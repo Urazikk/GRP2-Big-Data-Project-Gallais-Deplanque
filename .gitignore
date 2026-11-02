@@ -1,0 +1,19 @@
+# Data and Spark outputs (downloaded or generated, never committed)
+data/*
+!data/.gitkeep
+checkpoints/
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
