@@ -83,6 +83,10 @@ Feature films are movies longer than 40 minutes; a film counts in each of its ge
 python -m imdb_project.exploration.runtime_outliers
 # Top 3 genres per year (1980-2025) by IMDb votes, and comparison with the other genres
 python -m imdb_project.exploration.popular_genres
+# Directors with exactly one film rated >= 8.0 and other films averaging <= 6.0
+python -m imdb_project.exploration.directors
+# Series whose worst episode is in the last season and best in the first two
+python -m imdb_project.exploration.series
 ```
 
 ## AI tools declaration
