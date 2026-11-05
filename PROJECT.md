@@ -72,10 +72,24 @@ With Docker, run the commands below inside the container, for example
 3. Each part of the project (data preparation, exploration, enrichment, streaming, open
    question) is described in its own section below, with the command or notebook to run.
 
+### Data exploration
+
+Each question is one module, and its tables are written to `results/exploration/`.
+Feature films are movies longer than 40 minutes; a film counts in each of its genres.
+
+```bash
+# Feature films whose runtime is notably different from their genre (about 2 minutes);
+# the full list is written to data/exploration/runtime_outliers.csv
+python -m imdb_project.exploration.runtime_outliers
+# Top 3 genres per year (1980-2025) by IMDb votes, and comparison with the other genres
+python -m imdb_project.exploration.popular_genres
+```
+
 ## AI tools declaration
 
 | Tool | Used for |
 |------|----------|
 | Claude Code (Anthropic) | Repository setup: Docker Compose file, Spark session helper, IMDb readers with explicit schemas, download script, unit tests, this guide |
+| Claude Code (Anthropic) | Data exploration code and its unit tests |
 
 AI tools were not used to write the explanations and reasoning in `REPORT.md`.
