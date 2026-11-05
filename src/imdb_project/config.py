@@ -8,6 +8,8 @@ RAW_DIR = DATA_DIR / "raw"
 CLEAN_DIR = DATA_DIR / "clean"
 ENRICHED_DIR = DATA_DIR / "enriched"
 CHECKPOINT_DIR = DATA_DIR / "checkpoints"
+# small result tables (markdown) copied into REPORT.md, committed
+RESULTS_DIR = PROJECT_ROOT / "results"
 
 KAFKA_BOOTSTRAP_SERVERS = os.environ.get("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 
