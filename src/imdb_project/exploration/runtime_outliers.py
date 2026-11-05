@@ -6,13 +6,16 @@ exp(Q3 + k * IQR), with Q1, Q3 and IQR taken on the log scale (k = 1.5 by defaul
 
 Usage: python -m imdb_project.exploration.runtime_outliers
 """
-import csv
-
 from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
 
 from imdb_project.config import DATA_DIR, RESULTS_DIR
-from imdb_project.exploration.common import explode_genres, feature_films, to_markdown
+from imdb_project.exploration.common import (
+    explode_genres,
+    feature_films,
+    to_markdown,
+    write_csv,
+)
 from imdb_project.imdb_io import read_imdb
 from imdb_project.spark_session import get_spark
 
@@ -72,14 +75,6 @@ def summary(stats: DataFrame, outliers: DataFrame) -> DataFrame:
                     F.round(100 * (F.col("shorter") + F.col("longer")) / F.col("films"), 2))
         .orderBy(F.desc("films"))
     )
-
-
-def write_csv(df: DataFrame, path) -> None:
-    """Write a small DataFrame to a single CSV file."""
-    with open(path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        writer.writerow(df.columns)
-        writer.writerows(df.toLocalIterator())
 
 
 def main():

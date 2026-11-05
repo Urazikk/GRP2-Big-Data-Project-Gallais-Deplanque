@@ -1,4 +1,6 @@
 """Shared definitions for the exploration questions."""
+import csv
+
 from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
 
@@ -31,3 +33,11 @@ def to_markdown(df: DataFrame) -> str:
     for r in rows:
         lines.append("| " + " | ".join("" if v is None else str(v) for v in r) + " |")
     return "\n".join(lines) + "\n"
+
+
+def write_csv(df: DataFrame, path) -> None:
+    """Write a small DataFrame to a single CSV file."""
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(df.columns)
+        writer.writerows(df.toLocalIterator())

@@ -11,8 +11,8 @@ Usage: python -m imdb_project.exploration.careers
 from pyspark.sql import DataFrame, Window
 from pyspark.sql import functions as F
 
-from imdb_project.config import RESULTS_DIR
-from imdb_project.exploration.common import feature_films, to_markdown
+from imdb_project.config import DATA_DIR, RESULTS_DIR
+from imdb_project.exploration.common import feature_films, to_markdown, write_csv
 from imdb_project.imdb_io import read_imdb
 from imdb_project.spark_session import get_spark
 
@@ -96,7 +96,11 @@ def main():
     )
     out = RESULTS_DIR / "exploration"
     out.mkdir(parents=True, exist_ok=True)
-    (out / "early_peak_actors.md").write_text(to_markdown(result))
+    (out / "early_peak_actors_top50.md").write_text(to_markdown(result.limit(50)))
+    # Full list (thousands of rows) kept out of git, under data/
+    full = DATA_DIR / "exploration"
+    full.mkdir(parents=True, exist_ok=True)
+    write_csv(result, full / "early_peak_actors.csv")
     result.show(30, truncate=False)
     print(f"{result.count()} early peak actors out of {eligible} with "
           f">= {MIN_FILMS} films over >= {MIN_YEARS} years")
