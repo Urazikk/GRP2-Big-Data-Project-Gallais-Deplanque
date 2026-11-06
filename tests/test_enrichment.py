@@ -152,3 +152,28 @@ def test_multilingual_actors(spark):
         "n1", ["English", "French", "Japanese"], 3)
     assert row.successful_films == 3
     assert actors.where(F.col("language_count") >= 2).count() == 1
+
+
+def test_collect_film_stops_after_three_biographies(tmp_path):
+    import threading
+
+    from imdb_project.enrichment import collect
+
+    class Client:
+        looked_up = []
+
+        def find(self, candidates, imdb_id):
+            self.looked_up.append(imdb_id)
+            if imdb_id == "n2":
+                return None, None, None, "no English Wikipedia page found for: B"
+            return "T", {"lead": "Bio.", "plot": "Plot.", "plot_section": "Plot",
+                         "languages": ["English"]}, "2026-11-06T10:00:00+00:00", None
+
+    film = {"tconst": "t1", "primaryTitle": "M", "originalTitle": "M", "startYear": 2000,
+            "need_people": True}
+    credits = {"t1": [{"tconst": "t1", "ordering": i, "nconst": f"n{i}", "category": "actor",
+                       "primaryName": f"P{i}"} for i in range(1, 6)]}
+    people = {}
+    record = collect.collect_film(Client(), film, credits, people, threading.Lock())
+    assert record["synopsis"] == "Plot." and record["languages"] == ["English"]
+    assert sorted(people) == ["n1", "n2", "n3", "n4"]  # n2 has no page, n5 not needed

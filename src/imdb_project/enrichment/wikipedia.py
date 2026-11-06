@@ -2,7 +2,7 @@
 
 Only the Wikimedia REST page endpoints are used (summary and Parsoid HTML):
 - a User-Agent with a contact address (config.USER_AGENT);
-- at most one request every MIN_INTERVAL seconds;
+- at most one request every MIN_INTERVAL seconds, shared by all threads;
 - retries with backoff on 429 and 5xx, honouring Retry-After;
 - a local SQLite cache keyed by URL, so a page is never requested twice. Only the parts
   of a page we use are stored (text, languages, IMDb ids), not the full HTML.
@@ -12,6 +12,7 @@ A page is accepted for a film or a person only if it links to its IMDb id.
 import json
 import re
 import sqlite3
+import threading
 import time
 from datetime import datetime, timezone
 from urllib.parse import quote
@@ -50,11 +51,13 @@ def _path(title: str) -> str:
 
 
 class WikipediaClient:
-    """REST client with rate limit, retries and a persistent cache."""
+    """REST client with rate limit, retries and a persistent cache. Thread-safe."""
 
     def __init__(self, cache_path, min_interval: float = MIN_INTERVAL, session=None):
         cache_path.parent.mkdir(parents=True, exist_ok=True)
-        self.db = sqlite3.connect(str(cache_path))
+        self.db = sqlite3.connect(str(cache_path), check_same_thread=False)
+        self._db_lock = threading.Lock()
+        self._rate_lock = threading.Lock()
         self.db.execute("CREATE TABLE IF NOT EXISTS cache (url TEXT PRIMARY KEY, "
                         "status INTEGER, payload TEXT, fetched_at TEXT)")
         self.session = session or requests.Session()
@@ -66,11 +69,12 @@ class WikipediaClient:
     def _get(self, url: str):
         """GET with rate limit and retries. Returns (status, response or None)."""
         for attempt in range(MAX_RETRIES):
-            wait = self.min_interval - (time.monotonic() - self._last)
-            if wait > 0:
-                time.sleep(wait)
-            self._last = time.monotonic()
-            self.requests += 1
+            with self._rate_lock:  # requests start at least min_interval apart
+                wait = self.min_interval - (time.monotonic() - self._last)
+                if wait > 0:
+                    time.sleep(wait)
+                self._last = time.monotonic()
+                self.requests += 1
             try:
                 resp = self.session.get(url, timeout=60)
             except requests.RequestException:
@@ -85,16 +89,18 @@ class WikipediaClient:
 
     def cached(self, url: str, parse):
         """Return (status, payload, fetched_at) from the cache, or fetch, parse and store."""
-        row = self.db.execute("SELECT status, payload, fetched_at FROM cache WHERE url = ?",
-                              (url,)).fetchone()
+        with self._db_lock:
+            row = self.db.execute("SELECT status, payload, fetched_at FROM cache WHERE url = ?",
+                                  (url,)).fetchone()
         if row:
             return row[0], json.loads(row[1]) if row[1] else None, row[2]
         status, resp = self._get(url)
         payload = parse(resp) if status == 200 else None
         fetched_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
-        self.db.execute("INSERT OR REPLACE INTO cache VALUES (?, ?, ?, ?)",
-                        (url, status, json.dumps(payload) if payload else None, fetched_at))
-        self.db.commit()
+        with self._db_lock:
+            self.db.execute("INSERT OR REPLACE INTO cache VALUES (?, ?, ?, ?)",
+                            (url, status, json.dumps(payload) if payload else None, fetched_at))
+            self.db.commit()
         return status, payload, fetched_at
 
     def summary(self, title: str):

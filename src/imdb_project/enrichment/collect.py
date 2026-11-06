@@ -15,7 +15,9 @@ Usage: python -m imdb_project.enrichment.collect [--limit N]
 """
 import argparse
 import json
+import threading
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from imdb_project.config import ENRICHED_DIR
 from imdb_project.enrichment.wikipedia import (
@@ -71,9 +73,29 @@ def person_record(client, credit):
     return record
 
 
+def collect_film(client, film, credits, people, lock):
+    """Film record, plus biographies of its principals until BIOS_PER_FILM are found."""
+    record = film_record(client, film)
+    if film["need_people"]:
+        found = 0
+        for credit in sorted(credits[film["tconst"]], key=lambda c: c["ordering"]):
+            if found >= BIOS_PER_FILM:
+                break
+            with lock:
+                person = people.get(credit["nconst"])
+            if person is None:
+                person = person_record(client, credit)  # cached, so a race costs nothing
+                with lock:
+                    people[credit["nconst"]] = person
+            found += person["biography"] is not None
+    return record
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--limit", type=int, default=0, help="only the first N films")
+    parser.add_argument("--workers", type=int, default=4,
+                        help="parallel lookups (the request rate limit stays global)")
     args = parser.parse_args()
 
     films = read_jsonl(SCOPE_DIR / "films.jsonl")
@@ -84,22 +106,21 @@ def main():
         credits[c["tconst"]].append(c)
 
     client = WikipediaClient(CACHE_PATH)
-    people = {}
+    people, lock = {}, threading.Lock()
+    records = [None] * len(films)
+    with ThreadPoolExecutor(max_workers=args.workers) as pool:
+        futures = {pool.submit(collect_film, client, film, credits, people, lock): i
+                   for i, film in enumerate(films)}
+        for done, future in enumerate(as_completed(futures), 1):
+            records[futures[future]] = future.result()
+            if done % 100 == 0:
+                print(f"{done}/{len(films)} films, {len(people)} people, "
+                      f"{client.requests} requests sent", flush=True)
+
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     with open(RAW_DIR / "films.jsonl", "w", encoding="utf-8") as out:
-        for i, film in enumerate(films, 1):
-            out.write(json.dumps(film_record(client, film), ensure_ascii=False) + "\n")
-            if film["need_people"]:
-                found = 0
-                for credit in sorted(credits[film["tconst"]], key=lambda c: c["ordering"]):
-                    if found >= BIOS_PER_FILM:
-                        break
-                    if credit["nconst"] not in people:
-                        people[credit["nconst"]] = person_record(client, credit)
-                    found += people[credit["nconst"]]["biography"] is not None
-            if i % 100 == 0:
-                print(f"{i}/{len(films)} films, {len(people)} people, "
-                      f"{client.requests} requests sent", flush=True)
+        for record in records:
+            out.write(json.dumps(record, ensure_ascii=False) + "\n")
     with open(RAW_DIR / "people.jsonl", "w", encoding="utf-8") as out:
         for record in people.values():
             out.write(json.dumps(record, ensure_ascii=False) + "\n")
