@@ -2,3 +2,4 @@ confluent-kafka
 requests
 requests-sse>=0.5.0
 pytest
+beautifulsoup4

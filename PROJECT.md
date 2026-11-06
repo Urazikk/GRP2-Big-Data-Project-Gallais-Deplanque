@@ -94,11 +94,33 @@ python -m imdb_project.exploration.careers
 python -m imdb_project.exploration.multi_talented
 ```
 
+### Data enrichment
+
+Synopses and biographies come from English Wikipedia only. The collection step runs
+outside Spark and only needs `requests` and `beautifulsoup4`; every answer is cached in
+`data/enriched/cache/`, so it can be stopped and restarted. A page is kept only if it
+links to the IMDb id of the film or person.
+
+```bash
+# 1. Films to enrich: top 10 feature films per genre and year, 1980-2025 (Spark)
+python -m imdb_project.enrichment.scope --first-year 1980 --last-year 2025 --top-n 10
+# 2. Fetch Wikipedia pages (several hours, at most 4 requests per second)
+python -m imdb_project.enrichment.collect
+# 3. Clean, join and write data/enriched/films with its schema (Spark)
+python -m imdb_project.enrichment.build
+# Exploration question on languages, which needs the film languages from step 3
+python -m imdb_project.exploration.languages
+```
+
+Wikimedia rate-limits shared cloud addresses heavily, so step 2 should run from a
+personal connection.
+
 ## AI tools declaration
 
 | Tool | Used for |
 |------|----------|
 | Claude Code (Anthropic) | Repository setup: Docker Compose file, Spark session helper, IMDb readers with explicit schemas, download script, unit tests, this guide |
 | Claude Code (Anthropic) | Data exploration code and its unit tests |
+| Claude Code (Anthropic) | Data enrichment code (scope, Wikipedia collector, Spark build) and its unit tests |
 
 AI tools were not used to write the explanations and reasoning in `REPORT.md`.
