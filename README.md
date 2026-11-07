@@ -12,3 +12,13 @@ Final project for the Big Data Processing course (IMDb dataset, Spark and Kafka)
 
 - `PROJECT.md`: contributors, setup and execution guide, AI tools declaration
 - `REPORT.md`: results and methodology
+
+## Quick start
+
+```bash
+docker compose up -d
+docker compose exec pyspark-notebook pip install -r requirements.txt
+docker compose exec pyspark-notebook python scripts/download_imdb.py
+```
+
+See [`PROJECT.md`](PROJECT.md) for the full setup and execution guide.
