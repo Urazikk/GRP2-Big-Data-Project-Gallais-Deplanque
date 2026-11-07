@@ -1,0 +1,10 @@
+| genre | years_in_top | years_at_rank_1 |
+|---|---|---|
+| Drama | 46 | 42 |
+| Comedy | 34 | 2 |
+| Action | 29 | 1 |
+| Adventure | 16 | 1 |
+| Crime | 9 | 0 |
+| Horror | 2 | 0 |
+| Sci-Fi | 1 | 0 |
+| Thriller | 1 | 0 |
