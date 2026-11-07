@@ -82,11 +82,34 @@ Tables are written to `results/preparation/`.
 python -m imdb_project.preparation.missing_values
 ```
 
+### Data exploration
+
+Each question is one module, and its tables are written to `results/exploration/`.
+Feature films are movies longer than 40 minutes; a film counts in each of its genres.
+
+```bash
+# Feature films whose runtime is notably different from their genre (about 2 minutes);
+# the full list is written to data/exploration/runtime_outliers.csv
+python -m imdb_project.exploration.runtime_outliers
+# Top 3 genres per year (1980-2025) by IMDb votes, and comparison with the other genres
+python -m imdb_project.exploration.popular_genres
+# Directors with exactly one film rated >= 8.0 and other films averaging <= 6.0
+python -m imdb_project.exploration.directors
+# Series whose worst episode is in the last season and best in the first two
+python -m imdb_project.exploration.series
+# Actors with 20+ year careers whose popularity peaked early (about 5 minutes);
+# the full list is written to data/exploration/early_peak_actors.csv
+python -m imdb_project.exploration.careers
+# Multi-talented professionals and their films with combined roles (about 5 minutes)
+python -m imdb_project.exploration.multi_talented
+```
+
 ## AI tools declaration
 
 | Tool | Used for |
 |------|----------|
 | Claude Code (Anthropic) | Repository setup: Docker Compose file, Spark session helper, IMDb readers with explicit schemas, download script, unit tests, this guide |
 | Claude Code (Anthropic) | Data preparation code (missing values profiling) and its unit tests |
+| Claude Code (Anthropic) | Data exploration code and its unit tests |
 
 AI tools were not used to write the explanations and reasoning in `REPORT.md`.
