@@ -57,7 +57,7 @@ export PYTHONPATH=$PWD/src
 With Docker, run the commands below inside the container, for example
 `docker compose exec pyspark-notebook python scripts/download_imdb.py`.
 
-1. Download the IMDb dataset (about 1.5 GB compressed):
+1. Download the IMDb dataset (about 2 GB compressed):
 
    ```bash
    python scripts/download_imdb.py

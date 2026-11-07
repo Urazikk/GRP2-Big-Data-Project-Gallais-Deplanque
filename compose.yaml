@@ -23,7 +23,7 @@ services:
       - kafka-spark-net
 
   pyspark-notebook:
-    image: quay.io/jupyter/pyspark-notebook
+    image: quay.io/jupyter/pyspark-notebook:spark-4.0.1
     container_name: pyspark_notebook
     user: root
     ports:
