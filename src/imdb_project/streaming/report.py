@@ -74,15 +74,25 @@ def main():
     volume = spark.read.parquet(str(STREAMING_DIR / "volume")).cache()
     windows = spark.read.parquet(str(STREAMING_DIR / "windows"))
 
-    total = volume.agg(F.sum("changes")).first()[0] or 0
+    # windows are written once the watermark has passed them, so the last minutes of a run
+    # have no closed window: the share is computed over the closed windows only
+    total, closed_start, closed_end = volume.agg(
+        F.sum("changes"), F.min("window_start"), F.max("window_end")).first()
+    total = total or 0
     n_matched = matched.count()
+    n_matched_closed = matched.where(
+        (F.col("event_time") >= F.lit(closed_start)) & (F.col("event_time") < F.lit(closed_end))
+    ).count() if closed_end else 0
     first, last = matched.agg(F.min("event_time"), F.max("event_time")).first()
     summary_rows = [
-        ("changes counted in closed windows (all pages)", str(total)),
-        ("changes matched to the IMDb dataset", str(n_matched)),
-        ("matched share of closed-window changes (%)",
-         f"{100 * n_matched / total:.2f}" if total else ""),
+        ("changes matched to the IMDb dataset (whole run)", str(n_matched)),
         ("first / last matched event time", f"{first} / {last}"),
+        ("closed windows (written after the watermark passed them)",
+         f"{closed_start} / {closed_end}"),
+        ("changes in closed windows (all English Wikipedia articles)", str(total)),
+        ("matched changes in closed windows", str(n_matched_closed)),
+        ("matched share in closed windows (%)",
+         f"{100 * n_matched_closed / total:.2f}" if total else ""),
     ] + [(f"distinct {r.kind} entries matched", str(r.n)) for r in
          matched.groupBy("kind").agg(F.countDistinct("imdb_id").alias("n")).orderBy("kind")
          .collect()]
