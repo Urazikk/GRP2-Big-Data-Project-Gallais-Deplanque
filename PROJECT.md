@@ -110,6 +110,31 @@ python -m imdb_project.exploration.careers
 python -m imdb_project.exploration.multi_talented
 ```
 
+### Streaming data processing
+
+Live English Wikipedia changes go from Wikimedia to Kafka (producer, outside Spark) and are
+read by a Spark Structured Streaming job that keeps the changes of pages about the IMDb
+dataset (films, series and people). Kafka must be running: `docker compose up -d kafka`
+(or the full Docker Compose stack). From inside the notebook container, set nothing: the
+Kafka address is already `kafka:19092`.
+
+```bash
+# 1. Lookup table: Wikipedia page title -> IMDb id (Spark, about 5 minutes)
+python -m imdb_project.streaming.lookup --min-votes 1000 --plain-min-votes 20000
+# 2. Kafka topic (3 partitions)
+python -m imdb_project.streaming.admin
+# 3. In two terminals, for the test window (20 to 25 minutes):
+python -m imdb_project.streaming.consumer --minutes 25 --watermark "10 minutes" --window "5 minutes" --reset
+python -m imdb_project.streaming.producer --minutes 22
+# 3b. Optional late data test, in a third terminal while the first two run:
+#     replays changes from 40 minutes ago, older than the watermark
+python -m imdb_project.streaming.producer --minutes 3 --since-minutes 40 --quiet
+# 4. Result tables and streaming metrics (Spark batch)
+python -m imdb_project.streaming.report
+```
+
+Outputs: `data/streaming/` (parquet and `metrics.jsonl`), `results/streaming/` (tables).
+
 ## AI tools declaration
 
 | Tool | Used for |
@@ -117,5 +142,6 @@ python -m imdb_project.exploration.multi_talented
 | Claude Code (Anthropic) | Repository setup: Docker Compose file, Spark session helper, IMDb readers with explicit schemas, download script, unit tests, this guide |
 | Claude Code (Anthropic) | Data preparation code (missing values profiling, cleaning with quality flags and quarantine) and its unit tests |
 | Claude Code (Anthropic) | Data exploration code and its unit tests |
+| Claude Code (Anthropic) | Streaming code (Wikimedia producer, lookup table, Structured Streaming consumer, report) and its unit tests |
 
 AI tools were not used to write the explanations and reasoning in `REPORT.md`.
