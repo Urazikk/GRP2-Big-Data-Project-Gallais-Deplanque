@@ -281,6 +281,72 @@ Top three genres against the other genres, per year:
 | 2024 | 23 | 42.9 | 39.3 | 2855.0 | 2462.0 | 6.57 | 6.52 |
 | 2025 | 22 | 39.3 | 38.6 | 2477.0 | 2403.0 | 6.52 | 6.45 |
 
+#### Directors with one film rated 8.0 or more and other films averaging 6.0 or less
+
+Directors found: 171. The 25 with the most voted hit are below, full list in
+`results/exploration/one_hit_directors.md`.
+
+| nconst | primaryName | other_films | others_avg | hit_title | hit_year | hit_rating | hit_votes |
+|---|---|---|---|---|---|---|---|
+| nm0574625 | James McTeigue | 4 | 5.98 | V for Vendetta | 2005 | 8.1 | 1260308 |
+| nm0549658 | Richard Marquand | 6 | 5.98 | Star Wars: Episode VI - Return of the Jedi | 1983 | 8.3 | 1228582 |
+| nm0796117 | M. Night Shyamalan | 15 | 5.87 | The Sixth Sense | 1999 | 8.2 | 1175286 |
+| nm0446819 | Richard Kelly | 3 | 5.43 | Donnie Darko | 2001 | 8.0 | 924596 |
+| nm0001675 | Robert Rodriguez | 23 | 5.9 | Sin City | 2005 | 8.0 | 825453 |
+| nm0588340 | Frank Miller | 2 | 5.65 | Sin City | 2005 | 8.0 | 825453 |
+| nm0132709 | Martin Campbell | 20 | 5.62 | Casino Royale | 2006 | 8.0 | 757974 |
+| nm0000814 | John G. Avildsen | 21 | 5.78 | Rocky | 1976 | 8.1 | 706136 |
+| nm0853238 | Tate Taylor | 6 | 5.88 | The Help | 2011 | 8.1 | 534754 |
+| nm0936374 | Kirk Wise | 3 | 5.43 | Beauty and the Beast | 1991 | 8.0 | 511190 |
+| nm0204628 | Garth Davis | 2 | 5.65 | Lion | 2016 | 8.0 | 270125 |
+| nm0490487 | Wai Keung Lau | 43 | 5.72 | Infernal Affairs | 2002 | 8.0 | 139825 |
+| nm1749112 | Vincent Paronnaud | 4 | 5.83 | Persepolis | 2007 | 8.0 | 107428 |
+| nm0000671 | Billy Bob Thornton | 3 | 5.93 | Sling Blade | 1996 | 8.0 | 105152 |
+| nm1084488 | Umesh Shukla | 6 | 5.57 | OMG: Oh My God! | 2012 | 8.1 | 72394 |
+| nm2134474 | Vikas Bahl | 6 | 5.83 | Queen | 2013 | 8.1 | 71987 |
+| nm1025280 | Anubhav Sinha | 12 | 5.77 | Article 15 | 2019 | 8.1 | 42123 |
+| nm1164861 | Seth Gordon | 7 | 5.7 | The King of Kong: A Fistful of Quarters | 2007 | 8.0 | 38782 |
+| nm6134590 | Apoorv Singh Karki | 2 | 4.2 | Sirf Ek Bandaa Kaafi Hai | 2023 | 8.0 | 31497 |
+| nm0559877 | John Mathew Matthan | 2 | 5.75 | Sarfarosh | 1999 | 8.1 | 29122 |
+| nm1326535 | Sundar C. | 25 | 5.68 | Anbe Sivam | 2003 | 8.6 | 28783 |
+| nm0178880 | Eleanor Coppola | 2 | 5.2 | Hearts of Darkness: A Filmmaker's Apocalypse | 1991 | 8.1 | 26239 |
+| nm1729063 | Mert Baykal | 3 | 5.9 | Pardon | 2005 | 8.1 | 24920 |
+| nm0846092 | Kamal Tabrizi | 14 | 5.76 | The Lizard | 2004 | 8.4 | 24810 |
+| nm5120912 | Ajay Bahl | 3 | 4.63 | Section 375 | 2019 | 8.0 | 21914 |
+
+#### Series with the worst episode in the last season and the best in the first two
+
+Series found: 504 out of 13 594 series with at least three seasons of 10 episodes or more.
+The 25 most voted are below, full list in `results/exploration/series_worst_last_best_first.md`.
+
+| tconst | primaryTitle | startYear | long_seasons | last_season | rated_episodes | best_first | worst_last | series_votes |
+|---|---|---|---|---|---|---|---|---|
+| tt1856010 | House of Cards | 2013 | 5 | 6 | 73 | 9.5 | 2.5 | 565114 |
+| tt2707408 | Narcos | 2015 | 3 | 3 | 30 | 9.4 | 7.8 | 539285 |
+| tt3107288 | The Flash | 2014 | 9 | 9 | 184 | 9.6 | 3.8 | 389893 |
+| tt7335184 | You | 2018 | 5 | 5 | 50 | 9.1 | 5.3 | 378437 |
+| tt1837492 | 13 Reasons Why | 2017 | 4 | 4 | 49 | 9.1 | 5.1 | 344672 |
+| tt1312171 | The Umbrella Academy | 2019 | 3 | 4 | 36 | 8.9 | 4.8 | 319491 |
+| tt0844441 | True Blood | 2008 | 7 | 7 | 81 | 8.8 | 5.4 | 274090 |
+| tt0813715 | Heroes | 2006 | 4 | 4 | 78 | 8.9 | 6.8 | 267532 |
+| tt2357547 | Jessica Jones | 2015 | 3 | 3 | 39 | 9.0 | 7.1 | 243094 |
+| tt9335498 | Demon Slayer: Kimetsu no Yaiba | 2019 | 3 | 4 | 63 | 9.8 | 7.1 | 240684 |
+| tt4508902 | One Punch Man | 2015 | 3 | 3 | 36 | 9.5 | 1.6 | 232365 |
+| tt0285331 | 24 | 2001 | 8 | 8 | 192 | 9.3 | 7.6 | 208785 |
+| tt2575988 | Silicon Valley | 2014 | 3 | 6 | 53 | 9.3 | 7.3 | 185192 |
+| tt0934814 | Chuck | 2007 | 5 | 5 | 91 | 9.5 | 7.4 | 155059 |
+| tt1235099 | Lie to Me | 2009 | 3 | 3 | 48 | 8.8 | 7.0 | 136744 |
+| tt1740299 | The Man in the High Castle | 2015 | 4 | 4 | 40 | 9.2 | 6.0 | 127274 |
+| tt0439100 | Weeds | 2005 | 8 | 8 | 102 | 8.9 | 6.9 | 124046 |
+| tt1553656 | Under the Dome | 2013 | 3 | 3 | 39 | 7.6 | 6.1 | 120007 |
+| tt11041332 | Yellowjackets | 2021 | 3 | 3 | 29 | 8.2 | 6.6 | 118486 |
+| tt5296406 | Designated Survivor | 2016 | 3 | 3 | 53 | 8.5 | 6.5 | 117302 |
+| tt6315640 | Atypical | 2017 | 3 | 4 | 38 | 9.1 | 7.4 | 115695 |
+| tt8064302 | Dead to Me | 2019 | 3 | 3 | 30 | 8.6 | 7.4 | 112257 |
+| tt8714904 | Narcos: Mexico | 2018 | 3 | 3 | 30 | 9.0 | 7.4 | 103497 |
+| tt0060028 | Star Trek | 1966 | 3 | 3 | 80 | 9.2 | 5.2 | 102653 |
+| tt1462059 | Falling Skies | 2011 | 5 | 5 | 52 | 8.1 | 5.9 | 100080 |
+
 ### Methodological explanation
 
 ## Data enrichment
