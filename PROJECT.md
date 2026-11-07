@@ -87,6 +87,11 @@ python -m imdb_project.exploration.popular_genres
 python -m imdb_project.exploration.directors
 # Series whose worst episode is in the last season and best in the first two
 python -m imdb_project.exploration.series
+# Actors with 20+ year careers whose popularity peaked early (about 5 minutes);
+# the full list is written to data/exploration/early_peak_actors.csv
+python -m imdb_project.exploration.careers
+# Multi-talented professionals and their films with combined roles (about 5 minutes)
+python -m imdb_project.exploration.multi_talented
 ```
 
 ## AI tools declaration
