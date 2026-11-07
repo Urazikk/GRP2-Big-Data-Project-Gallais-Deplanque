@@ -69,20 +69,24 @@ With Docker, run the commands below inside the container, for example
    python -m pytest tests
    ```
 
-3. Data preparation, percentage of null / missing / empty values per column and top 5 columns
-   (about 10 minutes, tables written to `results/preparation/`):
-
-   ```bash
-   python -m imdb_project.preparation.missing_values
-   ```
-
-4. Each part of the project (data preparation, exploration, enrichment, streaming, open
+3. Each part of the project (data preparation, exploration, enrichment, streaming, open
    question) is described in its own section below, with the command or notebook to run.
+
+### Data preparation
+
+Tables are written to `results/preparation/`.
+
+```bash
+# Percentage of null / missing / empty values per column of each table, and the five
+# columns with the most missing values (about 10 minutes)
+python -m imdb_project.preparation.missing_values
+```
 
 ## AI tools declaration
 
 | Tool | Used for |
 |------|----------|
 | Claude Code (Anthropic) | Repository setup: Docker Compose file, Spark session helper, IMDb readers with explicit schemas, download script, unit tests, this guide |
+| Claude Code (Anthropic) | Data preparation code (missing values profiling) and its unit tests |
 
 AI tools were not used to write the explanations and reasoning in `REPORT.md`.
