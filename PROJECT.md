@@ -80,13 +80,19 @@ Tables are written to `results/preparation/`.
 # Percentage of null / missing / empty values per column of each table, and the five
 # columns with the most missing values (about 10 minutes)
 python -m imdb_project.preparation.missing_values
+# Clean tables in data/clean (typed parquet, quality flags in dq_flags, rows with a
+# missing parent key moved to data/clean/quarantine), summary in results/preparation/
+# (about 20 minutes)
+python -m imdb_project.preparation.cleaning --max-runtime 600
 ```
+
+Other parts can read a cleaned table with `imdb_project.imdb_io.read_clean(spark, "title_basics")`.
 
 ## AI tools declaration
 
 | Tool | Used for |
 |------|----------|
 | Claude Code (Anthropic) | Repository setup: Docker Compose file, Spark session helper, IMDb readers with explicit schemas, download script, unit tests, this guide |
-| Claude Code (Anthropic) | Data preparation code (missing values profiling) and its unit tests |
+| Claude Code (Anthropic) | Data preparation code (missing values profiling, cleaning with quality flags and quarantine) and its unit tests |
 
 AI tools were not used to write the explanations and reasoning in `REPORT.md`.
