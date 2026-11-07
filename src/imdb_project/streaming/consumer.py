@@ -121,7 +121,7 @@ def record_metrics(queries, path, stop: threading.Event, every: float = 5.0):
                     key = (p["name"], p["batchId"])
                     if key not in seen:
                         seen.add(key)
-                        out.write(json.dumps(p) + "\n")
+                        out.write(json.dumps(p, default=str) + "\n")
             out.flush()
             stop.wait(every)
 
