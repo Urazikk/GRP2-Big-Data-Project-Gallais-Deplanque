@@ -3,7 +3,8 @@
 Pages are asked for in batches (up to 50 titles per request) to keep the number of
 requests low:
 - a User-Agent with a contact address (config.USER_AGENT) and maxlag=5;
-- one request at a time, at most one every MIN_INTERVAL seconds;
+- at most one request started every MIN_INTERVAL seconds, and at most WORKERS requests
+  in flight (slow batches such as introductions are fetched a few at a time);
 - retries with backoff on 429 and 5xx (and maxlag errors), honouring Retry-After;
 - a local SQLite cache keyed by request URL, so a request is never sent twice.
 
@@ -12,7 +13,9 @@ A page is accepted for a film or a person only if it links to its IMDb id.
 import json
 import re
 import sqlite3
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from urllib.parse import quote, urlencode
 
@@ -25,6 +28,7 @@ API = "https://en.wikipedia.org/w/api.php"
 WIKI = "https://en.wikipedia.org/wiki/"
 MIN_INTERVAL = 0.2
 MAX_RETRIES = 8
+WORKERS = 3
 TITLES_PER_REQUEST = 50
 CONTENT_PER_REQUEST = 20
 EXTRACTS_PER_REQUEST = 20
@@ -65,15 +69,17 @@ class WikipediaClient:
         self.session.headers.update({"User-Agent": USER_AGENT})
         self.min_interval = min_interval
         self._last = 0.0
+        self._rate_lock = threading.Lock()
         self.requests = 0
 
     def _get(self, url: str) -> dict:
         for attempt in range(MAX_RETRIES):
-            wait = self.min_interval - (time.monotonic() - self._last)
-            if wait > 0:
-                time.sleep(wait)
-            self._last = time.monotonic()
-            self.requests += 1
+            with self._rate_lock:
+                wait = self.min_interval - (time.monotonic() - self._last)
+                if wait > 0:
+                    time.sleep(wait)
+                self._last = time.monotonic()
+                self.requests += 1
             try:
                 resp = self.session.get(url, timeout=90)
             except requests.RequestException:
@@ -91,11 +97,27 @@ class WikipediaClient:
             return data
         raise RuntimeError(f"giving up on {url} after {MAX_RETRIES} attempts")
 
-    def call(self, **params):
-        """One API request (cached). Returns (json, fetched_at)."""
+    @staticmethod
+    def url(**params) -> str:
         params = {"action": "query", "format": "json", "formatversion": "2",
                   "maxlag": "5", **params}
-        url = API + "?" + urlencode(sorted(params.items()))
+        return API + "?" + urlencode(sorted(params.items()))
+
+    def prefetch(self, param_list, workers: int = WORKERS):
+        """Fetch the uncached requests of a list in parallel and store them in the cache."""
+        urls = [self.url(**p) for p in param_list]
+        todo = [u for u in dict.fromkeys(urls) if not self.db.execute(
+            "SELECT 1 FROM cache WHERE url = ?", (u,)).fetchone()]
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            for u, data in zip(todo, pool.map(self._get, todo)):
+                fetched_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
+                self.db.execute("INSERT OR REPLACE INTO cache VALUES (?, ?, ?)",
+                                (u, json.dumps(data), fetched_at))
+                self.db.commit()
+
+    def call(self, **params):
+        """One API request (cached). Returns (json, fetched_at)."""
+        url = self.url(**params)
         row = self.db.execute("SELECT payload, fetched_at FROM cache WHERE url = ?",
                               (url,)).fetchone()
         if row:
@@ -148,6 +170,10 @@ class WikipediaClient:
         """
         result = {}
         unique = list(dict.fromkeys(titles))
+        params = dict(prop="pageprops|extlinks", ppprop="disambiguation",
+                      elquery=f"www.imdb.com/{kind}/", ellimit="max", redirects="1")
+        self.prefetch([dict(titles="|".join(b), **params)
+                       for b in chunks(unique, TITLES_PER_REQUEST)])
         for batch in chunks(unique, TITLES_PER_REQUEST):
             pages, _ = self.query(batch, prop="pageprops|extlinks", ppprop="disambiguation",
                                   elquery=f"www.imdb.com/{kind}/", ellimit="max")
@@ -174,7 +200,11 @@ class WikipediaClient:
     def intros(self, titles):
         """{title: (plain text introduction, fetched_at)} for existing pages."""
         out = {}
-        for batch in chunks(list(dict.fromkeys(titles)), EXTRACTS_PER_REQUEST):
+        unique = list(dict.fromkeys(titles))
+        self.prefetch([dict(titles="|".join(b), redirects="1", prop="extracts", exintro="1",
+                            explaintext="1", exlimit="max")
+                       for b in chunks(unique, EXTRACTS_PER_REQUEST)])
+        for batch in chunks(unique, EXTRACTS_PER_REQUEST):
             pages, fetched_at = self.query(batch, prop="extracts", exintro="1",
                                            explaintext="1", exlimit="max")
             for t, page in pages.items():
@@ -238,21 +268,34 @@ def plot_section(wikitext: str):
     return "", None
 
 
+LIST_TEMPLATES = {"plainlist", "plain list", "ubl", "ublist", "unbulleted list", "hlist",
+                  "flatlist", "flat list", "bulleted list", "bulletedlist", "nowrap", "nobr"}
+
+
 def infobox_languages(wikitext: str) -> list:
     """Languages listed in the film infobox, in order."""
     head = NEXT_SECTION.search(wikitext)
     code = mwparserfromhell.parse(wikitext[: head.start() if head else None])
     for template in code.filter_templates(recursive=False):
-        if str(template.name).strip().lower().startswith("infobox film"):
-            if not template.has("language"):
-                return []
-            value = mwparserfromhell.parse(str(template.get("language").value))
-            for tag in value.filter_tags(recursive=True,
-                                         matches=lambda t: str(t.tag).lower() == "ref"):
-                value.remove(tag)
-            text = value.strip_code(keep_template_params=True)
-            text = re.sub(r"<br\s*/?>", "\n", str(text), flags=re.I)
-            items = re.split(r"[\n*,;]+", text)
-            return [i.strip() for i in items if i.strip() and i.strip().lower() not in
-                    ("plainlist", "ubl", "unbulleted list", "hlist", "flatlist")]
+        if not str(template.name).strip().lower().startswith("infobox film"):
+            continue
+        if not template.has("language"):
+            return []
+        raw = str(template.get("language").value)
+        raw = re.sub(r"<ref[^>]*/>|<ref[^>]*>.*?</ref>", "", raw, flags=re.S | re.I)
+        raw = re.sub(r"<br\s*/?>|\{\{\s*(?:break|br)\s*\}\}", "\n", raw, flags=re.I)
+        # list templates ({{ubl|A|B}}, {{hlist|A|B}}, {{plainlist|* A}}): one item per line,
+        # repeated because they can be nested
+        for _ in range(5):
+            value = mwparserfromhell.parse(raw)
+            lists = [t for t in value.filter_templates(recursive=False)
+                     if str(t.name).strip().lower() in LIST_TEMPLATES]
+            if not lists:
+                break
+            for t in lists:
+                value.replace(t, "\n".join(str(p.value) for p in t.params if not p.showkey))
+            raw = str(value)
+        text = mwparserfromhell.parse(raw).strip_code()
+        items = re.split(r"[\n*,;]+|\s{2,}", str(text))
+        return [i.strip() for i in items if i.strip()]
     return []

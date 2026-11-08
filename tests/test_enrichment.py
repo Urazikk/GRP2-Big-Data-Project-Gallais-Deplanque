@@ -47,6 +47,11 @@ def test_plot_section_and_languages():
     assert plot == "A man walks in Paris.\nSecond part\nThen more."
     assert infobox_languages(WIKITEXT) == ["English", "French"]
     assert plot_section("No sections here.") == ("", None)
+    for value, expected in [("{{ubl|Cantonese|Mandarin}}", ["Cantonese", "Mandarin"]),
+                            ("Tamil<br />Hindi", ["Tamil", "Hindi"]),
+                            ("{{Unbulleted list|Korean|{{nowrap|English}}}}",
+                             ["Korean", "English"])]:
+        assert infobox_languages("{{Infobox film\n| language = " + value + "\n}}") == expected
 
 
 def test_candidates():
