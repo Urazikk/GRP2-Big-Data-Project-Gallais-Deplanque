@@ -96,12 +96,14 @@ def _language(x: Column) -> Column:
     intertitles = F.regexp_extract(x, r"([A-Z][a-z]+) intertitles", 1)
     return F.when(x.rlike(r"(?i)\bsilent\b"),
                   F.when(intertitles != "", intertitles).otherwise(F.lit("Silent"))
-                  ).otherwise(x)
+                  ).otherwise(F.trim(F.regexp_replace(x, r"(?i)\s+intertitles$", "")))
 
 
 def clean_languages(col: Column) -> Column:
     """Clean infobox language names, dropping empty items and duplicates."""
-    return F.array_distinct(F.filter(F.transform(col, _language), lambda x: F.length(x) > 0))
+    langs = F.array_distinct(F.filter(F.transform(col, _language), lambda x: F.length(x) > 0))
+    # "Silent" only stays when no language is given (e.g. ["Silent", "English intertitles"])
+    return F.when(F.size(langs) > 1, F.array_remove(langs, "Silent")).otherwise(langs)
 
 
 def read_raw(spark: SparkSession, path, schema) -> DataFrame:
@@ -226,10 +228,24 @@ def main():
     (out / "coverage.md").write_text(to_markdown(cov))
     notes = (
         enriched.where(F.col("synopsis").isNull())
-        .groupBy(F.regexp_replace("synopsis_note", r":.*", "").alias("synopsis_note"))
+        .groupBy(F.regexp_replace("synopsis_note", r"( to (tt|nm)\d+)?( among| for)?:.*$", "")
+                 .alias("synopsis_note"))
         .count().orderBy(F.desc("count"))
     )
     (out / "missing_synopsis_notes.md").write_text(to_markdown(notes))
+    (out / "schema.md").write_text("```\n" + enriched._jdf.schema().treeString() + "```\n")
+    sample = (
+        enriched.where(F.col("synopsis").isNotNull() & (F.col("biographies_found") >= 3))
+        .orderBy(F.desc("num_votes")).limit(5)
+        .select("tconst", "title", "year", F.array_join("top_genres", ", ").alias("top_genres"),
+                F.concat(F.substring("synopsis", 1, 160), F.lit("...")).alias("synopsis"),
+                "synopsis_source_url",
+                F.array_join("original_languages", ", ").alias("original_languages"),
+                F.array_join(F.transform("principals", lambda p: F.concat(
+                    p["name"], F.lit(" ("), F.when(p["biography"].isNotNull(), F.lit("bio"))
+                    .otherwise(p["note"]), F.lit(")"))), "; ").alias("principals"))
+    )
+    (out / "sample.md").write_text(to_markdown(sample))
     enriched.printSchema()
     cov.show()
     spark.stop()

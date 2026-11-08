@@ -4,6 +4,103 @@
 
 ### Results
 
+Percentage of null (`\N` in the IMDb files), missing or empty values per column, computed on
+the raw files with every column read as a string:
+
+| table | column | total_rows | null_marker | spark_null | empty | missing | missing_pct |
+|---|---|---|---|---|---|---|---|
+| name.basics | birthYear | 15783070 | 15097973 | 0 | 0 | 15097973 | 95.66 |
+| name.basics | deathYear | 15783070 | 15517984 | 0 | 0 | 15517984 | 98.32 |
+| name.basics | knownForTitles | 15783070 | 1912328 | 0 | 0 | 1912328 | 12.12 |
+| name.basics | nconst | 15783070 | 0 | 0 | 0 | 0 | 0.0 |
+| name.basics | primaryName | 15783070 | 91 | 0 | 0 | 91 | 0.0 |
+| name.basics | primaryProfession | 15783070 | 3209410 | 0 | 0 | 3209410 | 20.33 |
+| title.akas | attributes | 60074283 | 59757615 | 0 | 0 | 59757615 | 99.47 |
+| title.akas | isOriginalTitle | 60074283 | 0 | 0 | 0 | 0 | 0.0 |
+| title.akas | language | 60074283 | 19576970 | 0 | 0 | 19576970 | 32.59 |
+| title.akas | ordering | 60074283 | 0 | 0 | 0 | 0 | 0.0 |
+| title.akas | region | 60074283 | 12958051 | 0 | 0 | 12958051 | 21.57 |
+| title.akas | title | 60074283 | 0 | 0 | 0 | 0 | 0.0 |
+| title.akas | titleId | 60074283 | 0 | 0 | 0 | 0 | 0.0 |
+| title.akas | types | 60074283 | 40204114 | 0 | 0 | 40204114 | 66.92 |
+| title.basics | endYear | 12918857 | 12754952 | 0 | 0 | 12754952 | 98.73 |
+| title.basics | genres | 12918857 | 546498 | 0 | 0 | 546498 | 4.23 |
+| title.basics | isAdult | 12918857 | 0 | 0 | 0 | 0 | 0.0 |
+| title.basics | originalTitle | 12918857 | 0 | 0 | 0 | 0 | 0.0 |
+| title.basics | primaryTitle | 12918857 | 0 | 0 | 0 | 0 | 0.0 |
+| title.basics | runtimeMinutes | 12918857 | 8042071 | 0 | 0 | 8042071 | 62.25 |
+| title.basics | startYear | 12918857 | 1485401 | 0 | 0 | 1485401 | 11.5 |
+| title.basics | tconst | 12918857 | 0 | 0 | 0 | 0 | 0.0 |
+| title.basics | titleType | 12918857 | 0 | 0 | 0 | 0 | 0.0 |
+| title.crew | directors | 12919986 | 5761968 | 0 | 0 | 5761968 | 44.6 |
+| title.crew | tconst | 12919986 | 0 | 0 | 0 | 0 | 0.0 |
+| title.crew | writers | 12919986 | 6402347 | 0 | 0 | 6402347 | 49.55 |
+| title.episode | episodeNumber | 9997191 | 2104913 | 0 | 0 | 2104913 | 21.06 |
+| title.episode | parentTconst | 9997191 | 0 | 0 | 0 | 0 | 0.0 |
+| title.episode | seasonNumber | 9997191 | 2104913 | 0 | 0 | 2104913 | 21.06 |
+| title.episode | tconst | 9997191 | 0 | 0 | 0 | 0 | 0.0 |
+| title.principals | category | 102659089 | 0 | 0 | 0 | 0 | 0.0 |
+| title.principals | characters | 102659089 | 52567377 | 0 | 0 | 52567377 | 51.21 |
+| title.principals | job | 102659089 | 82835998 | 0 | 0 | 82835998 | 80.69 |
+| title.principals | nconst | 102659089 | 0 | 0 | 0 | 0 | 0.0 |
+| title.principals | ordering | 102659089 | 0 | 0 | 0 | 0 | 0.0 |
+| title.principals | tconst | 102659089 | 0 | 0 | 0 | 0 | 0.0 |
+| title.ratings | averageRating | 1728074 | 0 | 0 | 0 | 0 | 0.0 |
+| title.ratings | numVotes | 1728074 | 0 | 0 | 0 | 0 | 0.0 |
+| title.ratings | tconst | 1728074 | 0 | 0 | 0 | 0 | 0.0 |
+
+Five columns with the highest percentage of missing values:
+
+| table | column | total_rows | null_marker | spark_null | empty | missing | missing_pct |
+|---|---|---|---|---|---|---|---|
+| title.akas | attributes | 60074283 | 59757615 | 0 | 0 | 59757615 | 99.47 |
+| title.basics | endYear | 12918857 | 12754952 | 0 | 0 | 12754952 | 98.73 |
+| name.basics | deathYear | 15783070 | 15517984 | 0 | 0 | 15517984 | 98.32 |
+| name.basics | birthYear | 15783070 | 15097973 | 0 | 0 | 15097973 | 95.66 |
+| title.principals | job | 102659089 | 82835998 | 0 | 0 | 82835998 | 80.69 |
+
+Cleaning (`python -m imdb_project.preparation.cleaning --max-runtime 600`), rows per table:
+
+| table | rows_in | rows_out | quarantined |
+|---|---|---|---|
+| title_basics | 12918857 | 12918857 | 0 |
+| name_basics | 15783070 | 15783070 | 0 |
+| title_ratings | 1728074 | 1728074 | 0 |
+| title_principals | 102659089 | 102651910 | 7179 |
+| title_directors | 9576802 | 9576105 | 697 |
+| title_writers | 15214506 | 15213051 | 1455 |
+| title_episode | 9997191 | 9997186 | 5 |
+| title_akas | 60074283 | 60074173 | 110 |
+
+Rows moved to the quarantine table, per reason:
+
+| table | reason | count |
+|---|---|---|
+| title_akas | titleId missing in title.basics | 110 |
+| title_directors | nconst missing in name.basics | 443 |
+| title_directors | tconst missing in title.basics | 254 |
+| title_episode | parentTconst missing in title.basics | 5 |
+| title_principals | nconst missing in name.basics | 7179 |
+| title_writers | nconst missing in name.basics | 1186 |
+| title_writers | tconst missing in title.basics | 269 |
+
+Quality flags kept in the `dq_flags` column, per table:
+
+| table | flag | count |
+|---|---|---|
+| name_basics | alive_born_before_1900 | 2067 |
+| name_basics | lifespan_over_110 | 39 |
+| name_basics | birth_before_1000 | 34 |
+| name_basics | death_before_birth | 28 |
+| name_basics | unknown_known_for_title | 11 |
+| title_basics | start_after_current_year | 5530 |
+| title_basics | runtime_over_max | 1133 |
+| title_basics | runtime_not_positive | 4 |
+| title_episode | no_season_or_episode_number | 2104908 |
+| title_principals | died_before_release | 350839 |
+| title_principals | aged_over_100_at_release | 134812 |
+| title_principals | born_after_release | 3108 |
+
 ### Methodological explanation
 
 ## Data exploration
@@ -459,11 +556,296 @@ Multi-role films against single-role films, per combination (people with both ki
 | Umberto Lenzi | direct+write | 36 | 24 | 5.47 | 5.44 | 0.04 |
 | Lucio Fulci | act+direct+write | 35 | 29 | 5.85 | 5.98 | -0.13 |
 
+#### Actors and actresses successful in films of several languages
+
+The original language of a film is the first language of its English Wikipedia infobox
+(collected by the enrichment step). Success: rating >= 7.0 and votes >= 10000.
+
+| successful_films | with_language |
+|---|---|
+| 4963 | 4789 |
+
+Actors per number of original languages among their successful films:
+
+| language_count | count |
+|---|---|
+| 1 | 26433 |
+| 2 | 888 |
+| 3 | 112 |
+| 4 | 11 |
+| 5 | 2 |
+
+Most frequent original languages of successful films:
+
+| language | count |
+|---|---|
+| English | 3008 |
+| Hindi | 300 |
+| French | 255 |
+| Japanese | 170 |
+| Spanish | 97 |
+| German | 90 |
+| Italian | 87 |
+| Tamil | 87 |
+| Turkish | 74 |
+| Korean | 64 |
+| Telugu | 45 |
+| Russian | 42 |
+| Malayalam | 42 |
+| Cantonese | 41 |
+| Swedish | 41 |
+
+Actors with successful films in three languages or more:
+
+| primaryName | language_count | successful_films | languages |
+|---|---|---|---|
+| Bruno Ganz | 5 | 10 | English, German, Greek, Italian, Norwegian |
+| Christian Berkel | 5 | 7 | Danish, Dutch, English, French, German |
+| Prakash Raj | 4 | 26 | Hindi, Kannada, Tamil, Telugu |
+| Max von Sydow | 4 | 17 | English, French, Scanian, Swedish |
+| Om Puri | 4 | 12 | English, Hindi, Tamil, Telugu |
+| Donnie Yen | 4 | 10 | Cantonese, Chinese (dialect: Cantonese, English, Mandarin |
+| Ashish Vidyarthi | 4 | 8 | Hindi, Malayalam, Tamil, Telugu |
+| Dulquer Salmaan | 4 | 8 | Hindi, Malayalam, Tamil, Telugu |
+| Julie Delpy | 4 | 8 | English, French, German, Polish |
+| Monica Bellucci | 4 | 7 | Aramaic, English, French, Italian |
+| Ziyi Zhang | 4 | 7 | Cantonese, English, Korean, Mandarin |
+| Irene Papas | 4 | 6 | Arabic, English, French, Italian |
+| Tadanobu Asano | 4 | 6 | English, Japanese, Mongolian, Thai |
+| Amitabh Bachchan | 3 | 28 | English, Hindi, Telugu |
+| Nassar | 3 | 25 | Hindi, Tamil, Telugu |
+| Anupam Kher | 3 | 21 | English, Hindi, Telugu |
+| Jackie Chan | 3 | 17 | Cantonese, English, Mandarin |
+| Nawazuddin Siddiqui | 3 | 15 | English, Hindi, Tamil |
+| Saurabh Shukla | 3 | 13 | English, Hindi, Tamil |
+| Tony Leung Chiu-wai | 3 | 13 | Cantonese, English, Mandarin |
+| Catherine Deneuve | 3 | 12 | English, French, Spanish |
+| Tabu | 3 | 12 | English, Hindi, Telugu |
+| Fahadh Faasil | 3 | 11 | Malayalam, Tamil, Telugu |
+| Maggie Cheung | 3 | 11 | Cantonese, English, Mandarin |
+| Michelle Yeoh | 3 | 11 | Cantonese, English, Mandarin |
+| Ron Perlman | 3 | 11 | English, French, Invented language |
+| Anthony Quinn | 3 | 10 | Arabic, English, Italian |
+| Daniel Brühl | 3 | 10 | English, French, German |
+| Ingrid Bergman | 3 | 10 | English, English (production), Swedish |
+| Jeanne Moreau | 3 | 10 | English, French, Italian |
+| Michel Piccoli | 3 | 10 | English, French, Italian |
+| Amrish Puri | 3 | 9 | English, Hindi, Tamil |
+| Charles Chaplin | 3 | 9 | English, Sound (part-talkie), Synchronized Sound |
+| Kamal Haasan | 3 | 9 | Hindi, Tamil, Telugu |
+| Diane Kruger | 3 | 8 | English, French, German |
+| Erland Josephson | 3 | 8 | English, Russian, Swedish |
+| Jean Reno | 3 | 8 | English, French, Italian |
+| Jet Li | 3 | 8 | Cantonese, English, Mandarin |
+| Jim Caviezel | 3 | 8 | Aramaic, English, Persian |
+| Mohanlal | 3 | 8 | Hindi, Malayalam, Tamil |
+| Mélanie Laurent | 3 | 8 | English, French, Maghrebi Arabic |
+| Richard Harris | 3 | 8 | English, Italian, Russian |
+| Thomas Kretschmann | 3 | 8 | English, German, Korean |
+| Yun-Fat Chow | 3 | 8 | Cantonese, English, Mandarin |
+| Ali Suliman | 3 | 7 | Arabic, English, Palestinian Arabic |
+| Alia Bhatt | 3 | 7 | Hindi, Punjabi, Telugu |
+| Golshifteh Farahani | 3 | 7 | English, French, Persian |
+| Isabelle Adjani | 3 | 7 | English, French, German |
+| Kishore Kumar G. | 3 | 7 | Kannada, Malayalam, Tamil |
+| Lee Byung-hun | 3 | 7 | English, Filipino, Korean |
+| Mathieu Amalric | 3 | 7 | American Sign Language, English, French |
+| Rutger Hauer | 3 | 7 | Dutch, English, German |
+| Taapsee Pannu | 3 | 7 | Hindi, Tamil, Telugu |
+| Trisha Krishnan | 3 | 7 | Malayalam, Tamil, Telugu |
+| Atul Kulkarni | 3 | 6 | Hindi, Tamil, Telugu |
+| Chhaya Kadam | 3 | 6 | Hindi, Malayalam, Marathi |
+| Kenneth Branagh | 3 | 6 | Early Modern English, English, Walmajarri |
+| Matthias Schoenaerts | 3 | 6 | Dutch, English, French |
+| Pierfrancesco Favino | 3 | 6 | English, French, Italian |
+| Rao Ramesh | 3 | 6 | Kannada, Tamil, Telugu |
+| Sandra Hüller | 3 | 6 | English, French, German |
+| Shriya Saran | 3 | 6 | Hindi, Tamil, Telugu |
+| Valeria Golino | 3 | 6 | English, French, Italian |
+| Fernando Rey | 3 | 5 | English, French, Spanish |
+| Féodor Atkine | 3 | 5 | English, French, Spanish |
+| Ileana D'Cruz | 3 | 5 | Hindi, Tamil, Telugu |
+| Kajal Aggarwal | 3 | 5 | Hindi, Tamil, Telugu |
+| Klaus Kinski | 3 | 5 | English, German, Italian |
+| Pradeep Singh Rawat | 3 | 5 | Hindi, Tamil, Telugu |
+| Rodrigo Santoro | 3 | 5 | English, Portuguese, Spanish |
+| Roman Polanski | 3 | 5 | English, French, Polish |
+| Sai Kumar | 3 | 5 | Kannada, Tamil, Telugu |
+| Sofie Gråbøl | 3 | 5 | Danish, French, Scanian |
+| Tinnu Anand | 3 | 5 | Hindi, Tamil, Telugu |
+| Aksel Hennie | 3 | 4 | Danish, English, Norwegian |
+| Alida Valli | 3 | 4 | English, French, Italian |
+| Benno Fürmann | 3 | 4 | French, German, Polish |
+| Branka Katic | 3 | 4 | German, Romani, Serbian |
+| Doug Jones | 3 | 4 | American Sign Language, English, Spanish |
+| Eiji Okada | 3 | 4 | English, French, Japanese |
+| Florian Lukas | 3 | 4 | English, German, Hindi |
+| Francisco Rabal | 3 | 4 | English, Italian, Spanish |
+| Gian Maria Volontè | 3 | 4 | English, French, Italian |
+| Hanns Zischler | 3 | 4 | Danish, English, German |
+| Jayaram | 3 | 4 | Kannada, Tamil, Telugu |
+| Joanna Kulig | 3 | 4 | English, French, Polish |
+| Johan Heldenbergh | 3 | 4 | Bosnian, Dutch, English |
+| Julia Ormond | 3 | 4 | English, Russian, Spanish |
+| Margarita Lozano | 3 | 4 | English, French, Spanish |
+| Michel Blanc | 3 | 4 | English, French, Italian |
+| Michel Simon | 3 | 4 | English, French, French (intertitles) |
+| Nathan Jones | 3 | 4 | English, Mandarin, Thai |
+| Nikolaj Coster-Waldau | 3 | 4 | Danish, English, Norwegian |
+| Predrag Lakovic | 3 | 4 | Romani, Serbian, Serbo-Croatian |
+| Riccardo Scamarcio | 3 | 4 | English, French, Italian |
+| Sergi López | 3 | 4 | French, Italian, Spanish |
+| Sobhita Dhulipala | 3 | 4 | Hindi, Malayalam, Telugu |
+| Stéphane Audran | 3 | 4 | Danish, English, French |
+| Ángela Molina | 3 | 4 | French, Italian, Spanish |
+| Aitana Sánchez-Gijón | 3 | 3 | English, Italian, Spanish |
+| Al Ernest Garcia | 3 | 3 | English, Sound (part-talkie), Synchronized Sound |
+| Andréa Ferréol | 3 | 3 | French, German, Italian |
+| Anupama Parameswaran | 3 | 3 | Malayalam, Tamil, Telugu |
+| Claudia Gerini | 3 | 3 | Aramaic, English, Italian |
+| Daniel Olbrychski | 3 | 3 | English, German, Russian |
+| Danny Denzongpa | 3 | 3 | English, Hindi, Tamil |
+| Franco Nero | 3 | 3 | English, German, Spanish |
+| Gustaf Skarsgård | 3 | 3 | English, Norwegian, Swedish |
+| Hichem Yacoubi | 3 | 3 | French, Hassaniya Arabic, Wolof |
+| Homayoun Ershadi | 3 | 3 | Dari, English, Persian |
+| Hristo Shopov | 3 | 3 | Aramaic, English, Serbian |
+| Jean Martin | 3 | 3 | Arabic, French, Italian |
+| José Luis de Vilallonga | 3 | 3 | English, French, Italian |
+| Karl Markovics | 3 | 3 | English, German, Norwegian |
+| Leonor Watling | 3 | 3 | English, French, Spanish |
+| Miguel Bosé | 3 | 3 | English, French, Spanish |
+| R. Sarathkumar | 3 | 3 | Kannada, Tamil, Telugu |
+| Rakul Preet Singh | 3 | 3 | Hindi, Tamil, Telugu |
+| Sai Pallavi | 3 | 3 | Malayalam, Tamil, Telugu |
+| Sebastian Koch | 3 | 3 | Dutch, English, German |
+| Sergej Trifunovic | 3 | 3 | English, Norwegian, Serbian |
+| Siddharth | 3 | 3 | Hindi, Tamil, Telugu |
+| Susanne Lothar | 3 | 3 | English, French, German |
+| Valentina Cortese | 3 | 3 | English, French, Italian |
+| Vinay Rai | 3 | 3 | Malayalam, Tamil, Telugu |
+
+50 actors with the most successful films in two languages:
+
+| primaryName | language_count | successful_films | languages |
+|---|---|---|---|
+| Robert De Niro | 2 | 34 | English, Italian |
+| Paresh Rawal | 2 | 23 | Hindi, Tamil |
+| Clint Eastwood | 2 | 22 | English, Italian |
+| Burt Lancaster | 2 | 21 | English, Italian |
+| Aamir Khan | 2 | 20 | English, Hindi |
+| Jeff Bridges | 2 | 19 | English, English/French |
+| Shah Rukh Khan | 2 | 19 | Hindi, Tamil |
+| Christian Bale | 2 | 18 | English, Mandarin |
+| Henry Fonda | 2 | 18 | English, Italian |
+| Irrfan Khan | 2 | 18 | English, Hindi |
+| Kate Winslet | 2 | 18 | Early Modern English, English |
+| Steve Buscemi | 2 | 18 | English, French |
+| Ajay Devgn | 2 | 17 | Hindi, Telugu |
+| Mads Mikkelsen | 2 | 17 | Danish, English |
+| Stellan Skarsgård | 2 | 17 | English, Norwegian |
+| Naseeruddin Shah | 2 | 16 | Hindi, Tamil |
+| Rani Mukerji | 2 | 16 | Hindi, Tamil |
+| Colin Farrell | 2 | 15 | English, Thai |
+| Sally Hawkins | 2 | 15 | American Sign Language, English |
+| Tilda Swinton | 2 | 15 | English, Italian |
+| Dennis Hopper | 2 | 14 | English, German |
+| Kristin Scott Thomas | 2 | 14 | English, French |
+| Toshirō Mifune | 2 | 14 | English, Japanese |
+| Benicio Del Toro | 2 | 13 | English, Spanish |
+| Javier Bardem | 2 | 13 | English, Spanish |
+| Madhavan | 2 | 13 | Hindi, Tamil |
+| Michael Fassbender | 2 | 13 | English, Irish |
+| Michael Stuhlbarg | 2 | 13 | American Sign Language, English |
+| Nikolaj Lie Kaas | 2 | 13 | Danish, English |
+| Antonio Banderas | 2 | 12 | English, Spanish |
+| Boman Irani | 2 | 12 | Hindi, Telugu |
+| Marion Cotillard | 2 | 12 | English, French |
+| Michael Shannon | 2 | 12 | American Sign Language, English |
+| Penélope Cruz | 2 | 12 | English, Spanish |
+| Rajkummar Rao | 2 | 12 | English, Hindi |
+| Song Kang-ho | 2 | 12 | English, Korean |
+| Djimon Hounsou | 2 | 11 | American Sign Language, English |
+| Gary Cooper | 2 | 11 | English, Sound (synchronized) |
+| Gérard Depardieu | 2 | 11 | French, Italian |
+| Hrithik Roshan | 2 | 11 | Hindi, Tamil |
+| Juliette Binoche | 2 | 11 | English, French |
+| Kareena Kapoor | 2 | 11 | Hindi, Punjabi |
+| Samantha Ruth Prabhu | 2 | 11 | Tamil, Telugu |
+| Sanjay Dutt | 2 | 11 | Hindi, Kannada |
+| Alain Delon | 2 | 10 | French, Italian |
+| Cem Yılmaz | 2 | 10 | English, Turkish |
+| Charlotte Rampling | 2 | 10 | English, French |
+| Cillian Murphy | 2 | 10 | American Sign Language, English |
+| James Coburn | 2 | 10 | English, Italian |
+| Jason Clarke | 2 | 10 | English, Walmajarri |
+
+
 ### Methodological explanation
 
 ## Data enrichment
 
 ### Results
+
+Scope: top 10 feature films per genre and year (1980-2025) by IMDb votes, 7 184 films.
+
+Coverage:
+
+| films | with_synopsis | with_languages | with_3_biographies | avg_biographies |
+|---|---|---|---|---|
+| 7184 | 5824 | 6065 | 5684 | 3.24 |
+
+Films without a synopsis, by note written by the collector:
+
+| synopsis_note | count |
+|---|---|
+| no English Wikipedia page found | 762 |
+| page found but it has no plot or synopsis section | 363 |
+| no English Wikipedia page linking | 235 |
+
+Schema of `data/enriched/films`:
+
+```
+root
+ |-- tconst: string (nullable = true)
+ |-- title: string (nullable = true)
+ |-- year: integer (nullable = true)
+ |-- runtime_minutes: integer (nullable = true)
+ |-- genres: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+ |-- top_genres: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+ |-- average_rating: double (nullable = true)
+ |-- num_votes: integer (nullable = true)
+ |-- synopsis: string (nullable = true)
+ |-- synopsis_source_url: string (nullable = true)
+ |-- synopsis_retrieved_at: timestamp (nullable = true)
+ |-- synopsis_note: string (nullable = true)
+ |-- original_languages: array (nullable = false)
+ |    |-- element: string (containsNull = true)
+ |-- principals: array (nullable = false)
+ |    |-- element: struct (containsNull = true)
+ |    |    |-- ordering: integer (nullable = true)
+ |    |    |-- nconst: string (nullable = true)
+ |    |    |-- name: string (nullable = true)
+ |    |    |-- category: string (nullable = true)
+ |    |    |-- biography: string (nullable = true)
+ |    |    |-- source_url: string (nullable = true)
+ |    |    |-- retrieved_at: timestamp (nullable = true)
+ |    |    |-- note: string (nullable = true)
+ |-- biographies_found: integer (nullable = false)
+```
+
+Sample (the five most voted films with a synopsis and three biographies):
+
+| tconst | title | year | top_genres | synopsis | synopsis_source_url | original_languages | principals |
+|---|---|---|---|---|---|---|---|
+| tt0111161 | The Shawshank Redemption | 1994 | Drama | In 1947, Portland, Maine, banker Andy Dufresne arrives at Shawshank State Prison to serve two consecutive life sentences for murdering his wife and her lover. H... | https://en.wikipedia.org/wiki/The_Shawshank_Redemption | English | Tim Robbins (bio); Morgan Freeman (bio); Bob Gunton (bio); William Sadler (bio); Clancy Brown (bio) |
+| tt0468569 | The Dark Knight | 2008 | Crime, Thriller | A gang of masked criminals rob a mafia-owned bank in Gotham City, betraying and killing each other until the sole survivor, the Joker, reveals himself as the ma... | https://en.wikipedia.org/wiki/The_Dark_Knight | English | Christian Bale (bio); Heath Ledger (bio); Aaron Eckhart (bio); Michael Caine (bio); Maggie Gyllenhaal (bio) |
+| tt1375666 | Inception | 2010 | Adventure, Sci-Fi, Thriller | Dom Cobb and Arthur are professional thieves who perform corporate espionage using experimental dream-sharing technology to infiltrate their targets' subconscio... | https://en.wikipedia.org/wiki/Inception | English | Leonardo DiCaprio (bio); Joseph Gordon-Levitt (bio); Elliot Page (bio); Ken Watanabe (bio); Tom Hardy (bio) |
+| tt0137523 | Fight Club | 1999 | Crime, Drama, Thriller | The unnamed Narrator works an office job as an insurance claims adjuster. He sees a doctor for his disordered sleep, complaining that he falls asleep unexpected... | https://en.wikipedia.org/wiki/Fight_Club | English | Brad Pitt (bio); Edward Norton (bio); Meat Loaf (bio) |
+| tt0816692 | Interstellar | 2014 | Adventure, Sci-Fi | In the near future, humanity faces extinction due to dust storms and widespread crop blights. Joseph Cooper, a widowed former NASA test pilot, works as a farmer... | https://en.wikipedia.org/wiki/Interstellar_(film) | English | Matthew McConaughey (bio); Anne Hathaway (bio); Jessica Chastain (bio); Mackenzie Foy (bio); Ellen Burstyn (bio) |
+
 
 ### Methodological explanation
 
@@ -471,7 +853,80 @@ Multi-role films against single-role films, per combination (people with both ki
 
 ### Results
 
+Test run of 7 November 2026, 11:24 to 11:50 UTC: consumer running 25 minutes, live producer
+22 minutes (English Wikipedia, articles, edits and new pages), watermark 10 minutes,
+tumbling windows of 5 minutes, trigger every 30 seconds. Lookup table: 580,796 Wikipedia
+page titles for 49,349 films, 12,968 series and 258,997 people (titles with at least 1,000
+IMDb votes).
+
+Run summary:
+
+| metric | value |
+|---|---|
+| changes matched to the IMDb dataset (whole run) | 36 |
+| first / last matched event time | 2026-11-07 11:24:45.738000 / 2026-11-07 11:47:47.177000 |
+| closed windows (written after the watermark passed them) | 2026-11-07 11:20:00 / 2026-11-07 11:35:00 |
+| changes in closed windows (all English Wikipedia articles) | 874 |
+| matched changes in closed windows | 13 |
+| matched share in closed windows (%) | 1.49 |
+| distinct film entries matched | 12 |
+| distinct person entries matched | 13 |
+| distinct series entries matched | 2 |
+
+IMDb entries whose Wikipedia page changed during the run:
+
+| kind | imdb_id | label | changes | editors | bytes_changed |
+|---|---|---|---|---|---|
+| person | nm0446504 | John Kelly | 5 | 1 | 44 |
+| film | tt0118617 | Anastasia | 3 | 2 | 1166 |
+| series | tt6170874 | Salvation | 2 | 1 | 2250 |
+| person | nm0072758 | Tim Bentinck | 2 | 1 | 52 |
+| person | nm10635159 | Tyriq Withers | 2 | 2 | 304 |
+| film | tt0118636 | Apt Pupil | 1 | 1 | 18 |
+| person | nm0213642 | Dan DeCarlo | 1 | 1 | 2 |
+| person | nm0000358 | Daniel Day-Lewis | 1 | 1 | 2 |
+| series | tt33043892 | Dexter: Resurrection | 1 | 1 | 8 |
+| film | tt14564000 | Guntur Kaaram | 1 | 1 | 398 |
+| film | tt7125860 | If Beale Street Could Talk | 1 | 1 | 8 |
+| film | tt0160399 | Impostor | 1 | 1 | 782 |
+| person | nm5313125 | Jane Schoenbrun | 1 | 1 | 3 |
+| person | nm5481013 | Kaito Ishikawa | 1 | 1 | 2 |
+| person | nm3393343 | Kim Sae-ron | 1 | 1 | 7 |
+| person | nm2271872 | Park Si-yeon | 1 | 1 | 6558 |
+| film | tt8850222 | Peninsula | 1 | 1 | 73 |
+| person | nm0191520 | Peter Cullen | 1 | 1 | 9 |
+| person | nm0001636 | Priscilla Presley | 1 | 1 | 3 |
+| person | nm0712262 | Rick Ravanello | 1 | 1 | 19 |
+
+Closed windows, all English Wikipedia article changes against the matched ones:
+
+| window_start | window_end | changes | bot_changes | matched_changes | entries |
+|---|---|---|---|---|---|
+| 2026-11-07 11:20:00 | 2026-11-07 11:25:00 | 41 | 19 | 1 | 1 |
+| 2026-11-07 11:25:00 | 2026-11-07 11:30:00 | 416 | 171 | 6 | 5 |
+| 2026-11-07 11:30:00 | 2026-11-07 11:35:00 | 417 | 151 | 6 | 5 |
+
+Streaming metrics per query (from the progress of every micro-batch):
+
+| query | batches | input_rows | rows_dropped_by_watermark | max_state_rows | last_watermark | avg_input_rows_per_s | avg_processed_rows_per_s | avg_batch_ms | max_batch_ms |
+|---|---|---|---|---|---|---|---|---|---|
+| matched_events | 48 | 5235 | 2298 | 1705 | 2026-11-07T11:38:05.583Z | 4.0 | 40.5 | 2715.0 | 3245 |
+| volume | 48 | 5235 | 2298 | 1708 | 2026-11-07T11:38:05.583Z | 4.0 | 63.9 | 1750.0 | 2299 |
+| windows | 48 | 5235 | 2298 | 1723 | 2026-11-07T11:38:05.583Z | 4.0 | 35.3 | 3046.0 | 3763 |
+| windows_console | 48 | 5235 | 2298 | 1723 | 2026-11-07T11:38:05.583Z | 4.0 | 33.3 | 3179.0 | 3909 |
+
 ### Late arriving data
+
+Late data test: during the run, a second producer replayed for 3 minutes the changes made
+from 40 minutes before (3,447 events sent to the same topic). Rows dropped by the watermark
+are counted in the metrics table above.
+
+Delay between the change on Wikipedia (event time) and its arrival in Kafka, for the matched
+events that were kept:
+
+| median_s | p95_s | max_s | events_over_1_min |
+|---|---|---|---|
+| 0.3 | 557.8 | 636.6 | 2 |
 
 ### Methodological explanation
 

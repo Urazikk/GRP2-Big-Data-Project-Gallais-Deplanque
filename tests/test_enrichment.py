@@ -1,5 +1,4 @@
 import datetime
-from urllib.parse import unquote
 
 from pyspark.sql import functions as F
 
@@ -12,34 +11,47 @@ from imdb_project.enrichment.build import (
     clean_people,
     enriched_films,
 )
+from imdb_project.enrichment.collect import match
 from imdb_project.enrichment.wikipedia import (
     WikipediaClient,
     film_candidates,
-    parse_page,
+    infobox_languages,
     person_candidates,
+    plot_section,
 )
 from imdb_project.exploration.languages import multilingual_actors, original_language
 
-FILM_HTML = """<html><body>
-<section data-mw-section-id="0">
-<table class="infobox"><tr><th>Directed by</th><td>X</td></tr>
-<tr><th>Languages</th><td><a>French</a><sup>[1]</sup><br/><a>English</a> sign</td></tr></table>
-<p>Lead text<sup>[2]</sup> about the film.</p></section>
-<section data-mw-section-id="1"><h2 id="Plot">Plot</h2><p>First part.</p>
-<section data-mw-section-id="2"><h3 id="Part_two">Part two</h3><p>Second part.</p></section>
-</section>
-<section data-mw-section-id="2"><h2 id="External_links">External links</h2>
-<p><a href="https://www.imdb.com/title/tt0000001/">IMDb</a></p></section>
-</body></html>"""
+WIKITEXT = """{{Infobox film
+| name = Movie
+| language = {{Plainlist|
+* English
+* [[French language|French]]<ref>a source</ref>
+}}
+}}
+Movie is a film.
+
+== Plot ==
+A man<ref>x</ref> walks [[Paris|in Paris]].[[File:a.jpg|thumb|caption]]
+
+=== Second part ===
+Then {{cite web|url=u}}more.
+
+== Cast ==
+* Someone
+"""
 
 
-def test_parse_page():
-    page = parse_page(FILM_HTML)
-    assert page["imdb_ids"] == ["tt0000001"]
-    assert page["languages"] == ["French", "English sign"]
-    assert page["plot"] == "First part.\nSecond part."
-    assert page["plot_section"] == "Plot"
-    assert page["lead"].startswith("Lead text")
+def test_plot_section_and_languages():
+    plot, heading = plot_section(WIKITEXT)
+    assert heading == "Plot"
+    assert plot == "A man walks in Paris.\nSecond part\nThen more."
+    assert infobox_languages(WIKITEXT) == ["English", "French"]
+    assert plot_section("No sections here.") == ("", None)
+    for value, expected in [("{{ubl|Cantonese|Mandarin}}", ["Cantonese", "Mandarin"]),
+                            ("Tamil<br />Hindi", ["Tamil", "Hindi"]),
+                            ("{{Unbulleted list|Korean|{{nowrap|English}}}}",
+                             ["Korean", "English"])]:
+        assert infobox_languages("{{Infobox film\n| language = " + value + "\n}}") == expected
 
 
 def test_candidates():
@@ -50,43 +62,56 @@ def test_candidates():
 
 
 class FakeResponse:
-    def __init__(self, status, text="", data=None):
-        self.status_code, self.text, self._data, self.headers = status, text, data, {}
+    status_code, headers = 200, {}
+
+    def __init__(self, data):
+        self._data = data
+
+    def raise_for_status(self):
+        pass
 
     def json(self):
         return self._data
 
 
 class FakeSession:
-    """Answers like the REST API: one film page under 'Movie (2001 film)'."""
+    """Answers a batch query: one redirect, one disambiguation, one missing page."""
 
     def __init__(self):
-        self.headers, self.calls = {}, []
+        self.headers, self.calls = {}, 0
 
     def get(self, url, timeout):
-        self.calls.append(url)
-        url = unquote(url)
-        if url.endswith("summary/Movie_(2001_film)"):
-            return FakeResponse(200, data={"type": "standard", "title": "Movie (2001 film)"})
-        if url.endswith("summary/Movie_(film)"):
-            return FakeResponse(200, data={"type": "disambiguation", "title": "Movie (film)"})
-        if url.endswith("html/Movie_(2001_film)"):
-            return FakeResponse(200, text=FILM_HTML)
-        return FakeResponse(404)
+        self.calls += 1
+        return FakeResponse({"query": {
+            "redirects": [{"from": "Movie (film)", "to": "Movie (2001 film)"}],
+            "pages": [
+                {"title": "Movie (2001 film)",
+                 "extlinks": [{"url": "https://www.imdb.com/title/tt0000001/"}]},
+                {"title": "Movie", "pageprops": {"disambiguation": ""}},
+                {"title": "Other", "missing": True},
+            ]}})
 
 
-def test_find_checks_imdb_id_and_caches(tmp_path):
+def test_imdb_pages_resolves_batches_and_caches(tmp_path):
     session = FakeSession()
     client = WikipediaClient(tmp_path / "cache.sqlite", min_interval=0, session=session)
-    title, page, fetched_at, note = client.find(film_candidates("Movie", None, 2001),
-                                                "tt0000001")
-    assert title == "Movie (2001 film)" and note is None and fetched_at
-    calls = len(session.calls)
-    client.find(film_candidates("Movie", None, 2001), "tt0000001")
-    assert len(session.calls) == calls  # second lookup served from the cache
+    titles = ["Movie (film)", "Movie", "Other"]
+    found = client.imdb_pages(titles, "title")
+    assert found == {"Movie (film)": ("Movie (2001 film)", {"tt0000001"}),
+                     "Movie": None, "Other": None}
+    client.imdb_pages(titles, "title")
+    assert session.calls == 1  # the second lookup is served from the cache
 
-    title, page, _, note = client.find(film_candidates("Movie", None, 2001), "tt9999999")
-    assert title is None and "no English Wikipedia page linking to tt9999999" in note
+
+def test_match_keeps_first_page_linking_to_the_id():
+    found = {"A (film)": ("A (film)", {"tt2"}), "A": ("A", {"tt1"})}
+    out = match({"tt1": ["A (film)", "A"], "tt9": ["B"], "tt2": ["A (film)"]},
+                {"tt1": "tt1", "tt9": "tt9", "tt2": "tt2"}, found)
+    assert out["tt1"] == ("A", None)
+    assert out["tt2"] == ("A (film)", None)
+    assert out["tt9"][0] is None and "no English Wikipedia page found" in out["tt9"][1]
+    out = match({"tt3": ["A"]}, {"tt3": "tt3"}, found)
+    assert "no English Wikipedia page linking to tt3" in out["tt3"][1]
 
 
 def test_build_cleans_and_imposes_schema(spark):
@@ -152,28 +177,3 @@ def test_multilingual_actors(spark):
         "n1", ["English", "French", "Japanese"], 3)
     assert row.successful_films == 3
     assert actors.where(F.col("language_count") >= 2).count() == 1
-
-
-def test_collect_film_stops_after_three_biographies(tmp_path):
-    import threading
-
-    from imdb_project.enrichment import collect
-
-    class Client:
-        looked_up = []
-
-        def find(self, candidates, imdb_id):
-            self.looked_up.append(imdb_id)
-            if imdb_id == "n2":
-                return None, None, None, "no English Wikipedia page found for: B"
-            return "T", {"lead": "Bio.", "plot": "Plot.", "plot_section": "Plot",
-                         "languages": ["English"]}, "2026-11-06T10:00:00+00:00", None
-
-    film = {"tconst": "t1", "primaryTitle": "M", "originalTitle": "M", "startYear": 2000,
-            "need_people": True}
-    credits = {"t1": [{"tconst": "t1", "ordering": i, "nconst": f"n{i}", "category": "actor",
-                       "primaryName": f"P{i}"} for i in range(1, 6)]}
-    people = {}
-    record = collect.collect_film(Client(), film, credits, people, threading.Lock())
-    assert record["synopsis"] == "Plot." and record["languages"] == ["English"]
-    assert sorted(people) == ["n1", "n2", "n3", "n4"]  # n2 has no page, n5 not needed
