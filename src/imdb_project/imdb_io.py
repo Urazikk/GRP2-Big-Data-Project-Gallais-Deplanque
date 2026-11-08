@@ -7,7 +7,7 @@ from pyspark.sql.types import (
     StructType,
 )
 
-from imdb_project.config import RAW_DIR
+from imdb_project.config import CLEAN_DIR, RAW_DIR
 
 
 def _schema(*fields):
@@ -66,3 +66,12 @@ def read_imdb(spark, table, raw_dir=RAW_DIR, typed=True):
     if typed:
         reader = reader.option("nullValue", "\\N")
     return reader.csv(str(raw_dir / f"{table}.tsv.gz"))
+
+
+def read_clean(spark, table, clean_dir=CLEAN_DIR):
+    """Read a cleaned table written by imdb_project.preparation.cleaning.
+
+    Tables: name_basics, title_basics, title_ratings, title_principals, title_directors,
+    title_writers, title_episode, title_akas, quarantine.
+    """
+    return spark.read.parquet(str(clean_dir / table))
