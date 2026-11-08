@@ -15,8 +15,7 @@ from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
 
 from imdb_project.config import RESULTS_DIR
-from imdb_project.exploration.common import to_markdown
-from imdb_project.imdb_io import read_imdb
+from imdb_project.exploration.common import to_markdown, read_table
 from imdb_project.spark_session import get_spark
 
 SERIES_TYPES = ["tvSeries", "tvMiniSeries"]
@@ -81,9 +80,9 @@ def worst_last_best_first(series: DataFrame, episodes: DataFrame, ratings: DataF
 
 def main():
     spark = get_spark("imdb-series")
-    basics = read_imdb(spark, "title.basics")
-    episodes = read_imdb(spark, "title.episode").cache()
-    ratings = read_imdb(spark, "title.ratings")
+    basics = read_table(spark, "title.basics")
+    episodes = read_table(spark, "title.episode").cache()
+    ratings = read_table(spark, "title.ratings")
     series = long_series(basics, episodes).cache()
     result = (
         worst_last_best_first(series, episodes, ratings)
@@ -96,8 +95,10 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     (out / "series_worst_last_best_first.md").write_text(to_markdown(result))
     result.show(50, truncate=False)
-    print(f"{result.count()} series out of {series.count()} with "
-          f">= {MIN_LONG_SEASONS} seasons of >= {MIN_EPISODES} episodes")
+    summary_line = (f"Series found: {result.count()} out of {series.count()} series with at "
+                    f"least {MIN_LONG_SEASONS} seasons of {MIN_EPISODES} episodes or more.")
+    (out / "series_summary.txt").write_text(summary_line + "\n")
+    print(summary_line)
     spark.stop()
 
 

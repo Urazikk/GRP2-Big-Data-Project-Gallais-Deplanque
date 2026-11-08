@@ -9,8 +9,7 @@ from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
 
 from imdb_project.config import RESULTS_DIR
-from imdb_project.exploration.common import feature_films, to_markdown
-from imdb_project.imdb_io import read_imdb
+from imdb_project.exploration.common import feature_films, to_markdown, read_table
 from imdb_project.spark_session import get_spark
 
 HIGH_RATING = 8.0
@@ -65,10 +64,10 @@ def one_hit_directors(directed: DataFrame, high: float = HIGH_RATING,
 
 def main():
     spark = get_spark("imdb-directors")
-    films = feature_films(read_imdb(spark, "title.basics"))
-    directed = directed_films(films, read_imdb(spark, "title.crew"),
-                              read_imdb(spark, "title.ratings"))
-    names = read_imdb(spark, "name.basics").select("nconst", "primaryName")
+    films = feature_films(read_table(spark, "title.basics"))
+    directed = directed_films(films, read_table(spark, "title.crew"),
+                              read_table(spark, "title.ratings"))
+    names = read_table(spark, "name.basics").select("nconst", "primaryName")
     result = (
         one_hit_directors(directed).join(names, "nconst", "left")
         .select("nconst", "primaryName", "other_films", "others_avg",
