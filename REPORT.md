@@ -556,11 +556,296 @@ Multi-role films against single-role films, per combination (people with both ki
 | Umberto Lenzi | direct+write | 36 | 24 | 5.47 | 5.44 | 0.04 |
 | Lucio Fulci | act+direct+write | 35 | 29 | 5.85 | 5.98 | -0.13 |
 
+#### Actors and actresses successful in films of several languages
+
+The original language of a film is the first language of its English Wikipedia infobox
+(collected by the enrichment step). Success: rating >= 7.0 and votes >= 10000.
+
+| successful_films | with_language |
+|---|---|
+| 4963 | 4789 |
+
+Actors per number of original languages among their successful films:
+
+| language_count | count |
+|---|---|
+| 1 | 26433 |
+| 2 | 888 |
+| 3 | 112 |
+| 4 | 11 |
+| 5 | 2 |
+
+Most frequent original languages of successful films:
+
+| language | count |
+|---|---|
+| English | 3008 |
+| Hindi | 300 |
+| French | 255 |
+| Japanese | 170 |
+| Spanish | 97 |
+| German | 90 |
+| Italian | 87 |
+| Tamil | 87 |
+| Turkish | 74 |
+| Korean | 64 |
+| Telugu | 45 |
+| Russian | 42 |
+| Malayalam | 42 |
+| Cantonese | 41 |
+| Swedish | 41 |
+
+Actors with successful films in three languages or more:
+
+| primaryName | language_count | successful_films | languages |
+|---|---|---|---|
+| Bruno Ganz | 5 | 10 | English, German, Greek, Italian, Norwegian |
+| Christian Berkel | 5 | 7 | Danish, Dutch, English, French, German |
+| Prakash Raj | 4 | 26 | Hindi, Kannada, Tamil, Telugu |
+| Max von Sydow | 4 | 17 | English, French, Scanian, Swedish |
+| Om Puri | 4 | 12 | English, Hindi, Tamil, Telugu |
+| Donnie Yen | 4 | 10 | Cantonese, Chinese (dialect: Cantonese, English, Mandarin |
+| Ashish Vidyarthi | 4 | 8 | Hindi, Malayalam, Tamil, Telugu |
+| Dulquer Salmaan | 4 | 8 | Hindi, Malayalam, Tamil, Telugu |
+| Julie Delpy | 4 | 8 | English, French, German, Polish |
+| Monica Bellucci | 4 | 7 | Aramaic, English, French, Italian |
+| Ziyi Zhang | 4 | 7 | Cantonese, English, Korean, Mandarin |
+| Irene Papas | 4 | 6 | Arabic, English, French, Italian |
+| Tadanobu Asano | 4 | 6 | English, Japanese, Mongolian, Thai |
+| Amitabh Bachchan | 3 | 28 | English, Hindi, Telugu |
+| Nassar | 3 | 25 | Hindi, Tamil, Telugu |
+| Anupam Kher | 3 | 21 | English, Hindi, Telugu |
+| Jackie Chan | 3 | 17 | Cantonese, English, Mandarin |
+| Nawazuddin Siddiqui | 3 | 15 | English, Hindi, Tamil |
+| Saurabh Shukla | 3 | 13 | English, Hindi, Tamil |
+| Tony Leung Chiu-wai | 3 | 13 | Cantonese, English, Mandarin |
+| Catherine Deneuve | 3 | 12 | English, French, Spanish |
+| Tabu | 3 | 12 | English, Hindi, Telugu |
+| Fahadh Faasil | 3 | 11 | Malayalam, Tamil, Telugu |
+| Maggie Cheung | 3 | 11 | Cantonese, English, Mandarin |
+| Michelle Yeoh | 3 | 11 | Cantonese, English, Mandarin |
+| Ron Perlman | 3 | 11 | English, French, Invented language |
+| Anthony Quinn | 3 | 10 | Arabic, English, Italian |
+| Daniel Brühl | 3 | 10 | English, French, German |
+| Ingrid Bergman | 3 | 10 | English, English (production), Swedish |
+| Jeanne Moreau | 3 | 10 | English, French, Italian |
+| Michel Piccoli | 3 | 10 | English, French, Italian |
+| Amrish Puri | 3 | 9 | English, Hindi, Tamil |
+| Charles Chaplin | 3 | 9 | English, Sound (part-talkie), Synchronized Sound |
+| Kamal Haasan | 3 | 9 | Hindi, Tamil, Telugu |
+| Diane Kruger | 3 | 8 | English, French, German |
+| Erland Josephson | 3 | 8 | English, Russian, Swedish |
+| Jean Reno | 3 | 8 | English, French, Italian |
+| Jet Li | 3 | 8 | Cantonese, English, Mandarin |
+| Jim Caviezel | 3 | 8 | Aramaic, English, Persian |
+| Mohanlal | 3 | 8 | Hindi, Malayalam, Tamil |
+| Mélanie Laurent | 3 | 8 | English, French, Maghrebi Arabic |
+| Richard Harris | 3 | 8 | English, Italian, Russian |
+| Thomas Kretschmann | 3 | 8 | English, German, Korean |
+| Yun-Fat Chow | 3 | 8 | Cantonese, English, Mandarin |
+| Ali Suliman | 3 | 7 | Arabic, English, Palestinian Arabic |
+| Alia Bhatt | 3 | 7 | Hindi, Punjabi, Telugu |
+| Golshifteh Farahani | 3 | 7 | English, French, Persian |
+| Isabelle Adjani | 3 | 7 | English, French, German |
+| Kishore Kumar G. | 3 | 7 | Kannada, Malayalam, Tamil |
+| Lee Byung-hun | 3 | 7 | English, Filipino, Korean |
+| Mathieu Amalric | 3 | 7 | American Sign Language, English, French |
+| Rutger Hauer | 3 | 7 | Dutch, English, German |
+| Taapsee Pannu | 3 | 7 | Hindi, Tamil, Telugu |
+| Trisha Krishnan | 3 | 7 | Malayalam, Tamil, Telugu |
+| Atul Kulkarni | 3 | 6 | Hindi, Tamil, Telugu |
+| Chhaya Kadam | 3 | 6 | Hindi, Malayalam, Marathi |
+| Kenneth Branagh | 3 | 6 | Early Modern English, English, Walmajarri |
+| Matthias Schoenaerts | 3 | 6 | Dutch, English, French |
+| Pierfrancesco Favino | 3 | 6 | English, French, Italian |
+| Rao Ramesh | 3 | 6 | Kannada, Tamil, Telugu |
+| Sandra Hüller | 3 | 6 | English, French, German |
+| Shriya Saran | 3 | 6 | Hindi, Tamil, Telugu |
+| Valeria Golino | 3 | 6 | English, French, Italian |
+| Fernando Rey | 3 | 5 | English, French, Spanish |
+| Féodor Atkine | 3 | 5 | English, French, Spanish |
+| Ileana D'Cruz | 3 | 5 | Hindi, Tamil, Telugu |
+| Kajal Aggarwal | 3 | 5 | Hindi, Tamil, Telugu |
+| Klaus Kinski | 3 | 5 | English, German, Italian |
+| Pradeep Singh Rawat | 3 | 5 | Hindi, Tamil, Telugu |
+| Rodrigo Santoro | 3 | 5 | English, Portuguese, Spanish |
+| Roman Polanski | 3 | 5 | English, French, Polish |
+| Sai Kumar | 3 | 5 | Kannada, Tamil, Telugu |
+| Sofie Gråbøl | 3 | 5 | Danish, French, Scanian |
+| Tinnu Anand | 3 | 5 | Hindi, Tamil, Telugu |
+| Aksel Hennie | 3 | 4 | Danish, English, Norwegian |
+| Alida Valli | 3 | 4 | English, French, Italian |
+| Benno Fürmann | 3 | 4 | French, German, Polish |
+| Branka Katic | 3 | 4 | German, Romani, Serbian |
+| Doug Jones | 3 | 4 | American Sign Language, English, Spanish |
+| Eiji Okada | 3 | 4 | English, French, Japanese |
+| Florian Lukas | 3 | 4 | English, German, Hindi |
+| Francisco Rabal | 3 | 4 | English, Italian, Spanish |
+| Gian Maria Volontè | 3 | 4 | English, French, Italian |
+| Hanns Zischler | 3 | 4 | Danish, English, German |
+| Jayaram | 3 | 4 | Kannada, Tamil, Telugu |
+| Joanna Kulig | 3 | 4 | English, French, Polish |
+| Johan Heldenbergh | 3 | 4 | Bosnian, Dutch, English |
+| Julia Ormond | 3 | 4 | English, Russian, Spanish |
+| Margarita Lozano | 3 | 4 | English, French, Spanish |
+| Michel Blanc | 3 | 4 | English, French, Italian |
+| Michel Simon | 3 | 4 | English, French, French (intertitles) |
+| Nathan Jones | 3 | 4 | English, Mandarin, Thai |
+| Nikolaj Coster-Waldau | 3 | 4 | Danish, English, Norwegian |
+| Predrag Lakovic | 3 | 4 | Romani, Serbian, Serbo-Croatian |
+| Riccardo Scamarcio | 3 | 4 | English, French, Italian |
+| Sergi López | 3 | 4 | French, Italian, Spanish |
+| Sobhita Dhulipala | 3 | 4 | Hindi, Malayalam, Telugu |
+| Stéphane Audran | 3 | 4 | Danish, English, French |
+| Ángela Molina | 3 | 4 | French, Italian, Spanish |
+| Aitana Sánchez-Gijón | 3 | 3 | English, Italian, Spanish |
+| Al Ernest Garcia | 3 | 3 | English, Sound (part-talkie), Synchronized Sound |
+| Andréa Ferréol | 3 | 3 | French, German, Italian |
+| Anupama Parameswaran | 3 | 3 | Malayalam, Tamil, Telugu |
+| Claudia Gerini | 3 | 3 | Aramaic, English, Italian |
+| Daniel Olbrychski | 3 | 3 | English, German, Russian |
+| Danny Denzongpa | 3 | 3 | English, Hindi, Tamil |
+| Franco Nero | 3 | 3 | English, German, Spanish |
+| Gustaf Skarsgård | 3 | 3 | English, Norwegian, Swedish |
+| Hichem Yacoubi | 3 | 3 | French, Hassaniya Arabic, Wolof |
+| Homayoun Ershadi | 3 | 3 | Dari, English, Persian |
+| Hristo Shopov | 3 | 3 | Aramaic, English, Serbian |
+| Jean Martin | 3 | 3 | Arabic, French, Italian |
+| José Luis de Vilallonga | 3 | 3 | English, French, Italian |
+| Karl Markovics | 3 | 3 | English, German, Norwegian |
+| Leonor Watling | 3 | 3 | English, French, Spanish |
+| Miguel Bosé | 3 | 3 | English, French, Spanish |
+| R. Sarathkumar | 3 | 3 | Kannada, Tamil, Telugu |
+| Rakul Preet Singh | 3 | 3 | Hindi, Tamil, Telugu |
+| Sai Pallavi | 3 | 3 | Malayalam, Tamil, Telugu |
+| Sebastian Koch | 3 | 3 | Dutch, English, German |
+| Sergej Trifunovic | 3 | 3 | English, Norwegian, Serbian |
+| Siddharth | 3 | 3 | Hindi, Tamil, Telugu |
+| Susanne Lothar | 3 | 3 | English, French, German |
+| Valentina Cortese | 3 | 3 | English, French, Italian |
+| Vinay Rai | 3 | 3 | Malayalam, Tamil, Telugu |
+
+50 actors with the most successful films in two languages:
+
+| primaryName | language_count | successful_films | languages |
+|---|---|---|---|
+| Robert De Niro | 2 | 34 | English, Italian |
+| Paresh Rawal | 2 | 23 | Hindi, Tamil |
+| Clint Eastwood | 2 | 22 | English, Italian |
+| Burt Lancaster | 2 | 21 | English, Italian |
+| Aamir Khan | 2 | 20 | English, Hindi |
+| Jeff Bridges | 2 | 19 | English, English/French |
+| Shah Rukh Khan | 2 | 19 | Hindi, Tamil |
+| Christian Bale | 2 | 18 | English, Mandarin |
+| Henry Fonda | 2 | 18 | English, Italian |
+| Irrfan Khan | 2 | 18 | English, Hindi |
+| Kate Winslet | 2 | 18 | Early Modern English, English |
+| Steve Buscemi | 2 | 18 | English, French |
+| Ajay Devgn | 2 | 17 | Hindi, Telugu |
+| Mads Mikkelsen | 2 | 17 | Danish, English |
+| Stellan Skarsgård | 2 | 17 | English, Norwegian |
+| Naseeruddin Shah | 2 | 16 | Hindi, Tamil |
+| Rani Mukerji | 2 | 16 | Hindi, Tamil |
+| Colin Farrell | 2 | 15 | English, Thai |
+| Sally Hawkins | 2 | 15 | American Sign Language, English |
+| Tilda Swinton | 2 | 15 | English, Italian |
+| Dennis Hopper | 2 | 14 | English, German |
+| Kristin Scott Thomas | 2 | 14 | English, French |
+| Toshirō Mifune | 2 | 14 | English, Japanese |
+| Benicio Del Toro | 2 | 13 | English, Spanish |
+| Javier Bardem | 2 | 13 | English, Spanish |
+| Madhavan | 2 | 13 | Hindi, Tamil |
+| Michael Fassbender | 2 | 13 | English, Irish |
+| Michael Stuhlbarg | 2 | 13 | American Sign Language, English |
+| Nikolaj Lie Kaas | 2 | 13 | Danish, English |
+| Antonio Banderas | 2 | 12 | English, Spanish |
+| Boman Irani | 2 | 12 | Hindi, Telugu |
+| Marion Cotillard | 2 | 12 | English, French |
+| Michael Shannon | 2 | 12 | American Sign Language, English |
+| Penélope Cruz | 2 | 12 | English, Spanish |
+| Rajkummar Rao | 2 | 12 | English, Hindi |
+| Song Kang-ho | 2 | 12 | English, Korean |
+| Djimon Hounsou | 2 | 11 | American Sign Language, English |
+| Gary Cooper | 2 | 11 | English, Sound (synchronized) |
+| Gérard Depardieu | 2 | 11 | French, Italian |
+| Hrithik Roshan | 2 | 11 | Hindi, Tamil |
+| Juliette Binoche | 2 | 11 | English, French |
+| Kareena Kapoor | 2 | 11 | Hindi, Punjabi |
+| Samantha Ruth Prabhu | 2 | 11 | Tamil, Telugu |
+| Sanjay Dutt | 2 | 11 | Hindi, Kannada |
+| Alain Delon | 2 | 10 | French, Italian |
+| Cem Yılmaz | 2 | 10 | English, Turkish |
+| Charlotte Rampling | 2 | 10 | English, French |
+| Cillian Murphy | 2 | 10 | American Sign Language, English |
+| James Coburn | 2 | 10 | English, Italian |
+| Jason Clarke | 2 | 10 | English, Walmajarri |
+
+
 ### Methodological explanation
 
 ## Data enrichment
 
 ### Results
+
+Scope: top 10 feature films per genre and year (1980-2025) by IMDb votes, 7 184 films.
+
+Coverage:
+
+| films | with_synopsis | with_languages | with_3_biographies | avg_biographies |
+|---|---|---|---|---|
+| 7184 | 5824 | 6065 | 5684 | 3.24 |
+
+Films without a synopsis, by note written by the collector:
+
+| synopsis_note | count |
+|---|---|
+| no English Wikipedia page found | 762 |
+| page found but it has no plot or synopsis section | 363 |
+| no English Wikipedia page linking | 235 |
+
+Schema of `data/enriched/films`:
+
+```
+root
+ |-- tconst: string (nullable = true)
+ |-- title: string (nullable = true)
+ |-- year: integer (nullable = true)
+ |-- runtime_minutes: integer (nullable = true)
+ |-- genres: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+ |-- top_genres: array (nullable = true)
+ |    |-- element: string (containsNull = true)
+ |-- average_rating: double (nullable = true)
+ |-- num_votes: integer (nullable = true)
+ |-- synopsis: string (nullable = true)
+ |-- synopsis_source_url: string (nullable = true)
+ |-- synopsis_retrieved_at: timestamp (nullable = true)
+ |-- synopsis_note: string (nullable = true)
+ |-- original_languages: array (nullable = false)
+ |    |-- element: string (containsNull = true)
+ |-- principals: array (nullable = false)
+ |    |-- element: struct (containsNull = true)
+ |    |    |-- ordering: integer (nullable = true)
+ |    |    |-- nconst: string (nullable = true)
+ |    |    |-- name: string (nullable = true)
+ |    |    |-- category: string (nullable = true)
+ |    |    |-- biography: string (nullable = true)
+ |    |    |-- source_url: string (nullable = true)
+ |    |    |-- retrieved_at: timestamp (nullable = true)
+ |    |    |-- note: string (nullable = true)
+ |-- biographies_found: integer (nullable = false)
+```
+
+Sample (the five most voted films with a synopsis and three biographies):
+
+| tconst | title | year | top_genres | synopsis | synopsis_source_url | original_languages | principals |
+|---|---|---|---|---|---|---|---|
+| tt0111161 | The Shawshank Redemption | 1994 | Drama | In 1947, Portland, Maine, banker Andy Dufresne arrives at Shawshank State Prison to serve two consecutive life sentences for murdering his wife and her lover. H... | https://en.wikipedia.org/wiki/The_Shawshank_Redemption | English | Tim Robbins (bio); Morgan Freeman (bio); Bob Gunton (bio); William Sadler (bio); Clancy Brown (bio) |
+| tt0468569 | The Dark Knight | 2008 | Crime, Thriller | A gang of masked criminals rob a mafia-owned bank in Gotham City, betraying and killing each other until the sole survivor, the Joker, reveals himself as the ma... | https://en.wikipedia.org/wiki/The_Dark_Knight | English | Christian Bale (bio); Heath Ledger (bio); Aaron Eckhart (bio); Michael Caine (bio); Maggie Gyllenhaal (bio) |
+| tt1375666 | Inception | 2010 | Adventure, Sci-Fi, Thriller | Dom Cobb and Arthur are professional thieves who perform corporate espionage using experimental dream-sharing technology to infiltrate their targets' subconscio... | https://en.wikipedia.org/wiki/Inception | English | Leonardo DiCaprio (bio); Joseph Gordon-Levitt (bio); Elliot Page (bio); Ken Watanabe (bio); Tom Hardy (bio) |
+| tt0137523 | Fight Club | 1999 | Crime, Drama, Thriller | The unnamed Narrator works an office job as an insurance claims adjuster. He sees a doctor for his disordered sleep, complaining that he falls asleep unexpected... | https://en.wikipedia.org/wiki/Fight_Club | English | Brad Pitt (bio); Edward Norton (bio); Meat Loaf (bio) |
+| tt0816692 | Interstellar | 2014 | Adventure, Sci-Fi | In the near future, humanity faces extinction due to dust storms and widespread crop blights. Joseph Cooper, a widowed former NASA test pilot, works as a farmer... | https://en.wikipedia.org/wiki/Interstellar_(film) | English | Matthew McConaughey (bio); Anne Hathaway (bio); Jessica Chastain (bio); Mackenzie Foy (bio); Ellen Burstyn (bio) |
+
 
 ### Methodological explanation
 
