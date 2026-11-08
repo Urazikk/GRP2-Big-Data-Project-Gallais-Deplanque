@@ -8,6 +8,7 @@
 | nm0588340 | Frank Miller | 2 | 5.65 | Sin City | 2005 | 8.0 | 825453 |
 | nm0132709 | Martin Campbell | 20 | 5.62 | Casino Royale | 2006 | 8.0 | 757974 |
 | nm0000814 | John G. Avildsen | 21 | 5.78 | Rocky | 1976 | 8.1 | 706136 |
+| nm0000436 | Curtis Hanson | 15 | 6.0 | L.A. Confidential | 1997 | 8.2 | 666262 |
 | nm0853238 | Tate Taylor | 6 | 5.88 | The Help | 2011 | 8.1 | 534754 |
 | nm0936374 | Kirk Wise | 3 | 5.43 | Beauty and the Beast | 1991 | 8.0 | 511190 |
 | nm0204628 | Garth Davis | 2 | 5.65 | Lion | 2016 | 8.0 | 270125 |
@@ -16,7 +17,7 @@
 | nm0000671 | Billy Bob Thornton | 3 | 5.93 | Sling Blade | 1996 | 8.0 | 105152 |
 | nm1084488 | Umesh Shukla | 6 | 5.57 | OMG: Oh My God! | 2012 | 8.1 | 72394 |
 | nm2134474 | Vikas Bahl | 6 | 5.83 | Queen | 2013 | 8.1 | 71987 |
-| nm1025280 | Anubhav Sinha | 12 | 5.77 | Article 15 | 2019 | 8.1 | 42123 |
+| nm1025280 | Anubhav Sinha | 12 | 5.78 | Article 15 | 2019 | 8.1 | 42123 |
 | nm1164861 | Seth Gordon | 7 | 5.7 | The King of Kong: A Fistful of Quarters | 2007 | 8.0 | 38782 |
 | nm6134590 | Apoorv Singh Karki | 2 | 4.2 | Sirf Ek Bandaa Kaafi Hai | 2023 | 8.0 | 31497 |
 | nm0559877 | John Mathew Matthan | 2 | 5.75 | Sarfarosh | 1999 | 8.1 | 29122 |
@@ -33,7 +34,7 @@
 | nm0787453 | Kundan Shah | 7 | 5.21 | Jaane Bhi Do Yaaro | 1983 | 8.3 | 18180 |
 | nm0700872 | Puri Jagannadh | 33 | 5.52 | Pokiri | 2006 | 8.0 | 17290 |
 | nm4093647 | Anup Bhandari | 2 | 6.0 | RangiTaranga | 2015 | 8.1 | 16196 |
-| nm0471452 | Suresh Krishna | 24 | 5.97 | Baasha | 1995 | 8.2 | 13924 |
+| nm0471452 | Suresh Krishna | 24 | 5.98 | Baasha | 1995 | 8.2 | 13924 |
 | nm5650589 | Nalan Kumarasamy | 4 | 5.65 | Soodhu Kavvum | 2013 | 8.2 | 13753 |
 | nm0149134 | Sinan Çetin | 10 | 4.89 | Abbas in Flower | 1982 | 8.0 | 12161 |
 | nm0348015 | Gunasekhar | 10 | 5.57 | Okkadu | 2003 | 8.0 | 11840 |
@@ -62,7 +63,6 @@
 | nm6405547 | Yuvaraj Dhayalan | 2 | 5.0 | Irugapatru | 2023 | 8.1 | 3719 |
 | nm2569785 | Balasekaran | 3 | 5.3 | Love Today | 1997 | 8.5 | 3557 |
 | nm0536705 | Ananth Mahadevan | 11 | 5.6 | Phule | 2025 | 8.1 | 3250 |
-| nm1459905 | Raffi | 9 | 6.0 | Punjabi House | 1998 | 8.1 | 3214 |
 | nm0002239 | Prince | 2 | 4.9 | Sign 'o' the Times | 1987 | 8.0 | 3049 |
 | nm0536299 | Albert Magnoli | 5 | 5.32 | Sign 'o' the Times | 1987 | 8.0 | 3049 |
 | nm0389514 | David Hogan | 2 | 4.6 | Sign 'o' the Times | 1987 | 8.0 | 3049 |

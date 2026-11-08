@@ -28,5 +28,5 @@
 | Pupi Avati | direct+write | 38 | 6 | 6.23 | 5.63 | 0.6 |
 | Sreenivasan | act+write | 37 | 70 | 7.23 | 6.46 | 0.77 |
 | Joseph W. Sarno | direct+write | 36 | 1 | 5.32 | 6.3 | -0.98 |
-| Umberto Lenzi | direct+write | 36 | 24 | 5.47 | 5.44 | 0.04 |
+| Umberto Lenzi | direct+write | 36 | 24 | 5.48 | 5.44 | 0.04 |
 | Lucio Fulci | act+direct+write | 35 | 29 | 5.85 | 5.98 | -0.13 |

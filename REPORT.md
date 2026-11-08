@@ -109,63 +109,63 @@ Quality flags kept in the `dq_flags` column, per table:
 
 #### Runtime notably different from the genre average
 
-Outliers found: 37 570 (film, genre) pairs, 27 706 distinct films. Full list: `data/exploration/runtime_outliers.csv`.
+Outliers found: 37432 (film, genre) pairs, 27603 distinct films. Full list: `data/exploration/runtime_outliers.csv`.
 
 Statistics, fences and outliers per genre:
 
 | genre | films | mean | std | median | low_fence | high_fence | shorter | longer | outlier_pct |
 |---|---|---|---|---|---|---|---|---|---|
-| Drama | 196514 | 96.1 | 37.1 | 93 | 53.4 | 162.5 | 8078 | 3040 | 5.66 |
-| Documentary | 115951 | 78.1 | 223.6 | 74 | 28.7 | 178.6 | 0 | 942 | 0.81 |
-| Comedy | 96535 | 93.1 | 28.7 | 91 | 59.1 | 141.5 | 4536 | 2858 | 7.66 |
-| Romance | 42411 | 99.1 | 25.1 | 95 | 57.7 | 161.9 | 1169 | 723 | 4.46 |
-| Action | 40323 | 101.2 | 33.7 | 94 | 55.5 | 173.2 | 1224 | 661 | 4.67 |
-| Crime | 34587 | 95.5 | 25.6 | 92 | 58.3 | 149.4 | 1306 | 1039 | 6.78 |
-| Thriller | 34044 | 96.1 | 21.8 | 93 | 61.9 | 144.2 | 1425 | 1040 | 7.24 |
-| Horror | 30693 | 88.6 | 22.3 | 88 | 59.0 | 128.6 | 1605 | 904 | 8.17 |
-| Adventure | 24039 | 93.0 | 30.6 | 90 | 54.6 | 146.0 | 1040 | 821 | 7.74 |
-| Mystery | 16461 | 94.3 | 50.4 | 92 | 54.9 | 155.0 | 588 | 217 | 4.89 |
+| Drama | 196482 | 95.8 | 26.0 | 93 | 53.4 | 162.5 | 8078 | 3008 | 5.64 |
+| Documentary | 115904 | 76.3 | 27.1 | 74 | 28.7 | 178.6 | 0 | 895 | 0.77 |
+| Comedy | 96529 | 93.0 | 21.4 | 91 | 59.1 | 141.5 | 4536 | 2852 | 7.65 |
+| Romance | 42410 | 99.1 | 24.9 | 95 | 57.7 | 161.9 | 1169 | 722 | 4.46 |
+| Action | 40318 | 101.0 | 29.7 | 94 | 55.5 | 173.2 | 1224 | 656 | 4.66 |
+| Crime | 34583 | 95.4 | 24.5 | 92 | 58.3 | 149.4 | 1306 | 1035 | 6.77 |
+| Thriller | 34043 | 96.1 | 21.6 | 93 | 61.9 | 144.2 | 1425 | 1039 | 7.24 |
+| Horror | 30690 | 88.5 | 20.4 | 88 | 59.0 | 128.6 | 1605 | 901 | 8.17 |
+| Adventure | 24038 | 92.9 | 29.3 | 90 | 54.6 | 146.0 | 1040 | 820 | 7.74 |
+| Mystery | 16457 | 93.8 | 23.8 | 92 | 54.9 | 155.0 | 588 | 213 | 4.87 |
 | Biography | 16092 | 89.2 | 29.4 | 88 | 37.3 | 192.4 | 0 | 103 | 0.64 |
-| Family | 15932 | 92.3 | 32.7 | 90 | 50.5 | 155.5 | 522 | 330 | 5.35 |
-| Music | 13948 | 88.4 | 57.7 | 87 | 38.1 | 178.3 | 0 | 173 | 1.24 |
-| History | 13618 | 94.3 | 52.9 | 90 | 39.2 | 198.4 | 0 | 154 | 1.13 |
-| Fantasy | 12710 | 94.0 | 31.9 | 91 | 54.0 | 154.2 | 495 | 285 | 6.14 |
-| Sci-Fi | 9803 | 91.2 | 30.5 | 90 | 55.5 | 142.4 | 498 | 233 | 7.46 |
-| Musical | 8494 | 100.0 | 33.3 | 94 | 52.1 | 174.8 | 191 | 148 | 3.99 |
-| Animation | 8326 | 82.7 | 26.8 | 81 | 42.5 | 148.7 | 4 | 125 | 1.55 |
-| War | 8043 | 94.8 | 31.3 | 92 | 53.2 | 157.9 | 433 | 218 | 8.09 |
-| Sport | 6805 | 89.0 | 37.4 | 90 | 42.5 | 167.2 | 5 | 84 | 1.31 |
+| Family | 15930 | 92.1 | 25.5 | 90 | 50.5 | 155.5 | 522 | 328 | 5.34 |
+| Music | 13943 | 87.7 | 29.3 | 87 | 38.1 | 178.3 | 0 | 168 | 1.2 |
+| History | 13610 | 93.5 | 35.1 | 90 | 39.2 | 198.4 | 0 | 146 | 1.07 |
+| Fantasy | 12707 | 93.7 | 25.5 | 91 | 54.0 | 154.2 | 495 | 282 | 6.11 |
+| Sci-Fi | 9800 | 91.0 | 25.9 | 90 | 55.5 | 142.4 | 498 | 230 | 7.43 |
+| Musical | 8492 | 99.8 | 28.9 | 94 | 52.1 | 174.8 | 191 | 146 | 3.97 |
+| Animation | 8325 | 82.6 | 25.5 | 81 | 42.5 | 148.7 | 4 | 124 | 1.54 |
+| War | 8040 | 94.5 | 28.3 | 92 | 53.2 | 157.9 | 433 | 215 | 8.06 |
+| Sport | 6802 | 88.4 | 27.6 | 90 | 42.5 | 167.2 | 5 | 81 | 1.26 |
 | Western | 6374 | 76.5 | 28.7 | 70 | 28.7 | 178.6 | 0 | 81 | 1.27 |
-| Adult | 6118 | 79.5 | 30.1 | 77 | 45.2 | 124.2 | 15 | 224 | 3.91 |
+| Adult | 6115 | 79.0 | 22.4 | 77 | 45.2 | 124.2 | 15 | 221 | 3.86 |
 | News | 1408 | 77.6 | 32.2 | 75 | 33.8 | 156.3 | 0 | 22 | 1.56 |
 | Film-Noir | 876 | 81.9 | 13.8 | 82 | 48.9 | 132.0 | 0 | 2 | 0.23 |
-| Reality-TV | 298 | 92.2 | 85.1 | 90 | 34.8 | 176.4 | 0 | 9 | 3.02 |
+| Reality-TV | 297 | 87.7 | 33.3 | 90 | 34.8 | 176.4 | 0 | 8 | 2.69 |
 | Talk-Show | 104 | 87.6 | 33.6 | 79 | 23.5 | 285.6 | 0 | 0 | 0.0 |
 
 20 largest gaps to the genre mean:
 
 | genre | tconst | primaryTitle | startYear | runtimeMinutes | mean | gap_to_mean | direction |
 |---|---|---|---|---|---|---|---|
-| Documentary | tt8273150 | Logistics | 2012 | 51420 | 78.1 | 51341.9 | longer |
-| Documentary | tt3854496 | Ambiancé | 2020 | 43200 | 78.1 | 43121.9 | longer |
-| Documentary | tt12277054 | Carnets Filmés (Liste Complète) | 2019 | 28643 | 78.1 | 28564.9 | longer |
-| Documentary | tt2659636 | Modern Times Forever | 2011 | 14400 | 78.1 | 14321.9 | longer |
-| Documentary | tt2355497 | Beijing 2003 | 2004 | 9000 | 78.1 | 8921.9 | longer |
-| Documentary | tt5068890 | Hunger! | 2015 | 6000 | 78.1 | 5921.9 | longer |
-| Drama | tt5068890 | Hunger! | 2015 | 6000 | 96.1 | 5903.9 | longer |
-| Drama | tt1806963 | Matrjoschka | 2006 | 5700 | 96.1 | 5603.9 | longer |
-| Comedy | tt5136218 | London EC1 | 2015 | 5460 | 93.1 | 5366.9 | longer |
-| Mystery | tt5136218 | London EC1 | 2015 | 5460 | 94.3 | 5365.7 | longer |
-| Drama | tt5136218 | London EC1 | 2015 | 5460 | 96.1 | 5363.9 | longer |
-| Documentary | tt0284020 | The Cure for Insomnia | 1987 | 5220 | 78.1 | 5141.9 | longer |
-| Music | tt0284020 | The Cure for Insomnia | 1987 | 5220 | 88.4 | 5131.6 | longer |
-| Drama | tt3837350 | A 2nd generation film | 2013 | 3077 | 96.1 | 2980.9 | longer |
-| Documentary | tt5135246 | Saynatakuna: Masks | 2013 | 2905 | 78.1 | 2826.9 | longer |
-| History | tt5135246 | Saynatakuna: Masks | 2013 | 2905 | 94.3 | 2810.7 | longer |
-| Documentary | tt0342707 | The Longest Most Meaningless Movie in the World | 1970 | 2880 | 78.1 | 2801.9 | longer |
-| History | tt0342707 | The Longest Most Meaningless Movie in the World | 1970 | 2880 | 94.3 | 2785.7 | longer |
-| Drama | tt0342707 | The Longest Most Meaningless Movie in the World | 1970 | 2880 | 96.1 | 2783.9 | longer |
-| Documentary | tt1866307 | World Peace & Prayer Day | 2011 | 2400 | 78.1 | 2321.9 | longer |
+| Documentary | tt29745298 | Orinoco Croc, a long journey to Denmark. | 2023 | 600 | 76.3 | 523.7 | longer |
+| Documentary | tt31631137 | The History Channel Presents: The Revolution | 2006 | 600 | 76.3 | 523.7 | longer |
+| Documentary | tt8842760 | Old and rare forms of craftsmanship |  | 600 | 76.3 | 523.7 | longer |
+| Documentary | tt33776835 | Ulysses | 2024 | 587 | 76.3 | 510.7 | longer |
+| Adventure | tt39392193 | The Longest Movie on Earth!?: The Narwallus Movie! | 2016 | 600 | 92.9 | 507.1 | longer |
+| Drama | tt10798914 | Sdsdsdsdsdsds | 2019 | 600 | 95.8 | 504.2 | longer |
+| Documentary | tt30021908 | Internet Age | 2014 | 580 | 76.3 | 503.7 | longer |
+| Romance | tt39392193 | The Longest Movie on Earth!?: The Narwallus Movie! | 2016 | 600 | 99.1 | 500.9 | longer |
+| Action | tt12669540 | Marathon Wars |  | 600 | 101.0 | 499.0 | longer |
+| Action | tt39392193 | The Longest Movie on Earth!?: The Narwallus Movie! | 2016 | 600 | 101.0 | 499.0 | longer |
+| Horror | tt40792136 | Growth | 2026 | 587 | 88.5 | 498.5 | longer |
+| Sci-Fi | tt40792136 | Growth | 2026 | 587 | 91.0 | 496.0 | longer |
+| Drama | tt40792136 | Growth | 2026 | 587 | 95.8 | 491.2 | longer |
+| Documentary | tt0090015 | Shoah | 1985 | 566 | 76.3 | 489.7 | longer |
+| Drama | tt38094154 | Two-Bed | 2020 | 584 | 95.8 | 488.2 | longer |
+| Sci-Fi | tt35112545 | Planetagatik | 2024 | 579 | 91.0 | 488.0 | longer |
+| History | tt0270784 | Khleb - imya sushchestvitelnoe | 1988 | 580 | 93.5 | 486.5 | longer |
+| Drama | tt0270784 | Khleb - imya sushchestvitelnoe | 1988 | 580 | 95.8 | 484.2 | longer |
+| Adult | tt39394409 | MILF & Cougar 3-Pack | 2011 | 560 | 79.0 | 481.0 | longer |
+| Romance | tt0270784 | Khleb - imya sushchestvitelnoe | 1988 | 580 | 99.1 | 480.9 | longer |
 
 #### Top three genres per year (1980-2025)
 
@@ -239,19 +239,19 @@ Top three genres per year:
 | 2001 | 1 | Drama | 1825 | 14732568 | 7.45 |
 | 2001 | 2 | Comedy | 965 | 9508270 | 6.89 |
 | 2001 | 3 | Adventure | 166 | 9249984 | 7.68 |
-| 2002 | 1 | Drama | 1916 | 17055791 | 7.44 |
+| 2002 | 1 | Drama | 1915 | 17055791 | 7.44 |
 | 2002 | 2 | Adventure | 171 | 8689925 | 7.26 |
 | 2002 | 3 | Action | 477 | 8392137 | 6.73 |
 | 2003 | 1 | Drama | 2018 | 13250949 | 7.5 |
 | 2003 | 2 | Action | 471 | 11706196 | 7.01 |
 | 2003 | 3 | Comedy | 1142 | 10758236 | 6.74 |
-| 2004 | 1 | Drama | 2100 | 16470418 | 7.28 |
-| 2004 | 2 | Action | 497 | 11515167 | 7.0 |
+| 2004 | 1 | Drama | 2099 | 16469801 | 7.28 |
+| 2004 | 2 | Action | 496 | 11515133 | 7.0 |
 | 2004 | 3 | Comedy | 1160 | 10944579 | 6.65 |
 | 2005 | 1 | Drama | 2365 | 13686084 | 7.06 |
 | 2005 | 2 | Comedy | 1289 | 10189642 | 6.46 |
 | 2005 | 3 | Action | 453 | 9056978 | 6.75 |
-| 2006 | 1 | Drama | 2602 | 20879930 | 7.42 |
+| 2006 | 1 | Drama | 2601 | 20879881 | 7.42 |
 | 2006 | 2 | Comedy | 1433 | 11771538 | 6.53 |
 | 2006 | 3 | Thriller | 464 | 8662615 | 7.21 |
 | 2007 | 1 | Drama | 2800 | 18531545 | 7.24 |
@@ -263,54 +263,54 @@ Top three genres per year:
 | 2009 | 1 | Drama | 3695 | 17585793 | 7.15 |
 | 2009 | 2 | Comedy | 1948 | 13458216 | 6.87 |
 | 2009 | 3 | Action | 699 | 12114159 | 6.85 |
-| 2010 | 1 | Drama | 4156 | 17550116 | 6.93 |
+| 2010 | 1 | Drama | 4155 | 17549658 | 6.93 |
 | 2010 | 2 | Action | 853 | 13331320 | 6.67 |
 | 2010 | 3 | Adventure | 504 | 13175423 | 7.34 |
 | 2011 | 1 | Drama | 4337 | 20740529 | 7.04 |
 | 2011 | 2 | Action | 856 | 17142025 | 6.77 |
-| 2011 | 3 | Comedy | 2201 | 13977132 | 6.64 |
-| 2012 | 1 | Drama | 4644 | 20110724 | 7.1 |
+| 2011 | 3 | Comedy | 2200 | 13977132 | 6.64 |
+| 2012 | 1 | Drama | 4642 | 20110716 | 7.1 |
 | 2012 | 2 | Action | 859 | 14889760 | 6.84 |
 | 2012 | 3 | Comedy | 2344 | 12505113 | 6.65 |
-| 2013 | 1 | Drama | 5151 | 21976633 | 7.04 |
+| 2013 | 1 | Drama | 5149 | 21976633 | 7.04 |
 | 2013 | 2 | Action | 966 | 17156769 | 6.67 |
 | 2013 | 3 | Comedy | 2547 | 14798111 | 6.79 |
 | 2014 | 1 | Drama | 5365 | 24509209 | 7.1 |
 | 2014 | 2 | Action | 1017 | 20929010 | 6.92 |
 | 2014 | 3 | Adventure | 789 | 17732053 | 7.29 |
-| 2015 | 1 | Drama | 5439 | 20482176 | 7.01 |
+| 2015 | 1 | Drama | 5435 | 20481980 | 7.01 |
 | 2015 | 2 | Action | 1046 | 15554234 | 6.91 |
 | 2015 | 3 | Adventure | 696 | 14157413 | 7.02 |
-| 2016 | 1 | Drama | 5458 | 20877518 | 7.07 |
+| 2016 | 1 | Drama | 5457 | 20877518 | 7.07 |
 | 2016 | 2 | Action | 1123 | 17198675 | 6.81 |
 | 2016 | 3 | Adventure | 698 | 12359102 | 6.72 |
 | 2017 | 1 | Drama | 5572 | 20794270 | 7.0 |
-| 2017 | 2 | Action | 1151 | 16701145 | 6.98 |
-| 2017 | 3 | Comedy | 2700 | 11298413 | 6.73 |
-| 2018 | 1 | Drama | 5638 | 17400940 | 6.89 |
+| 2017 | 2 | Action | 1150 | 16701145 | 6.98 |
+| 2017 | 3 | Comedy | 2699 | 11298400 | 6.73 |
+| 2018 | 1 | Drama | 5634 | 17399937 | 6.89 |
 | 2018 | 2 | Action | 1105 | 15070353 | 6.9 |
 | 2018 | 3 | Adventure | 665 | 13340404 | 7.04 |
-| 2019 | 1 | Drama | 5588 | 22008361 | 7.2 |
+| 2019 | 1 | Drama | 5586 | 22008264 | 7.2 |
 | 2019 | 2 | Action | 1129 | 12350202 | 6.82 |
 | 2019 | 3 | Comedy | 2632 | 12255295 | 6.8 |
 | 2020 | 1 | Drama | 4267 | 10471475 | 6.56 |
 | 2020 | 2 | Comedy | 1973 | 6510734 | 6.44 |
 | 2020 | 3 | Action | 826 | 6125829 | 6.16 |
-| 2021 | 1 | Drama | 4954 | 14390968 | 6.77 |
+| 2021 | 1 | Drama | 4952 | 14390954 | 6.77 |
 | 2021 | 2 | Action | 1090 | 12862971 | 6.62 |
 | 2021 | 3 | Adventure | 558 | 10181453 | 7.01 |
 | 2022 | 1 | Drama | 5537 | 15956494 | 6.86 |
 | 2022 | 2 | Action | 1165 | 13342657 | 6.75 |
-| 2022 | 3 | Comedy | 2793 | 10196482 | 6.58 |
-| 2023 | 1 | Drama | 5739 | 14746054 | 6.85 |
+| 2022 | 3 | Comedy | 2792 | 10196482 | 6.58 |
+| 2023 | 1 | Drama | 5737 | 14746046 | 6.85 |
 | 2023 | 2 | Action | 1286 | 10567801 | 6.52 |
-| 2023 | 3 | Comedy | 2872 | 9489286 | 6.55 |
-| 2024 | 1 | Drama | 5547 | 11660418 | 6.68 |
+| 2023 | 3 | Comedy | 2871 | 9489286 | 6.55 |
+| 2024 | 1 | Drama | 5546 | 11660418 | 6.68 |
 | 2024 | 2 | Action | 1288 | 8648694 | 6.54 |
 | 2024 | 3 | Comedy | 2762 | 7094428 | 6.43 |
-| 2025 | 1 | Drama | 5091 | 8577811 | 6.66 |
-| 2025 | 2 | Action | 1282 | 7662518 | 6.43 |
-| 2025 | 3 | Comedy | 2556 | 5876106 | 6.42 |
+| 2025 | 1 | Drama | 5090 | 8577811 | 6.66 |
+| 2025 | 2 | Action | 1281 | 7662518 | 6.43 |
+| 2025 | 3 | Comedy | 2555 | 5876106 | 6.42 |
 
 Years in the top three per genre:
 
@@ -333,50 +333,50 @@ Top three genres against the other genres, per year:
 |---|---|---|---|---|---|---|---|
 | 1980 | 21 | 44.3 | 36.5 | 4698.0 | 3399.0 | 7.73 | 7.5 |
 | 1981 | 20 | 46.5 | 35.6 | 3222.0 | 2051.0 | 7.24 | 6.85 |
-| 1982 | 19 | 43.7 | 38.1 | 4227.0 | 3353.0 | 7.56 | 7.15 |
+| 1982 | 19 | 43.7 | 38.1 | 4227.0 | 3354.0 | 7.56 | 7.15 |
 | 1983 | 19 | 45.9 | 40.6 | 3615.0 | 2915.0 | 7.43 | 7.11 |
 | 1984 | 20 | 44.7 | 39.0 | 5172.0 | 4093.0 | 7.35 | 7.18 |
 | 1985 | 19 | 51.5 | 45.0 | 5054.0 | 3882.0 | 7.39 | 7.02 |
 | 1986 | 19 | 46.2 | 46.1 | 4218.0 | 4191.0 | 7.2 | 7.05 |
-| 1987 | 19 | 42.6 | 51.2 | 3748.0 | 5300.0 | 7.09 | 7.06 |
-| 1988 | 19 | 46.8 | 49.3 | 4411.0 | 4865.0 | 7.17 | 7.07 |
+| 1987 | 19 | 42.6 | 51.3 | 3748.0 | 5308.0 | 7.09 | 7.06 |
+| 1988 | 19 | 46.8 | 49.3 | 4411.0 | 4867.0 | 7.17 | 7.07 |
 | 1989 | 20 | 49.5 | 43.9 | 4947.0 | 3960.0 | 7.22 | 6.78 |
-| 1990 | 19 | 45.6 | 47.4 | 5411.0 | 5821.0 | 7.3 | 7.07 |
+| 1990 | 19 | 45.6 | 47.4 | 5411.0 | 5825.0 | 7.3 | 7.07 |
 | 1991 | 19 | 44.2 | 47.9 | 5090.0 | 5926.0 | 7.36 | 7.49 |
 | 1992 | 19 | 46.3 | 47.7 | 5865.0 | 6198.0 | 7.23 | 7.0 |
-| 1993 | 19 | 44.8 | 47.4 | 7398.0 | 8214.0 | 7.31 | 7.39 |
+| 1993 | 19 | 44.8 | 47.4 | 7398.0 | 8217.0 | 7.31 | 7.39 |
 | 1994 | 20 | 58.2 | 47.8 | 11999.0 | 7865.0 | 7.87 | 7.32 |
 | 1995 | 19 | 49.0 | 44.8 | 11426.0 | 9654.0 | 7.59 | 7.28 |
-| 1996 | 21 | 44.7 | 46.4 | 7250.0 | 7765.0 | 6.98 | 6.78 |
+| 1996 | 21 | 44.7 | 46.4 | 7250.0 | 7768.0 | 6.98 | 6.78 |
 | 1997 | 19 | 44.1 | 48.5 | 9382.0 | 11213.0 | 7.09 | 7.13 |
 | 1998 | 20 | 51.5 | 46.8 | 10664.0 | 8850.0 | 7.4 | 6.8 |
 | 1999 | 20 | 43.6 | 47.1 | 11133.0 | 12819.0 | 7.53 | 7.32 |
 | 2000 | 20 | 45.0 | 42.2 | 10393.0 | 9270.0 | 7.21 | 6.98 |
 | 2001 | 19 | 42.4 | 42.5 | 11330.0 | 11403.0 | 7.36 | 7.16 |
-| 2002 | 22 | 42.4 | 35.5 | 13314.0 | 9949.0 | 7.22 | 7.04 |
+| 2002 | 22 | 42.4 | 35.5 | 13319.0 | 9949.0 | 7.22 | 7.04 |
 | 2003 | 21 | 45.5 | 46.5 | 9836.0 | 10244.0 | 7.11 | 7.22 |
-| 2004 | 21 | 41.3 | 44.0 | 10362.0 | 11557.0 | 7.02 | 7.11 |
-| 2005 | 21 | 40.4 | 42.8 | 8019.0 | 8848.0 | 6.79 | 6.87 |
-| 2006 | 22 | 42.7 | 42.0 | 9183.0 | 8911.0 | 7.12 | 6.95 |
-| 2007 | 22 | 38.3 | 41.1 | 8238.0 | 9248.0 | 6.96 | 6.91 |
-| 2008 | 21 | 40.4 | 40.4 | 7888.0 | 7899.0 | 6.75 | 7.1 |
+| 2004 | 21 | 41.3 | 44.0 | 10367.0 | 11566.0 | 7.02 | 7.11 |
+| 2005 | 21 | 40.4 | 42.8 | 8019.0 | 8852.0 | 6.79 | 6.87 |
+| 2006 | 22 | 42.7 | 42.0 | 9185.0 | 8911.0 | 7.12 | 6.95 |
+| 2007 | 22 | 38.3 | 41.1 | 8238.0 | 9250.0 | 6.96 | 6.91 |
+| 2008 | 21 | 40.4 | 40.4 | 7888.0 | 7901.0 | 6.75 | 7.1 |
 | 2009 | 21 | 41.3 | 40.1 | 6805.0 | 6466.0 | 6.98 | 6.88 |
-| 2010 | 22 | 40.0 | 30.1 | 7991.0 | 5170.0 | 6.97 | 7.02 |
-| 2011 | 21 | 46.1 | 37.9 | 7014.0 | 5008.0 | 6.84 | 6.75 |
-| 2012 | 22 | 42.7 | 37.1 | 6054.0 | 4779.0 | 6.9 | 6.96 |
-| 2013 | 22 | 41.4 | 36.8 | 6225.0 | 5133.0 | 6.85 | 6.95 |
+| 2010 | 22 | 40.0 | 30.1 | 7993.0 | 5172.0 | 6.97 | 7.02 |
+| 2011 | 21 | 46.1 | 37.9 | 7015.0 | 5011.0 | 6.84 | 6.75 |
+| 2012 | 22 | 42.7 | 37.1 | 6056.0 | 4780.0 | 6.9 | 6.96 |
+| 2013 | 22 | 41.4 | 36.8 | 6226.0 | 5134.0 | 6.85 | 6.95 |
 | 2014 | 23 | 47.0 | 28.7 | 8809.0 | 3986.0 | 7.09 | 6.96 |
-| 2015 | 22 | 46.6 | 29.7 | 6990.0 | 3385.0 | 6.98 | 6.77 |
-| 2016 | 22 | 44.1 | 30.0 | 6929.0 | 3773.0 | 6.89 | 6.9 |
-| 2017 | 22 | 45.1 | 39.0 | 5178.0 | 4032.0 | 6.93 | 6.8 |
-| 2018 | 22 | 44.3 | 30.7 | 6184.0 | 3446.0 | 6.94 | 6.74 |
-| 2019 | 23 | 43.6 | 39.5 | 4986.0 | 4207.0 | 7.0 | 6.86 |
+| 2015 | 22 | 46.6 | 29.7 | 6994.0 | 3386.0 | 6.98 | 6.77 |
+| 2016 | 22 | 44.1 | 30.0 | 6930.0 | 3775.0 | 6.89 | 6.9 |
+| 2017 | 22 | 45.1 | 39.0 | 5179.0 | 4033.0 | 6.93 | 6.8 |
+| 2018 | 22 | 44.3 | 30.7 | 6187.0 | 3447.0 | 6.94 | 6.74 |
+| 2019 | 23 | 43.6 | 39.5 | 4987.0 | 4208.0 | 7.0 | 6.86 |
 | 2020 | 22 | 44.8 | 36.9 | 3270.0 | 2354.0 | 6.42 | 6.42 |
-| 2021 | 22 | 46.4 | 30.9 | 5670.0 | 2921.0 | 6.78 | 6.54 |
+| 2021 | 22 | 46.4 | 30.9 | 5672.0 | 2921.0 | 6.78 | 6.54 |
 | 2022 | 23 | 46.4 | 39.8 | 4160.0 | 3178.0 | 6.75 | 6.56 |
-| 2023 | 22 | 44.7 | 40.7 | 3517.0 | 2978.0 | 6.67 | 6.66 |
-| 2024 | 23 | 42.9 | 39.3 | 2855.0 | 2462.0 | 6.57 | 6.52 |
-| 2025 | 22 | 39.3 | 38.6 | 2477.0 | 2403.0 | 6.52 | 6.45 |
+| 2023 | 22 | 44.7 | 40.7 | 3518.0 | 2979.0 | 6.67 | 6.66 |
+| 2024 | 23 | 42.9 | 39.3 | 2856.0 | 2462.0 | 6.57 | 6.52 |
+| 2025 | 22 | 39.3 | 38.5 | 2478.0 | 2404.0 | 6.52 | 6.45 |
 
 #### Directors with one film rated 8.0 or more and other films averaging 6.0 or less
 
@@ -393,6 +393,7 @@ Directors found: 171. The 25 with the most voted hit are below, full list in
 | nm0588340 | Frank Miller | 2 | 5.65 | Sin City | 2005 | 8.0 | 825453 |
 | nm0132709 | Martin Campbell | 20 | 5.62 | Casino Royale | 2006 | 8.0 | 757974 |
 | nm0000814 | John G. Avildsen | 21 | 5.78 | Rocky | 1976 | 8.1 | 706136 |
+| nm0000436 | Curtis Hanson | 15 | 6.0 | L.A. Confidential | 1997 | 8.2 | 666262 |
 | nm0853238 | Tate Taylor | 6 | 5.88 | The Help | 2011 | 8.1 | 534754 |
 | nm0936374 | Kirk Wise | 3 | 5.43 | Beauty and the Beast | 1991 | 8.0 | 511190 |
 | nm0204628 | Garth Davis | 2 | 5.65 | Lion | 2016 | 8.0 | 270125 |
@@ -401,7 +402,7 @@ Directors found: 171. The 25 with the most voted hit are below, full list in
 | nm0000671 | Billy Bob Thornton | 3 | 5.93 | Sling Blade | 1996 | 8.0 | 105152 |
 | nm1084488 | Umesh Shukla | 6 | 5.57 | OMG: Oh My God! | 2012 | 8.1 | 72394 |
 | nm2134474 | Vikas Bahl | 6 | 5.83 | Queen | 2013 | 8.1 | 71987 |
-| nm1025280 | Anubhav Sinha | 12 | 5.77 | Article 15 | 2019 | 8.1 | 42123 |
+| nm1025280 | Anubhav Sinha | 12 | 5.78 | Article 15 | 2019 | 8.1 | 42123 |
 | nm1164861 | Seth Gordon | 7 | 5.7 | The King of Kong: A Fistful of Quarters | 2007 | 8.0 | 38782 |
 | nm6134590 | Apoorv Singh Karki | 2 | 4.2 | Sirf Ek Bandaa Kaafi Hai | 2023 | 8.0 | 31497 |
 | nm0559877 | John Mathew Matthan | 2 | 5.75 | Sarfarosh | 1999 | 8.1 | 29122 |
@@ -409,12 +410,11 @@ Directors found: 171. The 25 with the most voted hit are below, full list in
 | nm0178880 | Eleanor Coppola | 2 | 5.2 | Hearts of Darkness: A Filmmaker's Apocalypse | 1991 | 8.1 | 26239 |
 | nm1729063 | Mert Baykal | 3 | 5.9 | Pardon | 2005 | 8.1 | 24920 |
 | nm0846092 | Kamal Tabrizi | 14 | 5.76 | The Lizard | 2004 | 8.4 | 24810 |
-| nm5120912 | Ajay Bahl | 3 | 4.63 | Section 375 | 2019 | 8.0 | 21914 |
 
 #### Series with the worst episode in the last season and the best in the first two
 
-Series found: 504 out of 13 594 series with at least three seasons of 10 episodes or more.
-The 25 most voted are below, full list in `results/exploration/series_worst_last_best_first.md`.
+Series found: 504 out of 13594 series with at least 3 seasons of 10 episodes or more. The 25 most voted are below, full list in
+`results/exploration/series_worst_last_best_first.md`.
 
 | tconst | primaryTitle | startYear | long_seasons | last_season | rated_episodes | best_first | worst_last | series_votes |
 |---|---|---|---|---|---|---|---|---|
@@ -443,10 +443,11 @@ The 25 most voted are below, full list in `results/exploration/series_worst_last
 | tt8714904 | Narcos: Mexico | 2018 | 3 | 3 | 30 | 9.0 | 7.4 | 103497 |
 | tt0060028 | Star Trek | 1966 | 3 | 3 | 80 | 9.2 | 5.2 | 102653 |
 | tt1462059 | Falling Skies | 2011 | 5 | 5 | 52 | 8.1 | 5.9 | 100080 |
+
 #### Actors and actresses whose popularity peaked early
 
-Actors found: 4 163 out of 10 592 with at least 15 rated feature films over 20 years or more.
-The 50 with the largest decline are below, full list in `data/exploration/early_peak_actors.csv`.
+Actors found: 4164 out of 10592 with at least 15 rated feature films over 20 years or more. The 50 with the largest decline are below, full list in
+`data/exploration/early_peak_actors.csv`.
 
 | nconst | primaryName | films | first_year | last_year | best_film | best_year | best_rating | early_avg | late_avg | decline |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -507,19 +508,19 @@ People per combination of roles:
 
 | talent_combo | count |
 |---|---|
-| direct+write | 7902 |
-| act+direct+write | 1463 |
-| act+write | 1207 |
-| act+direct | 439 |
+| direct+write | 7901 |
+| act+direct+write | 1462 |
+| act+write | 1208 |
+| act+direct | 438 |
 
 Multi-role films against single-role films, per combination (people with both kinds of films):
 
 | talent_combo | people | multi_films | single_films | avg_multi_rating | avg_single_rating | avg_rating_gap | median_rating_gap | pct_better_multi | avg_multi_median_votes | avg_single_median_votes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| direct+write | 5655 | 31082 | 29826 | 5.95 | 5.9 | 0.05 | 0.03 | 52.1 | 8157.0 | 8641.0 |
-| act+direct+write | 1372 | 10556 | 20615 | 5.83 | 5.74 | 0.09 | 0.12 | 57.5 | 7181.0 | 4839.0 |
-| act+write | 1014 | 3300 | 15790 | 5.66 | 5.64 | 0.02 | 0.07 | 54.0 | 7271.0 | 5239.0 |
-| act+direct | 340 | 844 | 7765 | 5.74 | 5.84 | -0.1 | -0.04 | 47.9 | 4109.0 | 3684.0 |
+| direct+write | 5654 | 31077 | 29823 | 5.95 | 5.9 | 0.05 | 0.04 | 52.1 | 8158.0 | 8643.0 |
+| act+direct+write | 1371 | 10551 | 20605 | 5.83 | 5.74 | 0.09 | 0.12 | 57.5 | 7185.0 | 4841.0 |
+| act+write | 1015 | 3303 | 15799 | 5.66 | 5.64 | 0.02 | 0.07 | 54.0 | 7265.0 | 5235.0 |
+| act+direct | 339 | 842 | 7756 | 5.74 | 5.84 | -0.11 | -0.04 | 47.8 | 4120.0 | 3694.0 |
 
 30 people with the most multi-role films:
 
@@ -553,7 +554,7 @@ Multi-role films against single-role films, per combination (people with both ki
 | Pupi Avati | direct+write | 38 | 6 | 6.23 | 5.63 | 0.6 |
 | Sreenivasan | act+write | 37 | 70 | 7.23 | 6.46 | 0.77 |
 | Joseph W. Sarno | direct+write | 36 | 1 | 5.32 | 6.3 | -0.98 |
-| Umberto Lenzi | direct+write | 36 | 24 | 5.47 | 5.44 | 0.04 |
+| Umberto Lenzi | direct+write | 36 | 24 | 5.48 | 5.44 | 0.04 |
 | Lucio Fulci | act+direct+write | 35 | 29 | 5.85 | 5.98 | -0.13 |
 
 #### Actors and actresses successful in films of several languages
@@ -569,7 +570,7 @@ Actors per number of original languages among their successful films:
 
 | language_count | count |
 |---|---|
-| 1 | 26433 |
+| 1 | 26432 |
 | 2 | 888 |
 | 3 | 112 |
 | 4 | 11 |
@@ -787,13 +788,13 @@ Actors with successful films in three languages or more:
 
 ### Results
 
-Scope: top 10 feature films per genre and year (1980-2025) by IMDb votes, 7 184 films.
+Scope: top 10 feature films per genre and year (1980-2025) by IMDb votes.
 
 Coverage:
 
 | films | with_synopsis | with_languages | with_3_biographies | avg_biographies |
 |---|---|---|---|---|
-| 7184 | 5824 | 6065 | 5684 | 3.24 |
+| 7183 | 5823 | 6064 | 5684 | 3.25 |
 
 Films without a synopsis, by note written by the collector:
 
