@@ -157,6 +157,23 @@ python -m imdb_project.streaming.report
 
 Outputs: `data/streaming/` (parquet and `metrics.jsonl`), `results/streaming/` (tables).
 
+### Open question: are remakes rated lower than the films they remake?
+
+Candidate pairs are feature films with the same original title released at least 10 years
+apart; each candidate is confirmed on English Wikipedia (the introduction of the remake's
+page must call it a remake of a film of the original's year). The Wikipedia step runs
+outside Spark, sends batches of 20 titles per request and caches every answer in
+`data/open_question/cache/`. Tables are written to `results/open_question/`.
+
+```bash
+# 1. Candidate (original, remake) pairs, both films with >= 1000 votes (Spark, about 2 minutes)
+python -m imdb_project.open_question.remakes_scope --min-votes 1000 --min-gap 10
+# 2. Check every candidate on Wikipedia (about 300 requests, 5 to 15 minutes)
+python -m imdb_project.open_question.remakes_collect
+# 3. Comparisons and the confirmed pairs with their lineage (Spark, about 3 minutes)
+python -m imdb_project.open_question.remakes_analysis
+```
+
 ## AI tools declaration
 
 | Tool | Used for |
@@ -166,5 +183,6 @@ Outputs: `data/streaming/` (parquet and `metrics.jsonl`), `results/streaming/` (
 | Claude Code (Anthropic) | Data exploration code and its unit tests |
 | Claude Code (Anthropic) | Data enrichment code (scope, Wikipedia collector, Spark build) and its unit tests |
 | Claude Code (Anthropic) | Streaming code (Wikimedia producer, lookup table, Structured Streaming consumer, report) and its unit tests |
+| Claude Code (Anthropic) | Open question code (candidate pairs, batched Wikipedia check, Spark analysis) and its unit tests |
 
 AI tools were not used to write the explanations and reasoning in `REPORT.md`.

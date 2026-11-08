@@ -936,4 +936,102 @@ events that were kept:
 
 ### Results
 
+Pairs come from feature films (more than 40 minutes) with the same normalised original title,
+released at least 10 years apart, both with at least 1,000 IMDb votes. Each candidate was
+checked on English Wikipedia on 7 November 2026; the confirmed pairs, with the source URL and
+the sentence used as evidence, are in `data/open_question/remakes`.
+
+Candidates kept at each step:
+
+| step | count |
+|---|---|
+| candidate pairs (same title, gap >= 10 years) | 2408 |
+| distinct remake candidates | 2042 |
+| remake candidates with a Wikipedia page linking to their IMDb id | 1713 |
+| remakes confirmed by their Wikipedia introduction | 172 |
+| confirmed (original, remake) pairs | 180 |
+
+Remake rating minus original rating, all confirmed pairs:
+
+| pairs | avg_original_rating | avg_remake_rating | avg_diff | median_diff | pct_remake_better | pct_remake_worse | median_votes_ratio | pct_remake_more_votes |
+|---|---|---|---|---|---|---|---|---|
+| 180 | 6.94 | 5.82 | -1.12 | -1.1 | 13.3 | 86.1 | 0.93 | 49.4 |
+
+By gap between the two releases:
+
+| gap | pairs | avg_original_rating | avg_remake_rating | avg_diff | median_diff | pct_remake_better | pct_remake_worse | median_votes_ratio | pct_remake_more_votes |
+|---|---|---|---|---|---|---|---|---|---|
+| 10-19 years | 16 | 6.86 | 5.75 | -1.11 | -1.1 | 18.8 | 81.3 | 0.54 | 31.3 |
+| 20-29 years | 52 | 6.98 | 5.87 | -1.11 | -1.1 | 9.6 | 90.4 | 0.84 | 48.1 |
+| 30-49 years | 89 | 6.87 | 5.75 | -1.12 | -1.1 | 12.4 | 86.5 | 0.96 | 49.4 |
+| 50+ years | 23 | 7.2 | 6.03 | -1.16 | -1.2 | 21.7 | 78.3 | 1.53 | 65.2 |
+
+By decade of the remake:
+
+| remake_decade | pairs | avg_original_rating | avg_remake_rating | avg_diff | median_diff | pct_remake_better | pct_remake_worse | median_votes_ratio | pct_remake_more_votes |
+|---|---|---|---|---|---|---|---|---|---|
+| 1940 | 2 | 7.65 | 7.1 | -0.55 | -0.8 | 0.0 | 100.0 | 0.6 | 50.0 |
+| 1950 | 8 | 7.18 | 6.98 | -0.2 | -0.5 | 50.0 | 50.0 | 0.79 | 50.0 |
+| 1960 | 6 | 7.23 | 6.18 | -1.05 | -1.1 | 0.0 | 100.0 | 0.3 | 16.7 |
+| 1970 | 6 | 7.53 | 6.05 | -1.48 | -1.7 | 0.0 | 100.0 | 0.4 | 33.3 |
+| 1980 | 10 | 7.03 | 6.16 | -0.87 | -1.1 | 20.0 | 80.0 | 1.1 | 60.0 |
+| 1990 | 21 | 7.3 | 6.09 | -1.2 | -1.2 | 4.8 | 90.5 | 1.88 | 57.1 |
+| 2000 | 47 | 6.96 | 5.6 | -1.36 | -1.3 | 8.5 | 91.5 | 1.45 | 59.6 |
+| 2010 | 57 | 6.82 | 5.75 | -1.08 | -1.1 | 15.8 | 84.2 | 0.96 | 49.1 |
+| 2020 | 23 | 6.48 | 5.41 | -1.07 | -0.9 | 17.4 | 82.6 | 0.54 | 30.4 |
+
+By genre of the remake (genres with at least 10 pairs):
+
+| genre | pairs | avg_original_rating | avg_remake_rating | avg_diff | median_diff | pct_remake_better | pct_remake_worse | median_votes_ratio | pct_remake_more_votes |
+|---|---|---|---|---|---|---|---|---|---|
+| Drama | 75 | 7.14 | 6.09 | -1.04 | -1.0 | 16.0 | 84.0 | 0.86 | 46.7 |
+| Comedy | 54 | 6.94 | 5.9 | -1.04 | -1.1 | 7.4 | 92.6 | 1.11 | 53.7 |
+| Horror | 52 | 6.61 | 5.09 | -1.51 | -1.4 | 11.5 | 88.5 | 0.6 | 32.7 |
+| Action | 46 | 7.06 | 5.9 | -1.16 | -1.1 | 15.2 | 84.8 | 1.15 | 54.3 |
+| Thriller | 38 | 6.83 | 5.64 | -1.19 | -1.3 | 13.2 | 84.2 | 1.53 | 57.9 |
+| Crime | 37 | 7.08 | 6.19 | -0.89 | -0.9 | 16.2 | 81.1 | 1.89 | 67.6 |
+| Adventure | 33 | 7.17 | 6.35 | -0.81 | -0.7 | 24.2 | 75.8 | 1.43 | 57.6 |
+| Romance | 32 | 7.04 | 6.3 | -0.73 | -0.9 | 15.6 | 81.3 | 1.21 | 56.3 |
+| Mystery | 23 | 6.75 | 5.2 | -1.55 | -1.4 | 8.7 | 91.3 | 0.55 | 30.4 |
+| Sci-Fi | 16 | 6.77 | 5.29 | -1.48 | -1.5 | 6.3 | 93.8 | 0.8 | 43.8 |
+| Family | 15 | 7.02 | 6.15 | -0.87 | -1.0 | 6.7 | 93.3 | 1.22 | 60.0 |
+| Fantasy | 15 | 6.81 | 5.82 | -0.99 | -1.1 | 13.3 | 86.7 | 0.86 | 40.0 |
+
+Depending on whether the remake shares at least one principal (cast or crew) with the original:
+
+| shares_people | pairs | avg_original_rating | avg_remake_rating | avg_diff | median_diff | pct_remake_better | pct_remake_worse | median_votes_ratio | pct_remake_more_votes |
+|---|---|---|---|---|---|---|---|---|---|
+| False | 22 | 6.84 | 6.26 | -0.58 | -0.7 | 22.7 | 77.3 | 2.06 | 63.6 |
+| True | 158 | 6.96 | 5.76 | -1.2 | -1.2 | 12.0 | 87.3 | 0.86 | 47.5 |
+
+Largest drops:
+
+| original_title | original_year | original_rating | remake_title | remake_year | remake_rating | rating_diff | source_url |
+|---|---|---|---|---|---|---|---|
+| Night of the Living Dead | 1968 | 7.8 | Night of the Living Dead 3D | 2006 | 3.2 | -4.6 | https://en.wikipedia.org/wiki/Night_of_the_Living_Dead_3D |
+| Zanjeer | 1973 | 7.5 | Zanjeer | 2013 | 3.4 | -4.1 | https://en.wikipedia.org/wiki/Zanjeer_(2013_film) |
+| Psycho | 1960 | 8.5 | Psycho | 1998 | 4.6 | -3.9 | https://en.wikipedia.org/wiki/Psycho_(1998_film) |
+| Jacob's Ladder | 1990 | 7.4 | Jacob's Ladder | 2019 | 3.6 | -3.8 | https://en.wikipedia.org/wiki/Jacob's_Ladder_(2019_film) |
+| The Wicker Man | 1973 | 7.5 | The Wicker Man | 2006 | 3.8 | -3.7 | https://en.wikipedia.org/wiki/The_Wicker_Man_(2006_film) |
+| Black Christmas | 1974 | 7.1 | Black Christmas | 2019 | 3.5 | -3.6 | https://en.wikipedia.org/wiki/Black_Christmas_(2019_film) |
+| Night of the Living Dead | 1990 | 6.8 | Night of the Living Dead 3D | 2006 | 3.2 | -3.6 | https://en.wikipedia.org/wiki/Night_of_the_Living_Dead_3D |
+| Chatrapathi | 2005 | 7.6 | Chatrapathi | 2023 | 4.0 | -3.6 | https://en.wikipedia.org/wiki/Chatrapathi_(2023_film) |
+| The Wages of Fear | 1953 | 8.1 | The Wages of Fear | 2024 | 4.6 | -3.5 | https://en.wikipedia.org/wiki/The_Wages_of_Fear_(2024_film) |
+| Rollerball | 1975 | 6.5 | Rollerball | 2002 | 3.2 | -3.3 | https://en.wikipedia.org/wiki/Rollerball_(2002_film) |
+
+Largest gains:
+
+| original_title | original_year | original_rating | remake_title | remake_year | remake_rating | rating_diff | source_url |
+|---|---|---|---|---|---|---|---|
+| Amber Alert | 2012 | 4.4 | Amber Alert | 2024 | 6.1 | 1.7 | https://en.wikipedia.org/wiki/Amber_Alert_(film) |
+| A Star Is Born | 1976 | 6.1 | A Star Is Born | 2018 | 7.6 | 1.5 | https://en.wikipedia.org/wiki/A_Star_Is_Born_(2018_film) |
+| Ocean's Eleven | 1960 | 6.5 | Ocean's Eleven | 2001 | 7.7 | 1.2 | https://en.wikipedia.org/wiki/Ocean's_Eleven |
+| King Kong | 1976 | 6.0 | King Kong | 2005 | 7.2 | 1.2 | https://en.wikipedia.org/wiki/King_Kong_(2005_film) |
+| Deathstalker | 1983 | 4.6 | Deathstalker | 2025 | 5.8 | 1.2 | https://en.wikipedia.org/wiki/Deathstalker_(2025_film) |
+| The Ten Commandments | 1923 | 6.8 | The Ten Commandments | 1956 | 7.9 | 1.1 | https://en.wikipedia.org/wiki/The_Ten_Commandments_(1956_film) |
+| Satan's Slave | 1980 | 5.6 | Satan's Slaves | 2017 | 6.5 | 0.9 | https://en.wikipedia.org/wiki/Satan's_Slaves |
+| The Last House on the Left | 1972 | 5.8 | The Last House on the Left | 2009 | 6.5 | 0.7 | https://en.wikipedia.org/wiki/The_Last_House_on_the_Left_(2009_film) |
+| The Man Who Knew Too Much | 1934 | 6.7 | The Man Who Knew Too Much | 1956 | 7.4 | 0.7 | https://en.wikipedia.org/wiki/The_Man_Who_Knew_Too_Much_(1956_film) |
+| Scarface | 1932 | 7.7 | Scarface | 1983 | 8.3 | 0.6 | https://en.wikipedia.org/wiki/Scarface_(1983_film) |
+
 ### Methodological explanation
