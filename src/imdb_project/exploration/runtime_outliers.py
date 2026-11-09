@@ -15,8 +15,8 @@ from imdb_project.exploration.common import (
     feature_films,
     to_markdown,
     write_csv,
+    read_table,
 )
-from imdb_project.imdb_io import read_imdb
 from imdb_project.spark_session import get_spark
 
 IQR_FACTOR = 1.5
@@ -79,7 +79,7 @@ def summary(stats: DataFrame, outliers: DataFrame) -> DataFrame:
 
 def main():
     spark = get_spark("imdb-runtime-outliers")
-    films = feature_films(read_imdb(spark, "title.basics"))
+    films = feature_films(read_table(spark, "title.basics"))
     by_genre = explode_genres(films).cache()
     stats = genre_runtime_stats(by_genre).cache()
     outliers = runtime_outliers(by_genre, stats).cache()
@@ -95,8 +95,10 @@ def main():
     full.mkdir(parents=True, exist_ok=True)
     write_csv(outliers.orderBy("genre", "runtimeMinutes"), full / "runtime_outliers.csv")
     table.show(40, truncate=False)
-    print(f"{outliers.count()} (film, genre) outliers, "
-          f"{outliers.select('tconst').distinct().count()} distinct films")
+    summary_line = (f"Outliers found: {outliers.count()} (film, genre) pairs, "
+                    f"{outliers.select('tconst').distinct().count()} distinct films.")
+    (out / "runtime_outliers_summary.txt").write_text(summary_line + "\n")
+    print(summary_line)
     spark.stop()
 
 

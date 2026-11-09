@@ -19,8 +19,7 @@ from pyspark.sql import DataFrame, Window
 from pyspark.sql import functions as F
 
 from imdb_project.enrichment.collect import SCOPE_DIR
-from imdb_project.exploration.common import explode_genres, feature_films
-from imdb_project.imdb_io import read_imdb
+from imdb_project.exploration.common import explode_genres, feature_films, read_table
 from imdb_project.spark_session import get_spark
 
 MAX_PRINCIPALS = 5
@@ -91,12 +90,12 @@ def main():
     args = parser.parse_args()
 
     spark = get_spark("imdb-enrichment-scope")
-    films = feature_films(read_imdb(spark, "title.basics"))
-    ratings = read_imdb(spark, "title.ratings")
+    films = feature_films(read_table(spark, "title.basics"))
+    ratings = read_table(spark, "title.ratings")
     top = top_films(films, ratings, args.first_year, args.last_year, args.top_n).cache()
     scope = film_scope(films, top, successful_films(films, ratings)).orderBy("tconst")
-    people = people_scope(top, read_imdb(spark, "title.principals"),
-                          read_imdb(spark, "name.basics")).orderBy("tconst", "ordering")
+    people = people_scope(top, read_table(spark, "title.principals"),
+                          read_table(spark, "name.basics")).orderBy("tconst", "ordering")
 
     top.write.mode("overwrite").parquet(str(SCOPE_DIR / "top_films"))
     n_films = write_jsonl(scope, SCOPE_DIR / "films.jsonl")

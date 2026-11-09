@@ -14,8 +14,7 @@ from pyspark.sql import functions as F
 
 from imdb_project.config import ENRICHED_DIR, RESULTS_DIR
 from imdb_project.enrichment.scope import SUCCESS_RATING, SUCCESS_VOTES, successful_films
-from imdb_project.exploration.common import feature_films, to_markdown
-from imdb_project.imdb_io import read_imdb
+from imdb_project.exploration.common import feature_films, to_markdown, read_table
 from imdb_project.spark_session import get_spark
 
 ACTING = ["actor", "actress"]
@@ -51,11 +50,11 @@ def language_coverage(success: DataFrame, languages: DataFrame) -> DataFrame:
 
 def main():
     spark = get_spark("imdb-languages")
-    films = feature_films(read_imdb(spark, "title.basics"))
-    success = successful_films(films, read_imdb(spark, "title.ratings")).cache()
+    films = feature_films(read_table(spark, "title.basics"))
+    success = successful_films(films, read_table(spark, "title.ratings")).cache()
     languages = original_language(spark.read.parquet(str(ENRICHED_DIR / "film_languages")))
-    actors = multilingual_actors(success, languages, read_imdb(spark, "title.principals"))
-    names = read_imdb(spark, "name.basics").select("nconst", "primaryName")
+    actors = multilingual_actors(success, languages, read_table(spark, "title.principals"))
+    names = read_table(spark, "name.basics").select("nconst", "primaryName")
     multi = (
         actors.where(F.col("language_count") >= 2).join(names, "nconst", "left")
         .select("primaryName", "language_count", "successful_films",

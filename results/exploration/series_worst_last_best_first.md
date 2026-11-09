@@ -132,8 +132,8 @@
 | tt0073965 | The Bionic Woman | 1976 | 3 | 3 | 58 | 8.6 | 5.6 | 9332 |
 | tt1545214 | Kung Fu Panda: Legends of Awesomeness | 2011 | 3 | 3 | 78 | 8.3 | 6.5 | 9253 |
 | tt0475900 | Anthony Bourdain: No Reservations | 2005 | 8 | 9 | 143 | 8.9 | 6.2 | 8967 |
-| tt21105088 | Golden Boy | 2022 | 3 | 3 | 101 | 8.7 | 4.1 | 8945 |
 | tt0112047 | Life with Louie | 1994 | 3 | 3 | 39 | 9.2 | 8.1 | 8945 |
+| tt21105088 | Golden Boy | 2022 | 3 | 3 | 101 | 8.7 | 4.1 | 8945 |
 | tt0092319 | Beauty and the Beast | 1987 | 3 | 3 | 55 | 9.0 | 6.5 | 8827 |
 | tt2184065 | Almost Famous | 2012 | 3 | 4 | 90 | 7.9 | 4.8 | 8389 |
 | tt35082593 | Gassal | 2024 | 3 | 3 | 30 | 9.3 | 5.2 | 8380 |
@@ -169,8 +169,8 @@
 | tt1551948 | Dance Academy | 2010 | 3 | 3 | 65 | 9.4 | 7.6 | 5520 |
 | tt1884856 | Masha and the Bear | 2007 | 7 | 5 | 119 | 9.7 | 6.6 | 5430 |
 | tt1478022 | Genis Aile | 2009 | 3 | 3 | 43 | 8.3 | 5.5 | 5422 |
-| tt6942048 | The Oath | 2017 | 3 | 3 | 84 | 8.7 | 6.8 | 5412 |
 | tt1571313 | Pair of Kings | 2010 | 3 | 3 | 69 | 8.8 | 6.2 | 5412 |
+| tt6942048 | The Oath | 2017 | 3 | 3 | 84 | 8.7 | 6.8 | 5412 |
 | tt9721776 | Inconstant Love | 2019 | 3 | 3 | 81 | 9.8 | 6.8 | 5381 |
 | tt3638488 | Bedrag | 2016 | 3 | 3 | 30 | 8.1 | 7.4 | 5308 |
 | tt0366025 | Hope & Faith | 2003 | 3 | 3 | 74 | 8.5 | 6.4 | 5110 |
@@ -267,8 +267,8 @@
 | tt0191715 | PB&J Otter | 1998 | 3 | 3 | 7 | 9.6 | 7.6 | 1892 |
 | tt7150060 | Find Me in Paris | 2018 | 3 | 3 | 78 | 9.2 | 6.1 | 1874 |
 | tt0092469 | The Tracey Ullman Show | 1987 | 4 | 4 | 22 | 9.0 | 5.8 | 1864 |
-| tt0075579 | Secret Army | 1977 | 3 | 3 | 43 | 8.8 | 4.2 | 1857 |
 | tt0098790 | Evening Shade | 1990 | 4 | 4 | 92 | 8.1 | 5.8 | 1857 |
+| tt0075579 | Secret Army | 1977 | 3 | 3 | 43 | 8.8 | 4.2 | 1857 |
 | tt0125622 | Honey, I Shrunk the Kids: The TV Show | 1997 | 3 | 3 | 66 | 7.5 | 2.5 | 1857 |
 | tt11384796 | Kalkanski krugovi | 2021 | 3 | 3 | 30 | 6.9 | 3.9 | 1851 |
 | tt1558182 | Call Me Fitz | 2010 | 4 | 4 | 48 | 7.8 | 5.5 | 1845 |
@@ -365,8 +365,8 @@
 | tt0118252 | All Dogs Go to Heaven: The Series | 1996 | 3 | 3 | 40 | 9.2 | 2.6 | 749 |
 | tt0435566 | Def Comedy Jam | 1992 | 7 | 8 | 14 | 8.4 | 4.6 | 744 |
 | tt4942462 | Club der roten Bänder | 2015 | 3 | 3 | 30 | 9.2 | 7.6 | 731 |
-| tt4092270 | Down There | 2015 | 5 | 5 | 47 | 8.5 | 4.8 | 728 |
 | tt1781715 | The Sparticle Mystery | 2011 | 3 | 3 | 33 | 8.3 | 6.2 | 728 |
+| tt4092270 | Down There | 2015 | 5 | 5 | 47 | 8.5 | 4.8 | 728 |
 | tt0103362 | Between the Lines | 1992 | 3 | 3 | 35 | 9.0 | 6.3 | 727 |
 | tt0262973 | Elvira's Movie Macabre | 1981 | 8 | 4 | 14 | 7.3 | 4.9 | 723 |
 | tt5021206 | The Mr. Peabody & Sherman Show | 2015 | 4 | 4 | 42 | 8.9 | 6.0 | 717 |
@@ -483,8 +483,8 @@
 | tt0860267 | Stubbe - Case by Case | 1995 | 4 | 4 | 45 | 8.0 | 3.4 | 120 |
 | tt27579863 | Lego Friends: The Next Chapter | 2023 | 4 | 3 | 26 | 9.6 | 8.4 | 109 |
 | tt2327933 | Alles Klara | 2012 | 3 | 3 | 15 | 8.1 | 6.0 | 106 |
-| tt34174211 | Celebrity Substitute | 2024 | 3 | 3 | 7 | 9.6 | 2.3 | 105 |
 | tt0126179 | Women: Stories of Passion | 1996 | 3 | 3 | 4 | 7.7 | 2.6 | 105 |
+| tt34174211 | Celebrity Substitute | 2024 | 3 | 3 | 7 | 9.6 | 2.3 | 105 |
 | tt7853214 | SOKO Hamburg | 2018 | 5 | 5 | 54 | 6.9 | 4.6 | 103 |
 | tt1126592 | Banda sonora | 2007 | 6 | 3 | 2 | 9.4 | 6.4 | 101 |
 | tt19638434 | FRO Thizzle Reviews | 2022 | 5 | 5 | 65 | 10.0 | 3.1 | 95 |

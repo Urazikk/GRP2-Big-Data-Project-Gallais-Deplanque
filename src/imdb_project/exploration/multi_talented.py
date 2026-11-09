@@ -16,8 +16,7 @@ from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
 
 from imdb_project.config import RESULTS_DIR
-from imdb_project.exploration.common import feature_films, to_markdown
-from imdb_project.imdb_io import read_imdb
+from imdb_project.exploration.common import feature_films, to_markdown, read_table
 from imdb_project.spark_session import get_spark
 
 ROLE_OF_CATEGORY = {"actor": "act", "actress": "act", "director": "direct", "writer": "write"}
@@ -111,12 +110,12 @@ def summary_by_combo(perf: DataFrame) -> DataFrame:
 
 def main():
     spark = get_spark("imdb-multi-talented")
-    films = feature_films(read_imdb(spark, "title.basics"))
-    roles = film_roles(films, read_imdb(spark, "title.principals"),
-                       read_imdb(spark, "title.crew"), read_imdb(spark, "title.ratings")).cache()
+    films = feature_films(read_table(spark, "title.basics"))
+    roles = film_roles(films, read_table(spark, "title.principals"),
+                       read_table(spark, "title.crew"), read_table(spark, "title.ratings")).cache()
     talented = multi_talented(roles).cache()
     perf = performance_by_person(roles, talented).cache()
-    names = read_imdb(spark, "name.basics").select("nconst", "primaryName")
+    names = read_table(spark, "name.basics").select("nconst", "primaryName")
 
     combos = talented.groupBy("talent_combo").count().orderBy(F.desc("count"))
     summary = summary_by_combo(perf)

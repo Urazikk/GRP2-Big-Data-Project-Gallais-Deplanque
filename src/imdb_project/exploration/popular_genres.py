@@ -9,8 +9,7 @@ from pyspark.sql import DataFrame, Window
 from pyspark.sql import functions as F
 
 from imdb_project.config import RESULTS_DIR
-from imdb_project.exploration.common import explode_genres, feature_films, to_markdown
-from imdb_project.imdb_io import read_imdb
+from imdb_project.exploration.common import explode_genres, feature_films, to_markdown, read_table
 from imdb_project.spark_session import get_spark
 
 FIRST_YEAR, LAST_YEAR = 1980, 2025
@@ -99,8 +98,8 @@ def top_genre_frequency(top: DataFrame) -> DataFrame:
 
 def main():
     spark = get_spark("imdb-popular-genres")
-    by_genre = explode_genres(feature_films(read_imdb(spark, "title.basics")))
-    ratings = read_imdb(spark, "title.ratings")
+    by_genre = explode_genres(feature_films(read_table(spark, "title.basics")))
+    ratings = read_table(spark, "title.ratings")
     ranked = rank_genres(genre_year_popularity(by_genre, ratings)).cache()
     top = top_genres(ranked).cache()
     comparison = compare_top_vs_rest(ranked)

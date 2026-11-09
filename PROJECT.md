@@ -91,6 +91,8 @@ Other parts can read a cleaned table with `imdb_project.imdb_io.read_clean(spark
 ### Data exploration
 
 Each question is one module, and its tables are written to `results/exploration/`.
+The analyses and the enrichment read the cleaned tables of `data/clean` when they exist
+(run the cleaning step first), and the raw files otherwise.
 Feature films are movies longer than 40 minutes; a film counts in each of its genres.
 
 ```bash

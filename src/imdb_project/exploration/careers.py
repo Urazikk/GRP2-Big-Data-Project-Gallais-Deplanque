@@ -12,8 +12,7 @@ from pyspark.sql import DataFrame, Window
 from pyspark.sql import functions as F
 
 from imdb_project.config import DATA_DIR, RESULTS_DIR
-from imdb_project.exploration.common import feature_films, to_markdown, write_csv
-from imdb_project.imdb_io import read_imdb
+from imdb_project.exploration.common import feature_films, to_markdown, write_csv, read_table
 from imdb_project.spark_session import get_spark
 
 ACTING = ["actor", "actress"]
@@ -77,10 +76,10 @@ def early_peak_actors(acted: DataFrame, min_films: int = MIN_FILMS,
 
 def main():
     spark = get_spark("imdb-careers")
-    films = feature_films(read_imdb(spark, "title.basics"))
-    acted = acted_films(films, read_imdb(spark, "title.principals"),
-                        read_imdb(spark, "title.ratings")).cache()
-    names = read_imdb(spark, "name.basics").select("nconst", "primaryName")
+    films = feature_films(read_table(spark, "title.basics"))
+    acted = acted_films(films, read_table(spark, "title.principals"),
+                        read_table(spark, "title.ratings")).cache()
+    names = read_table(spark, "name.basics").select("nconst", "primaryName")
     result = (
         early_peak_actors(acted).join(names, "nconst", "left")
         .select("nconst", "primaryName", "films", "first_year", "last_year", "best_film",
@@ -102,8 +101,10 @@ def main():
     full.mkdir(parents=True, exist_ok=True)
     write_csv(result, full / "early_peak_actors.csv")
     result.show(30, truncate=False)
-    print(f"{result.count()} early peak actors out of {eligible} with "
-          f">= {MIN_FILMS} films over >= {MIN_YEARS} years")
+    summary_line = (f"Actors found: {result.count()} out of {eligible} with at least "
+                    f"{MIN_FILMS} rated feature films over {MIN_YEARS} years or more.")
+    (out / "careers_summary.txt").write_text(summary_line + "\n")
+    print(summary_line)
     spark.stop()
 
 

@@ -14,8 +14,7 @@ from pyspark.sql import types as T
 
 from imdb_project.config import ENRICHED_DIR, RESULTS_DIR
 from imdb_project.enrichment.collect import RAW_DIR, SCOPE_DIR
-from imdb_project.exploration.common import to_markdown
-from imdb_project.imdb_io import read_imdb
+from imdb_project.exploration.common import to_markdown, read_table
 from imdb_project.spark_session import get_spark
 
 RAW_FILM_SCHEMA = T.StructType([
@@ -214,8 +213,8 @@ def main():
     credits = spark.read.schema(CREDIT_SCHEMA).json(str(SCOPE_DIR / "people.jsonl"))
     films = clean_films(read_raw(spark, RAW_DIR / "films.jsonl", RAW_FILM_SCHEMA)).cache()
     people = clean_people(read_raw(spark, RAW_DIR / "people.jsonl", RAW_PERSON_SCHEMA))
-    enriched = enriched_films(top, read_imdb(spark, "title.basics"),
-                              read_imdb(spark, "title.ratings"), films, credits,
+    enriched = enriched_films(top, read_table(spark, "title.basics"),
+                              read_table(spark, "title.ratings"), films, credits,
                               people).cache()
 
     enriched.write.mode("overwrite").parquet(str(ENRICHED_DIR / "films"))

@@ -1,22 +1,22 @@
 | genre | tconst | primaryTitle | startYear | runtimeMinutes | mean | gap_to_mean | direction |
 |---|---|---|---|---|---|---|---|
-| Documentary | tt8273150 | Logistics | 2012 | 51420 | 78.1 | 51341.9 | longer |
-| Documentary | tt3854496 | Ambiancé | 2020 | 43200 | 78.1 | 43121.9 | longer |
-| Documentary | tt12277054 | Carnets Filmés (Liste Complète) | 2019 | 28643 | 78.1 | 28564.9 | longer |
-| Documentary | tt2659636 | Modern Times Forever | 2011 | 14400 | 78.1 | 14321.9 | longer |
-| Documentary | tt2355497 | Beijing 2003 | 2004 | 9000 | 78.1 | 8921.9 | longer |
-| Documentary | tt5068890 | Hunger! | 2015 | 6000 | 78.1 | 5921.9 | longer |
-| Drama | tt5068890 | Hunger! | 2015 | 6000 | 96.1 | 5903.9 | longer |
-| Drama | tt1806963 | Matrjoschka | 2006 | 5700 | 96.1 | 5603.9 | longer |
-| Comedy | tt5136218 | London EC1 | 2015 | 5460 | 93.1 | 5366.9 | longer |
-| Mystery | tt5136218 | London EC1 | 2015 | 5460 | 94.3 | 5365.7 | longer |
-| Drama | tt5136218 | London EC1 | 2015 | 5460 | 96.1 | 5363.9 | longer |
-| Documentary | tt0284020 | The Cure for Insomnia | 1987 | 5220 | 78.1 | 5141.9 | longer |
-| Music | tt0284020 | The Cure for Insomnia | 1987 | 5220 | 88.4 | 5131.6 | longer |
-| Drama | tt3837350 | A 2nd generation film | 2013 | 3077 | 96.1 | 2980.9 | longer |
-| Documentary | tt5135246 | Saynatakuna: Masks | 2013 | 2905 | 78.1 | 2826.9 | longer |
-| History | tt5135246 | Saynatakuna: Masks | 2013 | 2905 | 94.3 | 2810.7 | longer |
-| Documentary | tt0342707 | The Longest Most Meaningless Movie in the World | 1970 | 2880 | 78.1 | 2801.9 | longer |
-| History | tt0342707 | The Longest Most Meaningless Movie in the World | 1970 | 2880 | 94.3 | 2785.7 | longer |
-| Drama | tt0342707 | The Longest Most Meaningless Movie in the World | 1970 | 2880 | 96.1 | 2783.9 | longer |
-| Documentary | tt1866307 | World Peace & Prayer Day | 2011 | 2400 | 78.1 | 2321.9 | longer |
+| Documentary | tt29745298 | Orinoco Croc, a long journey to Denmark. | 2023 | 600 | 76.3 | 523.7 | longer |
+| Documentary | tt31631137 | The History Channel Presents: The Revolution | 2006 | 600 | 76.3 | 523.7 | longer |
+| Documentary | tt8842760 | Old and rare forms of craftsmanship |  | 600 | 76.3 | 523.7 | longer |
+| Documentary | tt33776835 | Ulysses | 2024 | 587 | 76.3 | 510.7 | longer |
+| Adventure | tt39392193 | The Longest Movie on Earth!?: The Narwallus Movie! | 2016 | 600 | 92.9 | 507.1 | longer |
+| Drama | tt10798914 | Sdsdsdsdsdsds | 2019 | 600 | 95.8 | 504.2 | longer |
+| Documentary | tt30021908 | Internet Age | 2014 | 580 | 76.3 | 503.7 | longer |
+| Romance | tt39392193 | The Longest Movie on Earth!?: The Narwallus Movie! | 2016 | 600 | 99.1 | 500.9 | longer |
+| Action | tt12669540 | Marathon Wars |  | 600 | 101.0 | 499.0 | longer |
+| Action | tt39392193 | The Longest Movie on Earth!?: The Narwallus Movie! | 2016 | 600 | 101.0 | 499.0 | longer |
+| Horror | tt40792136 | Growth | 2026 | 587 | 88.5 | 498.5 | longer |
+| Sci-Fi | tt40792136 | Growth | 2026 | 587 | 91.0 | 496.0 | longer |
+| Drama | tt40792136 | Growth | 2026 | 587 | 95.8 | 491.2 | longer |
+| Documentary | tt0090015 | Shoah | 1985 | 566 | 76.3 | 489.7 | longer |
+| Drama | tt38094154 | Two-Bed | 2020 | 584 | 95.8 | 488.2 | longer |
+| Sci-Fi | tt35112545 | Planetagatik | 2024 | 579 | 91.0 | 488.0 | longer |
+| History | tt0270784 | Khleb - imya sushchestvitelnoe | 1988 | 580 | 93.5 | 486.5 | longer |
+| Drama | tt0270784 | Khleb - imya sushchestvitelnoe | 1988 | 580 | 95.8 | 484.2 | longer |
+| Adult | tt39394409 | MILF & Cougar 3-Pack | 2011 | 560 | 79.0 | 481.0 | longer |
+| Romance | tt0270784 | Khleb - imya sushchestvitelnoe | 1988 | 580 | 99.1 | 480.9 | longer |
