@@ -103,6 +103,42 @@ Quality flags kept in the `dq_flags` column, per table:
 
 ### Methodological explanation
 
+**Reading the source tables**
+
+We started by reading the seven tables with all columns treated as text, so the original values would be preserved. This made it possible to distinguish the `\N` markers from Spark nulls and empty strings. If we had converted the columns too early, some invalid values could have been treated as nulls.
+
+**Missing values**
+
+The profiling showed that missing values were only represented by `\N`. We did not find any empty strings or Spark nulls. The highest rates mainly concern optional fields, or fields that are only relevant for certain types of data. This is the case for `endYear` in series, `deathYear` for deceased people, or some attributes linked to alternative titles. So, a high missing-value rate does not necessarily mean that the data quality is poor.
+
+**Data-quality checks**
+
+We checked the consistency of dates, unusual runtimes, foreign keys, partial duplicates and missing episode information. To do this, we used column conditions, joins and left anti-joins between the tables. For example, 7,179 principals could not be matched to a person in `name_basics`, and 5,530 titles had a start year later than 2026.
+
+**Quarantine table**
+
+We used a quarantine table to keep problematic records separate from the clean data, without deleting them. For each record, we kept the source table, the reason for the issue and the complete original row. This means the records can still be checked later. Deleting them would have caused a loss of information, while keeping them in the main tables would not have solved the join problems.
+
+**Flagging unusual values**
+
+Instead of changing the original values, we added indicators in the `dq_flags` column. Some anomalies can actually be real or can be explained by their context: Jeanne Calment really did live for an exceptionally long time, and some writers or actors can be credited after their death. For this reason, correcting these values automatically could also mean removing information that was actually correct.
+
+**Runtime threshold**
+
+Runtimes equal to or below zero, as well as runtimes above 600 minutes, were set to null in the cleaned column. We chose this threshold to limit the impact of extreme values on the statistics: the standard deviation of documentary runtimes decreased from 224 to 27 minutes after cleaning. We kept the original value in `runtimeMinutes_raw`, so it can be checked again if needed.
+
+**Partial duplicates and episodes**
+
+Partial duplicates can represent real credits, for example an actor playing several roles or a person having several writing credits. We therefore kept these records. Episodes without a season or episode number were also kept, but flagged with `no_season_or_episode_number`; the series analysis is then restricted to seasons greater than or equal to 1.
+
+**Other options considered**
+
+For orphan records, we could either delete them or keep them in the main tables. We chose quarantine because it preserves the data while keeping the issues separate. For suspicious dates, setting values to null or deleting rows would have caused information loss. For runtimes, letting each analysis define its own filters would have made the processing less consistent. Finally, credits made after death were not automatically reclassified or deleted because their context is not always an error.
+
+**Remaining limitations**
+
+The 600-minute threshold can also exclude some genuinely very long films, even though their raw values are preserved. In addition, `read_table` uses data from `data/clean` only if that directory already exists, so execution order matters. Finally, the analyses do not systematically use `dq_flags` yet, meaning that some actors' posthumous credits can affect the apparent length of their careers.
+
 ## Data exploration
 
 ### Results
@@ -965,9 +1001,29 @@ Streaming metrics per query (from the progress of every micro-batch):
 
 ### Late arriving data
 
-Late data test: during the run, a second producer replayed for 3 minutes the changes made
-from 40 minutes before (3,447 events sent to the same topic). Rows dropped by the watermark
-are counted in the metrics table above.
+**Late data**
+
+Data is considered late when its event time is older than the events already processed by Spark. This can happen after a network interruption, a producer reconnection or the replay of older events.
+
+**Watermark duration**
+
+We chose a ten-minute watermark to accept events that arrive with a limited delay, without keeping the aggregation state for too long. A larger watermark accepts more late events but uses more memory and delays the writing of windows. Without a watermark, the state could grow without limit and windows could not be properly finalised in append mode.
+
+**Events arriving after the watermark**
+
+When an event is older than the watermark, Spark drops it during the stateful operation. The number of dropped rows is available in `numRowsDroppedByWatermark`. This also allows Spark to release the state of windows that are considered finished.
+
+**Removing duplicates**
+
+After a reconnection or a producer retry, the same event can be sent more than once. The `dropDuplicatesWithinWatermark(event_id)` function ensures that only one occurrence of each identifier is kept. Previously seen identifiers are stored for the watermark duration, avoiding the need to keep an unlimited history.
+
+**Replay test**
+
+For the test, a second producer replayed 3,447 events over a period of three minutes. The replay started with events from around 40 minutes earlier and then moved forward towards more recent events. Spark dropped 2,298 of them because of the watermark, while events delayed by less than ten minutes were accepted. For the events that were kept, the delay between the event and its arrival in Kafka had a median of 0.3 seconds, a 95th percentile of 557.8 seconds and a maximum of 636.6 seconds.
+
+**Last windows at shutdown**
+
+Windows are written around ten minutes after their end, once the watermark considers them finished. The application stopped before the watermark had reached the last windows. As a result, only the windows between 11:20 and 11:35 were written. This happened because Spark had not yet considered those windows complete.
 
 Delay between the change on Wikipedia (event time) and its arrival in Kafka, for the matched
 events that were kept:
@@ -977,6 +1033,38 @@ events that were kept:
 | 0.3 | 557.8 | 636.6 | 2 |
 
 ### Methodological explanation
+
+**Streaming architecture**
+
+The producer collects recent Wikipedia events from the Server-Sent Events stream with `requests-sse`. It then sends these events to the Kafka topic `wikipedia-changes`. This topic has three partitions and uses the page title as the message key. Spark Structured Streaming consumes the messages and matches them against a lookup table built from the IMDb data.
+
+**Filtering events**
+
+The first attempts to collect Wikipedia events were not always straightforward: the producer based on pywikibot was getting blocked. We therefore used the Server-Sent Events stream. The producer first applies a filter to keep only English Wikipedia events from the main article namespace, with an event type of edit or new. During the test, around 50,000 events were read and 1,814 were sent to Kafka. Spark then applies a more specific filter by checking whether each page matches a film, series or person in IMDb.
+
+**IMDb lookup table**
+
+The lookup table links Wikipedia page titles to IMDb films, series and people. It contains 580,796 page titles, built from entries with at least 1,000 votes. Different naming formats are taken into account, such as "Title (1995 film)" or "Name (actor)". Bare titles are included only for entries with at least 20,000 votes, in order to reduce incorrect matches.
+
+**Results from the test window**
+
+The test on 7 November, from 11:24 to 11:50 UTC, detected 36 changes matching 27 IMDb entries: 12 films, 2 series and 13 people. In the closed windows from 11:20 to 11:35, 13 out of 874 changes matched IMDb, or 1.49%. This test shows that the stream is able to retrieve relevant events, even if only a small part of all Wikipedia changes concerns the entries being monitored.
+
+**Event time**
+
+We used `meta.dt`, which corresponds to the actual time when the change happened on Wikipedia. Processing time depends on when the message reaches our application and can be delayed by network interruptions or replay. Event time therefore makes it possible to place changes in the correct time window, even when they arrive late.
+
+**Windows and output mode**
+
+We used fixed five-minute windows so that each change is counted only once. The 30-second trigger checks regularly for new events. Append mode writes a window once it is complete and validated by the watermark. This avoids writing the same results several times. Each output also has its own checkpoint to make recovery after a stop easier.
+
+**Streaming metrics**
+
+The queries processed 48 micro-batches, with around three seconds per batch and approximately four input rows per second. The processing rate was between 33 and 64 rows per second. There are four rows in the metrics table because each query reads from Kafka independently.
+
+**Other matching and output options**
+
+For matching, we could have used page titles alone, but this would have created too many false positives, or queried Wikidata, which was not accessible in our environment. We could also have checked the IMDb link on every page with an API request, but this would have been too costly. For Spark outputs, complete and update modes were possible, but append is suitable because we want to write windows only once they are finished. Processing time would have been simpler to use, but less reliable for late events.
 
 ## Open question
 
@@ -1095,3 +1183,27 @@ The rating gap was similar for films released 10–19 years apart (−1.11 point
 These findings support a general preference for originals within the confirmed sample, although they do not establish why remakes score lower. Survivorship bias may partly explain the difference, since older films reaching at least 1,000 votes today are often enduring classics, potentially favouring highly rated originals in our sample.
 
 ### Methodological explanation
+
+**Building candidate pairs**
+
+For this part, we selected films longer than 40 minutes with at least 1,000 votes. We normalised the original titles by converting them to lowercase and removing punctuation. Films with the same title were then paired when their release dates were at least ten years apart. This filter helps identify possible remakes without comparing every film with every other film. It produced 2,408 candidate pairs, including 2,042 remake candidates.
+
+**Checking Wikipedia pages**
+
+Using title similarity alone gave too many false positives, for example between Joker (1991 and 2019) or Titanic (1953 and 1997). We therefore added a check based on Wikipedia: the later film's page must link to its IMDb identifier, and a sentence in the introduction must contain the word "remake", without negation, together with the original film's year. The URL, collection date and supporting sentence are kept for each confirmed pair.
+
+**Checking the precision**
+
+The first rule still accepted some incorrect cases. For example, it could match a sentence such as 'was remade in 1962', even when the year did not refer to the original film. It could also accept a sentence containing a negation. We then improved the rule. The sentence had to contain the word "remake", without a negation, and also mention the year of the original film. A manual check of 15 randomly selected confirmed pairs then found that all 15 were correct.
+
+**Batched API requests**
+
+The first method sent one REST request per page. In practice, we received 429 errors and had to wait 20 seconds between attempts, so the collection was very slow, at around four requests per minute. The MediaWiki Action API accepts up to 50 titles per request, but we requested 20 titles at a time to retrieve the page introductions. This reduced the collection to 323 requests in total. We also set a User-Agent with contact information and used maxlag, Retry-After and a local cache.
+
+**Other possible methods**
+
+We also considered relying only on the title, searching for the word "remake" across the whole page instead of only in the introduction, or using Wikidata's "remake of" property. However, Wikidata was not accessible in our environment. We could also have used IMDb alternative titles to identify remakes released under a different name, or changed the vote and release-gap thresholds.
+
+**Limitations**
+
+The method can miss remakes with a different title, whose Wikipedia introduction does not mention the word "remake", which have fewer than 1,000 votes or do not have an English page. A remake can also be linked to several earlier versions, as with A Star Is Born (2018), which was linked to the 1976 version. The selection probably favours well-known remakes. Shared credits appear in 158 of the 180 pairs and are often related to the authors of the adapted works, so these shared credits do not necessarily show that the films had the same production team.
