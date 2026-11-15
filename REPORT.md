@@ -784,6 +784,43 @@ Actors with successful films in three languages or more:
 
 ### Methodological explanation
 
+#### Introduction
+
+We used Simon’s cleaned IMDb tables. Orphan records were quarantined, anomalies flagged, and runtimes above 600 minutes set to null. We defined a feature film as a title classified as “movie” lasting more than 40 minutes. This follows the Academy’s feature-film threshold. Films with several genres were counted in each genre. IMDb lists genres alphabetically, so the first genre cannot be treated as the main one. Unless otherwise specified, ratings required at least 100 votes. This reduces the influence of extreme scores based on only a few viewers.
+
+#### Q1
+
+We considered a runtime notably different when it fell outside the genre’s Tukey fences: Q1 − 1.5 × IQR and Q3 + 1.5 × IQR. We calculated these limits on log runtimes and converted them back into minutes. We used logarithms because runtimes are asymmetric, with a long tail towards longer films. This reduces the influence of that tail when identifying unusual durations. We rejected z-scores because extreme values affect the mean and standard deviation, making symmetric thresholds unsuitable here. We also rejected Tukey fences on raw runtimes because, with a factor of 1.5, half the genres had lower limits below 40 minutes, making unusually short feature films undetectable in those genres, and the method identified only 5,374 short films compared with 23,134 after the log transformation, roughly a quarter as many. We excluded genres with fewer than 30 films. Their small samples would make the quartiles less reliable. The method identified 37,432 unusual film–genre pairs. These represented 27,603 distinct films, since one film can belong to several genres. The method still cannot detect unusually short films in every genre. For Documentary, the lower limit was 28.7 minutes, below our feature-film threshold.
+
+#### Q2
+
+We measured a genre’s popularity by summing the IMDb votes for its films released in each year from 1980 to 2025. This provides an indicator of audience attention, although it does not directly measure viewing figures. We rejected film counts because they measure production volume. Average ratings were also unsuitable because they reflect audience appreciation rather than audience size. Drama appeared in the top three in all 46 years and ranked first in 42. Comedy reached the top three in 34 years, and Action in 29. IMDb’s launch in 1990 creates uneven coverage of older films, while the newest releases have had less time to accumulate votes. Films with several genres also contribute their votes to multiple totals, so genre audiences overlap.
+
+#### Q3
+
+We compared vote share, film share, votes per film, and vote-weighted ratings for the top three genres and the rest. These measures describe audience concentration, production volume, attention per film, and audience appreciation. Depending on the year, the top three accounted for 38–58% of votes and generally attracted more votes per film, with slightly higher weighted ratings. These shares were calculated from film–genre pairs, so they do not represent mutually exclusive groups of films.
+
+#### Q4
+
+We interpreted “several other films” as at least two other rated films. A director qualified with exactly one film rated at least 8.0 and an average of at most 6.0 across the others. We used a simple average for those other films. This gives every film equal weight and prevents a heavily voted title from dominating the comparison. Only films with at least 100 votes contributed ratings. This makes the selection less sensitive to unusually high or low scores from tiny audiences. The analysis identified 171 directors. A co-directed film counted towards each credited director, so some filmographies overlap.
+
+#### Q5
+
+We required at least three seasons containing ten or more listed episodes each. These counts included unrated episodes, but only seasons numbered from one onwards were considered. For rating comparisons, episodes needed at least ten votes. This retained useful coverage in a dataset where the median rated episode had only 23 votes. We excluded a series if a tied extreme rating also occurred outside the required seasons. This ensured that the lowest rating belonged exclusively to the final season and the highest exclusively to seasons one or two. We defined the final season as the highest-numbered season containing qualifying rated episodes. It may therefore differ from the actual final season if later episodes lack usable ratings. The conditions selected 504 series. These came from 13,594 eligible series.
+
+#### Q6
+
+IMDb’s `title.akas.language` describes the language of a title in a particular market, rather than the film’s original language. It could classify *Das Boot* as English, while a region-based alternative misleadingly associated *The Godfather* with India. We instead used the first language listed in the film’s Wikipedia infobox. This gave us a consistent operational definition, although it simplifies multilingual films. A successful film needed a rating of at least 7.0 and at least 10,000 votes. Together, these thresholds selected films that were well rated and had substantial audience engagement. We found 888 actors with successful films in exactly two languages. Another 125 had successful films in three or more languages. Films without a usable Wikipedia page were not covered. Some language entries were also incorrectly split during extraction, which could affect individual classifications.
+
+#### Q7
+
+We used film ratings to represent popularity because the assignment refers to “highest rated” films. We rejected vote counts because their uneven coverage across release periods could distort career comparisons. We divided each career into three equal periods using the years between the first and last film. “Early” therefore meant the first third of that time span, rather than the first third of the film count. An actor’s highest-rated film had to fall in the first third, and that period’s average rating had to exceed the final third’s average. Combining these conditions prevented a single exceptional early film from determining the result alone. Among 10,592 eligible actors with at least 15 rated films over at least 20 years, 4,164 qualified, or about 39%. This remains a broad criterion, and a few poorly rated late films can lower the final-period average substantially.
+
+#### Q8
+
+We identified acting, directing, and writing credits from `title.principals` and `title.crew`. We avoided `primaryProfession` because it describes a person’s general professions rather than their actual contribution to each film. A person qualified as multi-talented after holding at least two different roles. Each role had to appear on at least three films, ensuring that an isolated credit was insufficient. For each person, we compared ratings for films where they combined roles with ratings for films where they held only one role. This kept the comparison within the same person’s filmography. Average differences were small, ranging from −0.11 points for actor–directors to +0.09 for people combining all three roles. The results therefore showed little association between combining roles and higher film ratings.
+
+
 ## Data enrichment
 
 ### Results
@@ -849,6 +886,16 @@ Sample (the five most voted films with a synopsis and three biographies):
 
 
 ### Methodological explanation
+
+We selected the ten most-voted feature films per genre and release year between 1980 and 2025, producing 7,183 distinct films. The year range and top-N limit are configurable, and removing the limit allows the same selection logic to cover the full dataset.
+
+We chose English Wikipedia because it provides freely accessible, human-written material. This matched the assignment’s requirement to avoid machine-generated source text. We tried several title variants and ignored disambiguation pages. A page was accepted only when it contained the matching IMDb link, reducing confusion between remakes and namesakes. We rejected title-only matching because identical or translated titles can lead to the wrong page. Wikidata was another possible route through IMDb identifiers, but it was inaccessible from our environment.
+
+Requests used a User-Agent with contact details and the `maxlag` parameter. We also implemented retries with increasing waits, respected `Retry-After`, and cached responses locally to avoid repeated requests. The initial page-by-page approach encountered rate limiting and would have required around 65,000 requests. We switched to MediaWiki API batches of 50 titles, reducing the total to approximately 2,200 requests.
+
+Synopses came from the film page’s “Plot” section or an equivalent section, while biographies came from the introductions of people’s pages. We searched people in credit order, checking up to five candidates to obtain three biographies per film. Each synopsis and biography retained its source URL and collection date. When information was unavailable, the program recorded an explanatory note instead of inventing content.
+
+Collection ran outside Spark, as permitted by the assignment. Spark handled the explicit schema, text and language cleaning, IMDb joins, and validation of the required output structure. Coverage reached 81% for synopses, 84% for original languages, and 79% for at least three biographies. Films without usable Wikipedia pages remained uncovered, which the assignment allowed, while strict IMDb-link verification also excluded some otherwise correct pages.
 
 ## Streaming data processing
 
@@ -934,6 +981,10 @@ events that were kept:
 ## Open question
 
 ### Question and motivation
+
+We investigated whether remakes receive lower IMDb ratings than the films they remake. This tests the widespread belief that “the original is always better” against audience ratings. The question is also relevant to studios, which use remakes to revisit familiar stories and established titles. Comparing the ratings helps assess whether these new versions receive the same appreciation as their originals. We also compared vote counts to explore whether remakes attract greater audience attention.
+
+IMDb does not directly identify which earlier film a title remakes, so additional evidence was necessary. We therefore used each remake’s Wikipedia page to confirm its relationship with the original film.
 
 ### Results
 
@@ -1034,5 +1085,13 @@ Largest gains:
 | The Last House on the Left | 1972 | 5.8 | The Last House on the Left | 2009 | 6.5 | 0.7 | https://en.wikipedia.org/wiki/The_Last_House_on_the_Left_(2009_film) |
 | The Man Who Knew Too Much | 1934 | 6.7 | The Man Who Knew Too Much | 1956 | 7.4 | 0.7 | https://en.wikipedia.org/wiki/The_Man_Who_Knew_Too_Much_(1956_film) |
 | Scarface | 1932 | 7.7 | Scarface | 1983 | 8.3 | 0.6 | https://en.wikipedia.org/wiki/Scarface_(1983_film) |
+
+#### Key findings
+
+Of the 2,408 candidate pairs, 180 were confirmed as original–remake relationships. Within this confirmed sample, the remake had a lower IMDb rating in 86% of pairs. Remakes averaged 5.82, compared with 6.94 for originals, a difference of approximately −1.1 points.
+
+The rating gap was similar for films released 10–19 years apart (−1.11 points) and those released at least 50 years apart (−1.16 points). Remakes did not consistently attract more votes either: the median remake-to-original vote ratio was 0.93. Only 49% of remakes received more votes than their originals, showing no clear advantage in this measure of attention.
+
+These findings support a general preference for originals within the confirmed sample, although they do not establish why remakes score lower. Survivorship bias may partly explain the difference, since older films reaching at least 1,000 votes today are often enduring classics, potentially favouring highly rated originals in our sample.
 
 ### Methodological explanation
