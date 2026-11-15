@@ -982,6 +982,10 @@ events that were kept:
 
 ### Question and motivation
 
+We investigated whether remakes receive lower IMDb ratings than the films they remake. This tests the widespread belief that “the original is always better” against audience ratings. The question is also relevant to studios, which use remakes to revisit familiar stories and established titles. Comparing the ratings helps assess whether these new versions receive the same appreciation as their originals. We also compared vote counts to explore whether remakes attract greater audience attention.
+
+IMDb does not directly identify which earlier film a title remakes, so additional evidence was necessary. We therefore used each remake’s Wikipedia page to confirm its relationship with the original film.
+
 ### Results
 
 Pairs come from feature films (more than 40 minutes) with the same normalised original title,
@@ -1081,5 +1085,13 @@ Largest gains:
 | The Last House on the Left | 1972 | 5.8 | The Last House on the Left | 2009 | 6.5 | 0.7 | https://en.wikipedia.org/wiki/The_Last_House_on_the_Left_(2009_film) |
 | The Man Who Knew Too Much | 1934 | 6.7 | The Man Who Knew Too Much | 1956 | 7.4 | 0.7 | https://en.wikipedia.org/wiki/The_Man_Who_Knew_Too_Much_(1956_film) |
 | Scarface | 1932 | 7.7 | Scarface | 1983 | 8.3 | 0.6 | https://en.wikipedia.org/wiki/Scarface_(1983_film) |
+
+#### Key findings
+
+Of the 2,408 candidate pairs, 180 were confirmed as original–remake relationships. Within this confirmed sample, the remake had a lower IMDb rating in 86% of pairs. Remakes averaged 5.82, compared with 6.94 for originals, a difference of approximately −1.1 points.
+
+The rating gap was similar for films released 10–19 years apart (−1.11 points) and those released at least 50 years apart (−1.16 points). Remakes did not consistently attract more votes either: the median remake-to-original vote ratio was 0.93. Only 49% of remakes received more votes than their originals, showing no clear advantage in this measure of attention.
+
+These findings support a general preference for originals within the confirmed sample, although they do not establish why remakes score lower. Survivorship bias may partly explain the difference, since older films reaching at least 1,000 votes today are often enduring classics, potentially favouring highly rated originals in our sample.
 
 ### Methodological explanation
